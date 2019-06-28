@@ -1,0 +1,28 @@
+@import './nav.css';
+@import './index.css';
+
+/*
+@import './reset.css';
+@import './footer.css';
+@import './form.css';
+@import './button.css';
+@import './products.css';
+@import './products-forms.css';
+@import './products-manage.css';
+@import './login-signup.css';
+@import './one-product.css';
+@import './home.css';
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Faster+One|Oswald:300,400,500,700|Source+Sans+Pro:300,400,600,700&display=swap');
+
+
+@import url("https://fonts.googleapis.com/css?family=Nunito&display=swap");
+a {
+  color: #00B7FF; }
+
+/*# sourceMappingURL=style.css.map */
+* {
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif; }
+
