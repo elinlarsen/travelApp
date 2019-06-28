@@ -1,12 +1,12 @@
 require('dotenv').config();
 
-const bodyParser   = require('body-parser');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const express      = require('express');
-const favicon      = require('serve-favicon');
-const hbs          = require('hbs');
+const express = require('express');
+const favicon = require('serve-favicon');
+const hbs = require('hbs');
 const app = express();
-const session    = require("express-session");
+const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const mongoose=require("mongoose")
 const logger       = require('morgan');
@@ -35,10 +35,10 @@ app.use(
 );
 
 app.use(require('node-sass-middleware')({
-  src:  path.join(__dirname, 'public'),
+  src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
   sourceMap: true
-}));    
+}));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -48,20 +48,26 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 //session 
 app.use(session({
   secret: "basic-auth-secret",
-        cookie: { maxAge: 60000 },
+  cookie: { maxAge: 60000 },
   store: new MongoStore({
     mongooseConnection: mongoose.connection,
     ttl: 24 * 60 * 60 // 1 day
-  }  )
- }));
+  })
+}));
 
 
 // default value for title local
 app.locals.title = 'Travel App';
-app.locals.site_URL=process.env.SITE_URL;
+app.locals.site_URL = process.env.SITE_URL;
+
+//Registering partials
+
+hbs.registerPartials(__dirname + "/views/partials");
 
 
 const index = require('./routes/index');
 app.use('/', index);
+
+
 
 module.exports = app;
