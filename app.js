@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 require('dotenv').config();
 
 const bodyParser   = require('body-parser');
@@ -12,33 +11,6 @@ const MongoStore = require("connect-mongo")(session);
 const mongoose=require("mongoose")
 const logger       = require('morgan');
 const path         = require('path');
-=======
-require("dotenv").config();
->>>>>>> 581edc897ba67bdca6221f39a74d829983518cde
-
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const express = require("express");
-const favicon = require("serve-favicon");
-const hbs = require("hbs");
-const mongoose = require("mongoose");
-const logger = require("morgan");
-const path = require("path");
-
-<<<<<<< HEAD
-
-=======
-mongoose
-  .connect("mongodb://localhost/travelapp", { useNewUrlParser: true })
-  .then(x => {
-    console.log(
-      `Connected to Mongo! Database name: "${x.connections[0].name}"`
-    );
-  })
-  .catch(err => {
-    console.error("Error connecting to mongo", err);
-  });
->>>>>>> 581edc897ba67bdca6221f39a74d829983518cde
 
 const app_name = require("./package.json").name;
 const debug = require("debug")(
