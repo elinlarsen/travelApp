@@ -1,5 +1,11 @@
 @import "./main.css";
 @import "./nav.css";
+@import "./tripdetails.css";
+@import "./utilityclasses.css";
+
+* {
+  box-sizing: border-box;
+}
 
 .main_background {
   background-image: url("../images/cover.jpg");

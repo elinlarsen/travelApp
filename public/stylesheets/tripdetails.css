@@ -1,0 +1,56 @@
+#trip_details_container {
+  display: flex;
+  height: 80vh;
+  background-color: lightgrey;
+}
+
+#trip_details_form_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.trip_details_form_labels,
+.trip_details_form {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  font-weight: bold;
+  padding: 5px 0px;
+}
+
+.trip_details_form_labels .header {
+  width: 19%;
+  text-align: center;
+  border-bottom: solid;
+  border-width: 1px;
+}
+
+#trip_details_form_container {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.trip_details_form input,
+.trip_details_form button {
+  width: 19%;
+  text-align: center;
+  border-radius: 3px;
+  padding: 3px 0px;
+  border-style: none;
+}
+
+#trip_details_map {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-style: solid;
+}
+
+.input_button {
+  background-color: darkblue;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
