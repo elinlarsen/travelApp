@@ -1,19 +1,30 @@
+console.log("AJAX Handler initialized");
+
 class ajaxHandler {
-  constructor(baseUrl) {
+  constructor(baseUrl, endpoint) {
     this.BASE_URL = baseUrl;
     this.instance = axios.create({ baseURL: this.BASE_URL });
+    this.endpoint = endpoint;
     this.result = null;
   }
 
-  createOneStep(data, clbk) {
+  createOne(data, clbk) {
     this.instance
-      .post("/tripdetails")
+      .post(this.endpoint, data)
       .then(serverRes => clbk(serverRes.data))
       .catch(serverErr => console.log("no data retrieved"));
   }
-}
 
-console.log("AJAX Handler initialized");
+  deleteOne(id, clbk1, clbk2) {
+    this.instance
+      .delete(this.endpoint + id)
+      .then(serverRes => clbk1(serverRes))
+      .catch(serverErr => {
+        console.log("No data deleted");
+        clbk2(serverErr);
+      });
+  }
+}
 
 /* getFullList(clbk) {
 

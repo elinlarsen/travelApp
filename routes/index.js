@@ -27,8 +27,8 @@ router.get("/about", (req, res, next) => {
 });
 
 router.post("/tripdetails", (req, res, next) => {
-  console.log(stepHandler.model.schema);
-  stepHandler.createOne({ name: "test" });
+  console.log(req.body);
+  stepHandler.createOne(req.body);
 });
 
 module.exports = router;
