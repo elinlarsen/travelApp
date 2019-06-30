@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   populateFormDetails();
+  tripDetailsAjaxHandler = new ajaxHandler("http://localhost:3000");
 });
 
 function populateFormDetails(tripId) {
@@ -7,7 +8,7 @@ function populateFormDetails(tripId) {
     currentLine = allButtonsInForm().length;
 
     let formElementHTMLContent =
-      '<input type="date" name="start_date" class="input_date" placeholder="01/01/2020" value="O1/O1/2O2O"><input type="date" name="end_date" class="input_date" placeholder="01/12/2020" value="O1/12/2O2O"><input type="text" name="activity" class="input_text" placeholder="Visit" value="Visit"><input type="text" name="location" class="input_text" placeholder="New Delhi" value="New Delhi"> <button id="trip_details_input_button' +
+      '<input type="date" name="start_date" class="input_date" placeholder="2020-01-01" value="2020-01-01"><input type="date" name="end_date" class="input_date" placeholder="2020-01-01" value="2020-01-01"><input type="text" name="activity" class="input_text" placeholder="Visit" value="Visit"><input type="text" name="location" class="input_text" placeholder="New Delhi" value="New Delhi"> <button id="trip_details_input_button' +
       currentLine +
       '" class="trip_details_input_button"> + </button>';
 
@@ -38,6 +39,9 @@ function allButtonsInForm() {
 
 function addAFormLine(e) {
   e.preventDefault();
+  tripDetailsAjaxHandler.createOneStep({ name: "test" }, () =>
+    console.log("test")
+  );
   populateFormDetails();
 }
 
