@@ -1,32 +1,35 @@
 const geocoder = new google.maps.Geocoder();
 const currentURL = window.location.pathname;
 const tripId = currentURL.substring(currentURL.indexOf("tripdetails") + 12);
+const tripDetailsAjaxHandler = new ajaxHandler(
+  "http://localhost:3000",
+  "/tripdetails"
+);
+const tripAjaxHandler = new ajaxHandler("http://localhost:3000", "/trips");
+
+console.log("trip id is " + tripId);
 
 document.addEventListener("DOMContentLoaded", () => {
-  showTripSteps();
-  tripDetailsAjaxHandler = new ajaxHandler(
-    "http://localhost:3000",
-    "/tripdetails"
-  );
-
-  tripAjaxHandler = new ajaxHandler("http://localhost:3000", "/trips");
-
+  showTripSteps(tripId);
   map = startMap();
 });
 
 function extractTrip(tripId) {
-  if (!tripId) tripData = {};
+  let tripData = {};
+
+  if (!tripId) return tripData;
   else {
-    let tripData = {};
-    tripAjaxHandler.getAll(res => console.log(res));
+    console.log("Extracting trip " + tripId);
+    tripAjaxHandler.getOne(tripId, res => console.log(res));
   }
 
   return tripData;
 }
 
 function showTripSteps(tripId) {
-  tripData = extractTrip(tripId);
+  console.log("ready to show steps for " + tripId);
 
+  tripData = extractTrip(tripId);
   currentLine = allButtonsInForm().length;
 
   let formElementHTMLContent =
