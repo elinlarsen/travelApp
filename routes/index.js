@@ -18,7 +18,7 @@ router.get("/signup", (req, res, next) => {
   res.render("signup");
 });
 
-router.get("/tripdetails", (req, res, next) => {
+router.get(["/tripdetails", "/tripdetails/:trip_id"], (req, res, next) => {
   res.render("tripdetails");
 });
 

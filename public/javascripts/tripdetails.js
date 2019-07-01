@@ -1,4 +1,6 @@
 const geocoder = new google.maps.Geocoder();
+const currentURL = window.location.pathname;
+const tripId = currentURL.substring(currentURL.indexOf("tripdetails") + 12);
 
 document.addEventListener("DOMContentLoaded", () => {
   showTripSteps();
@@ -6,36 +8,47 @@ document.addEventListener("DOMContentLoaded", () => {
     "http://localhost:3000",
     "/tripdetails"
   );
-  map = startMap();
 
-  geocodeAddress("Paris", geocoder, map);
+  tripAjaxHandler = new ajaxHandler("http://localhost:3000", "/trips");
+
+  map = startMap();
 });
 
-function showTripSteps(tripId) {
-  if (!tripId) {
-    currentLine = allButtonsInForm().length;
-
-    let formElementHTMLContent =
-      '<input type="date" id="start_date' +
-      currentLine +
-      '+"class="input_date start_date"placeholder="2020-01-01" value="2020-01-01"><input type="date" id="end_date' +
-      currentLine +
-      '"class="input_date end_date" placeholder="2020-01-01" value="2020-01-01"><input type="text" id="activity' +
-      currentLine +
-      '" class="input_text activity" placeholder="Visit" value="Visit"><input type="text" id="location' +
-      currentLine +
-      '"class="input_text location" placeholder="New Delhi" value="New Delhi"> <button id="trip_details_input_button' +
-      currentLine +
-      '" class="trip_details_input_button"> + </button>';
-
-    let formElement = document.createElement("form");
-    formElement.id = "trip_details_form" + currentLine;
-    formElement.classList.add("trip_details_form");
-    formElement.innerHTML = formElementHTMLContent;
-    document
-      .getElementById("trip_details_form_container")
-      .appendChild(formElement);
+function extractTrip(tripId) {
+  if (!tripId) tripData = {};
+  else {
+    let tripData = {};
+    tripAjaxHandler.getAll(res => console.log(res));
   }
+
+  return tripData;
+}
+
+function showTripSteps(tripId) {
+  tripData = extractTrip(tripId);
+
+  currentLine = allButtonsInForm().length;
+
+  let formElementHTMLContent =
+    '<input type="date" id="start_date' +
+    currentLine +
+    '+"class="input_date start_date"placeholder="2020-01-01" value="2020-01-01"><input type="date" id="end_date' +
+    currentLine +
+    '"class="input_date end_date" placeholder="2020-01-01" value="2020-01-01"><input type="text" id="activity' +
+    currentLine +
+    '" class="input_text activity" placeholder="Visit" value="Visit"><input type="text" id="location' +
+    currentLine +
+    '"class="input_text location" placeholder="New Delhi" value="New Delhi"> <button id="trip_details_input_button' +
+    currentLine +
+    '" class="trip_details_input_button"> + </button>';
+
+  let formElement = document.createElement("form");
+  formElement.id = "trip_details_form" + currentLine;
+  formElement.classList.add("trip_details_form");
+  formElement.innerHTML = formElementHTMLContent;
+  document
+    .getElementById("trip_details_form_container")
+    .appendChild(formElement);
 
   allButtonsInForm().forEach((button, index) => {
     if (index < currentLine) {
@@ -44,9 +57,9 @@ function showTripSteps(tripId) {
     }
   });
 
-  allButtonsInForm().forEach(button => (button.innerHTML = "-"));
+  allButtonsInForm().forEach(button => (button.innerHTML = "Delete step"));
   allButtonsInForm()[currentLine].addEventListener("click", postTripStep);
-  allButtonsInForm()[currentLine].innerHTML = "+";
+  allButtonsInForm()[currentLine].innerHTML = "Add step";
 }
 
 function allButtonsInForm() {
@@ -78,18 +91,10 @@ function deleteTripStep(e) {
 }
 
 function startMap() {
-  const ironhackBCN = {
-    lat: 41.3977381,
-    lng: 2.190471916
-  };
-
-  const latlng = new google.maps.LatLng(39.305, -76.617);
-
   map = new google.maps.Map(document.getElementById("trip_details_map"), {
-    zoom: 5,
-    center: ironhackBCN
+    zoom: 5
   });
-
+  geocodeAddress("Paris", geocoder, map);
   return map;
 }
 

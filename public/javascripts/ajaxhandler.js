@@ -8,6 +8,13 @@ class ajaxHandler {
     this.result = null;
   }
 
+  getAll(clbk) {
+    this.instance
+      .get(this.endpoint)
+      .then(serverRes => clbk(serverRes.data))
+      .catch(serverErr => console.log("No data retrieved"));
+  }
+
   createOne(data, clbk) {
     this.instance
       .post(this.endpoint, data)
