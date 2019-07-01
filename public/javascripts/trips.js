@@ -2,9 +2,7 @@
 const currentURL = window.location.pathname;
 const tripsDataAjaxHandler = new ajaxHandler("http://localhost:3000","/tripsData");
 
-// --------- DOM ---------
-const allTripsDiv=document.getElementById("all-trips")
-const trashButtons=document.querySelectorAll(".fa-trash")
+
 
 // --------- Event Listener ---------
 document.addEventListener("DOMContentLoaded", () => {
@@ -13,10 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --------- Creating and delement DOM elements ---------
 function showTrips(){ 
+    
     tripsDataAjaxHandler.getAll(trips => {
-        trips.forEach(
-            trip => createTripContainer(trip))
+        trips.forEach( trip => createTripContainer(trip))
         
+        const trashButtons=document.querySelectorAll(".fa-trash")
         trashButtons.forEach(link => {
             //console.log(link)
             link.onclick = deleteTripElement;
@@ -26,6 +25,7 @@ function showTrips(){
 
 
 function createTripContainer(tripInfoObject){
+    const allTripsDiv=document.getElementById("all-trips")
     let tripContainerEl=document.createElement("div");    
     tripContainerEl.className="wrapper-trip-container";
     tripContainerEl.id=tripInfoObject._id;
@@ -38,9 +38,11 @@ function createTripContainer(tripInfoObject){
      <div class="trip-container" style="background-image: url(${tripInfoObject.picture})"> 
      ${tripInfoObject.name}
     </div>
-`
+    `
     allTripsDiv.appendChild(tripContainerEl)
 }
+
+
 
 function deleteTripElement(evt) {
     evt.preventDefault();
@@ -49,9 +51,8 @@ function deleteTripElement(evt) {
     let divButton=deleteButton.parentNode
     let wrapperTrip=divButton.parentNode
     wrapperTrip.remove();
+    tripsDataAjaxHandler.deleteOne(ID, res => console.log("DELETED"))
 }
-
-
 
 
 

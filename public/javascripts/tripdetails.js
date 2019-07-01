@@ -1,4 +1,4 @@
-const geocoder = new google.maps.Geocoder();
+/*const geocoder = new google.maps.Geocoder();
 const currentURL = window.location.pathname;
 const tripId = currentURL.substring(currentURL.indexOf("tripdetails") + 12);
 
@@ -126,7 +126,7 @@ function postTripStep(e) {
         console.log("new step added")
       );
 
-      //tripAjaxHandler.updateOne (tripId, ) */
+      //tripAjaxHandler.updateOne (tripId, ) 
     });
   });
 
@@ -144,7 +144,8 @@ function deleteTripStep(e) {
       console.log("step deleted")
     });
 
-  this.parentNode.remove();
+    this.parentNode.remove();
+  }
 }
 
 function startMap() {
@@ -168,3 +169,5 @@ function geocodeAddress(address, geocoder, resultsMap) {
     }
   });
 }
+
+*/

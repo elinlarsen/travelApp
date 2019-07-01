@@ -113,7 +113,6 @@ router.get('/tripsData', (req, res)=> {
   })
 })
 
-
 router.get('/tripsData/:trip_id', (req, res)=> {
   let ID=req.params.trip_id;
   tripHandler.getOne( {_id: ID}, resData => {
@@ -125,10 +124,10 @@ router.get('/tripsData/:trip_id', (req, res)=> {
 
 router.delete('/tripsData/:trip_id', (req, res) =>{
   let ID=req.params.trip_id;
+  console.log({_id: ID})
   tripHandler.deleteOne({_id: ID}, resData => {
     console.log("ID ------",{_id: ID})
     console.log("DELETING ONE -------",resData)
-    res.redirect("/trips")
   })
 })
 
