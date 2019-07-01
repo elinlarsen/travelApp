@@ -13,7 +13,7 @@ const visitSchema= new Schema({
     },      
     type : {type : String},
     budget : {type : String, emum : ["$", "$$", "$$$", "$$$$"]},
-    recommendation: {type: Schema.Types.ObjectId , ref: "recommendationModel"},
+    recommendation: [{type: Schema.Types.ObjectId , ref: "recommendationModel"}], // nested arrays of reviews id
 })
 
 const visitModel=mongoose.model("visitModel", visitSchema)

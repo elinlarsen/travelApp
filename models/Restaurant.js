@@ -14,7 +14,7 @@ const restauSchema= new Schema({
     type : {type : String},
     budget : {type : String, emum : ["$", "$$", "$$$", "$$$$"]},
     cuisine: {type : String}, 
-    recommendation: {type: Schema.Types.ObjectId , ref: "recommendationModel"},
+    recommendation: [{type: Schema.Types.ObjectId , ref: "recoModel"}], //nested arrays of ids 
 })
 
 const restauModel=mongoose.model("restauModel", restauSchema)

@@ -26,7 +26,7 @@ const transportSchema= new Schema({
     },  
     type : {type : String},   
     budget : {type : String, emum : ["$", "$$", "$$$", "$$$$"]},
-    recommendation: {type: Schema.Types.ObjectId , ref: "recommendationModel"},
+    recommendation: [{type: Schema.Types.ObjectId , ref: "recoModel"}], //nested arrays of reference ids
 })
 
 const transportModel=mongoose.model("transportModel", transportSchema)

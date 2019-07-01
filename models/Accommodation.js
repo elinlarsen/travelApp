@@ -19,7 +19,7 @@ const accSchema= new Schema({
     },  
     type : {type : String},   
     budget : {type : String, emum : ["$", "$$", "$$$", "$$$$"]},
-    recommendation: {type: Schema.Types.ObjectId , ref: "recommendationModel"},
+    recommendation: [{type: Schema.Types.ObjectId , ref: "recoModel"}], // nested array of reviews
 })
 
 const accModel=mongoose.model("accModel", accSchema)
