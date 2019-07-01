@@ -6,13 +6,13 @@
 
 <div id="all-trips">
 
-    
+   
     <div class="wrapper-trip-container" >
 
         <div class="cta-trip invisible">
             <a href="/tripdetails/${tripInfoObject._id}" class="fa fa-eye table-icon" ></a> 
             <a href="/trip_edit/${tripInfoObject._id}" class="fa fa-edit table-icon"></a>
-            <a href="/trip_delete/${tripInfoObject._id}" class="fa fa-trash table-icon"></a> 
+            <button id="${tripInfoObject._id}" class="fa table-icon"></button>
         </div>
 
         <form action="/trip_add" class="form-button-add trip-container" >
