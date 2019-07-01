@@ -29,7 +29,7 @@ router.get("/trips/:trip_id", (req, res, next) => {
   tripHandler.getOneById(req.params.trip_id, response => res.send(response));
 });
 
-router.get(["/tripdetails", "/tripdetails/:trip_id"], (req, res, next) => {
+router.get("/tripdetails/:trip_id", (req, res, next) => {
   /* tripHandler.createOne({
     name: "Great Trip" + Math.random(),
     start_date: "01.02.2020",
@@ -41,7 +41,13 @@ router.get(["/tripdetails", "/tripdetails/:trip_id"], (req, res, next) => {
     ]
   }); */
 
-  res.render("tripdetails");
+  tripHandler.getOneById(req.params.trip_id, tripResponse => {
+    console.log("-----------", tripResponse);
+    res.render("tripdetails", {tripResponse})
+  })
+
+  
+
 });
 
 //GET TRIPS
@@ -94,5 +100,7 @@ router.get('/tripsData', (req, res)=> {
     res.send(resData)
   })
 })
+
+
 
 module.exports = router;

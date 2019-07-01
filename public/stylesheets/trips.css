@@ -3,8 +3,8 @@
     flex-flow: row wrap; 
     justify-content: center; 
     align-items: center; 
+    padding : 2%;
 }
-
 .invisible{
     visibility: hidden;
 }
@@ -52,6 +52,9 @@
     font-family: 'Source Sans Pro'; 
     background-repeat:no-repeat;
     background-size: 350px 350px;
+    text-transform: uppercase;
+    color : white;
+
 }
 
 .form-button-add{
