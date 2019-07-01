@@ -1,0 +1,21 @@
+.form-item-wrapper {
+    flex-direction: column;
+    margin-bottom: 1.1rem;
+  }
+
+  .label {
+    margin-bottom:1rem;
+    font-size: 1.2rem;
+  }
+
+  .input {
+    padding: .7rem;
+    border: none;
+    border: 1px solid black;
+    border-radius: .2rem;
+    font-size: .9rem;
+  }
+
+  input:focus {
+    outline: none;
+  }

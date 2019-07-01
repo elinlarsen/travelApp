@@ -2,9 +2,13 @@
 @import "./nav.css";
 @import "./tripdetails.css";
 @import "./utilityclasses.css";
+@import "./trips.css"; 
+@import "./addtripform.css";
+@import './button.css';
 
 * {
   box-sizing: border-box;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 .main_background {

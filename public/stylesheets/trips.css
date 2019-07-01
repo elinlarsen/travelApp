@@ -1,0 +1,75 @@
+#all-trips{
+    display : flex; 
+    flex-flow: row nowrap; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.invisible{
+    visibility: hidden;
+}
+
+.table-icon{
+    color : #3f51b5;
+}
+
+.table-icon:hover {
+    color: black;
+  }
+
+.cta-trip{
+    display: flex; 
+    flex-flow: column nowrap;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.cta-trip a{
+    text-decoration: none;
+    padding: 5px; 
+    font-size: 1.2em;
+}
+
+.wrapper-trip-container{
+    margin : 0px 5%; 
+    background-color : white;
+    display : flex; 
+    flex-flow: row; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.trip-container{
+    height: 400px;
+    width: 400px;
+    border: 2px solid #3f51b5; 
+    border-radius: 25px; 
+    display : flex; 
+    flex-flow: row; 
+    justify-content: center; 
+    align-items: center; 
+    font-size : 1.5em; 
+    font-family: 'Source Sans Pro'; 
+    background-repeat:no-repeat;
+    background-size: 400px 400px;
+}
+
+.form-button-add{
+    display : flex;
+    flex-flow: column; 
+    justify-content: center; 
+    align-items: center; 
+
+}
+.add-button-input{
+    height: 80px; 
+    width: 80px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+    font-size: 30px;
+    color: rgba(255,255,255,1);
+    border-radius: 50%;
+    background-color :  #3f51b5;
+}
