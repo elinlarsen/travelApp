@@ -1,28 +1,29 @@
-{{>nav}}
-
 <script src="../javascripts/tripdetails.js"></script>
 
-<div id="trip_details_container" class="medium_padding">
+{{>nav}}
 
-  <div id="trip_details_form_container" class="medium_padding">
+<div id="wrapper-trip-details" style="background-image: url({{tripResponse.picture}})">
 
-    <div class="trip_details_form_labels">
+      <section class='title'>
+        <h1>{{tripResponse.name}}</h1>
+      </section>
 
-      <div class="header"> Start </div>
-      <div class="header"> End </div>
-      <div class="header"> To do what </div>
-      <div class="header"> Where </div>
-      <div class="header"> Add </div>
+      <div id="trip_details_container" class="medium_padding">
 
+          <div id="trip_details_form_container" class="medium_padding">
 
+          <div class="trip_details_form_labels">
+            <div class="header"> Start </div>
+            <div class="header"> End </div>
+            <div class="header"> To do what </div>
+            <div class="header"> Where </div>
+            <div class="header"> Add </div>
+          </div>
+              
+          <form class="trip_details_form"></form>
 
-    </div>
-
-    <form class="trip_details_form">
-    </form>
-
-  </div>
-
-  <div id="trip_details_map"> Trip details map </div>
+          </div>
+              <div id="trip_details_map"> Trip details map </div>
+          </div>
 
 </div>

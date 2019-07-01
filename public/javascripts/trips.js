@@ -19,7 +19,7 @@ function createTripContainer(tripInfoObject){
     //tripContainerEl.style.backgroundRepeat = "no-repeat"; 
     tripContainerEl.innerHTML=` 
     <div class="cta-trip visible" >
-        <a href="/trip_view/${tripInfoObject._id}" class="fa fa-eye table-icon" ></a> 
+        <a href="/tripdetails/${tripInfoObject._id}" class="fa fa-eye table-icon" ></a> 
         <a href="/trip_edit/${tripInfoObject._id}" class="fa fa-edit table-icon"></a>
         <a href="/trip_delete/${tripInfoObject._id}" class="fa fa-trash table-icon"></a> 
     </div>

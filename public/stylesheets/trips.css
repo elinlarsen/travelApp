@@ -1,10 +1,10 @@
 #all-trips{
     display : flex; 
-    flex-flow: row nowrap; 
+    flex-flow: row wrap; 
     justify-content: center; 
     align-items: center; 
+    padding : 2%;
 }
-
 .invisible{
     visibility: hidden;
 }
@@ -31,7 +31,7 @@
 }
 
 .wrapper-trip-container{
-    margin : 0px 5%; 
+    margin : 2%; 
     background-color : white;
     display : flex; 
     flex-flow: row; 
@@ -40,18 +40,21 @@
 }
 
 .trip-container{
-    height: 400px;
-    width: 400px;
+    height: 350px;
+    width: 350px;
     border: 2px solid #3f51b5; 
     border-radius: 25px; 
     display : flex; 
     flex-flow: row; 
     justify-content: center; 
     align-items: center; 
-    font-size : 1.5em; 
+    font-size : 2em; 
     font-family: 'Source Sans Pro'; 
     background-repeat:no-repeat;
-    background-size: 400px 400px;
+    background-size: 350px 350px;
+    text-transform: uppercase;
+    color : white;
+
 }
 
 .form-button-add{

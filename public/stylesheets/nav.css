@@ -20,7 +20,7 @@ padding: 0px; }
 
 #options_container ul li {
 list-style: none;
-padding: 0px 20px 0px 20px;
+padding: 0px 30px 0px 30px;
 cursor: pointer; }
 
 #options_container ul a:hover, #log_details p:hover {

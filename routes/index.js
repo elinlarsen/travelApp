@@ -29,14 +29,17 @@ router.get("/trips/:trip_id", (req, res, next) => {
   tripHandler.getOneById(req.params.trip_id, response => res.send(response));
 });
 
-router.get(["/tripdetails", "/tripdetails/:trip_id"], (req, res, next) => {
+router.get("/tripdetails/:trip_id", (req, res, next) => {
   /* tripHandler.createOne({
     name: "Great Trip" + Math.random(),
     start_date: "01.02.2020",
     end_date: "01.03.2020"
   }); */
 
-  res.render("tripdetails");
+  tripHandler.getOneById(req.params.trip_id, tripResponse => {
+    console.log("-----------", tripResponse);
+    res.render("tripdetails", { tripResponse });
+  });
 });
 
 //GET TRIPS
@@ -87,6 +90,7 @@ router.post("/trip_add", upload.single("picture"), (req, res) => {
   });
 
   tripHandler.createOne(newTrip);
+  res.redirect("/trips");
 });
 
 // GET TRIP Data

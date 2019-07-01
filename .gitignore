@@ -1,8 +1,4 @@
 .env
 node-modules/
-<<<<<<< HEAD
 .DS_store
-
-=======
-.DS_store
->>>>>>> 1df8c8692a006795d8e9e92c53715abc24e3386c
+/public/uploads/
