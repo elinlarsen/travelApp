@@ -35,11 +35,13 @@ class ajaxHandler {
 
   deleteOne(id, clbk1, clbk2) {
     this.instance
-      .delete(this.endpoint + id)
-      .then(serverRes => clbk1(serverRes))
+      .delete(this.endpoint + "/" + id)
+      .then(serverRes => {
+        if (clbk1) clbk1(serverRes);
+      })
       .catch(serverErr => {
         console.log("No data deleted");
-        clbk2(serverErr);
+        if (clbk2) clbk2(serverErr);
       });
   }
 

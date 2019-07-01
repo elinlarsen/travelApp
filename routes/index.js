@@ -101,4 +101,11 @@ router.get("/tripsData", (req, res) => {
   });
 });
 
+/* router.delete("/tripdetails/:id", (req, res) => {
+  console.log("ready to delete");
+  stepHandler.deleteOne({ _id: req.params.id }, resData => {
+    console.log(resData);
+  });
+}); */
+
 module.exports = router;

@@ -1,6 +1,7 @@
 const geocoder = new google.maps.Geocoder();
 const currentURL = window.location.pathname;
 const tripId = currentURL.substring(currentURL.indexOf("tripdetails") + 12);
+var markersList = [];
 
 const tripDetailsAjaxHandler = new ajaxHandler(
   "http://localhost:3000",
@@ -77,23 +78,19 @@ function addBlankStep() {
 
 function showTripSteps(step, clbk) {
   newForm = addBlankStep();
-  newForm.id = "trip_details_form_" + step._id;
+  newForm.id = step._id;
   newForm.classList.remove("blank");
 
-  document
-    .getElementById("trip_details_form_" + step._id)
-    .querySelector(".start_date").value = step.start_date;
-  document
-    .getElementById("trip_details_form_" + step._id)
-    .querySelector(".end_date").value = step.end_date;
-  document
-    .getElementById("trip_details_form_" + step._id)
-    .querySelector(".location").value = step.city;
-  document
-    .getElementById("trip_details_form_" + step._id)
-    .querySelector(".activity").value = step.other;
+  document.getElementById(step._id).querySelector(".start_date").value =
+    step.start_date;
+  document.getElementById(step._id).querySelector(".end_date").value =
+    step.end_date;
+  document.getElementById(step._id).querySelector(".location").value =
+    step.city;
+  document.getElementById(step._id).querySelector(".activity").value =
+    step.other;
 
-  geocodeAddress(step.city, geocoder, map);
+  geocodeAddress(step.city, geocoder, map, step._id);
 
   [...document.getElementsByClassName("blank")].forEach(x => x.remove());
   addBlankStep();
@@ -120,6 +117,7 @@ function postTripStep(e) {
 
     tripAjaxHandler.getOne(tripId, resultTrip => {
       stepsData = resultTrip.steps;
+      geocodeAddress(dataToPost.city, geocoder, map, result);
       stepsData.push(result);
 
       tripAjaxHandler.updateOne(tripId, { steps: stepsData }, res =>
@@ -130,39 +128,67 @@ function postTripStep(e) {
     });
   });
 
-  geocodeAddress(dataToPost.city, geocoder, map);
-
   addBlankStep();
 }
 
 function deleteTripStep(e) {
   e.preventDefault();
- 
+  let stepToDelete = this.parentNode.id;
+  console.log("step to Deletes is " + stepToDelete);
+
   tripAjaxHandler.getOne(tripId, resultTrip => {
-  
-    tripAjaxHandler.deleteOne(resultTrip._id, res => {
-      console.log("step deleted")
+    stepsData = resultTrip.steps;
+    console.log("Before deleting, steps are " + stepsData);
+    console.log(
+      "Ready to remove step at the following index: " +
+        stepsData.indexOf(stepToDelete)
+    );
+    stepsData.splice(stepsData.indexOf(stepToDelete), 1);
+    console.log("Steps data is now " + stepsData);
+
+    tripAjaxHandler.updateOne(tripId, { steps: stepsData }, res => {
+      console.log("step removed");
     });
+  });
+
+  console.log(markersList);
+  console.log(stepToDelete);
+
+  console.log(
+    markersList.find(x => {
+      return x.stepIndex == stepToDelete;
+    })
+  );
+  //.setMap(null);
 
   this.parentNode.remove();
 }
 
+//Functions to deal with google map API = to be exported in separate file for later
+
+var markers = [];
+
 function startMap() {
   map = new google.maps.Map(document.getElementById("trip_details_map"), {
-    zoom: 5
+    zoom: 5,
+    center: { lat: 48.85, lng: 2.3488 }
   });
-  geocodeAddress("Paris", geocoder, map);
+
+  //geocodeAddress("Paris", geocoder, map);
   return map;
 }
 
-function geocodeAddress(address, geocoder, resultsMap) {
+function geocodeAddress(address, geocoder, resultsMap, stepIndex) {
   geocoder.geocode({ address: address }, function(results, status) {
     if (status === "OK") {
       resultsMap.setCenter(results[0].geometry.location);
+
       let marker = new google.maps.Marker({
         map: resultsMap,
         position: results[0].geometry.location
       });
+
+      markersList.push({ marker, stepIndex });
     } else {
       alert("Geocode was not successful for the following reason: " + status);
     }
