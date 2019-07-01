@@ -83,6 +83,7 @@ router.post('/trip_add', upload.single('picture'), (req, res) => {
   });
 
   tripHandler.createOne(newTrip)
+  res.redirect('/trips')
 
 });
 
