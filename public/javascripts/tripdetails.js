@@ -25,11 +25,13 @@ function extractTripSteps(tripId, clbk) {
     console.log("Extracting trip " + tripId);
 
     tripAjaxHandler.getOne(tripId, res => {
-      res.steps.forEach((step, index) => {
-        stepsAjaxHandler.getOne(step, res => {
-          showTripSteps(res);
+      if (res.steps.length == 0) addBlankStep();
+      else
+        res.steps.forEach((step, index) => {
+          stepsAjaxHandler.getOne(step, res => {
+            showTripSteps(res);
+          });
         });
-      });
     });
   }
 }
@@ -40,13 +42,13 @@ function addBlankStep() {
   let formElementHTMLContent =
     '<input type="date" id="start_date' +
     currentLine +
-    '+"class="input_date start_date"placeholder="2020-01-01" value="2020-01-01"><input type="date" id="end_date' +
+    '+"class="input_date start_date"><input type="date" id="end_date' +
     currentLine +
-    '"class="input_date end_date" placeholder="2020-01-01" value="2020-01-01"><input type="text" id="activity' +
+    '"class="input_date end_date"><input type="text" id="activity' +
     currentLine +
-    '" class="input_text activity" placeholder="Visit" value="Visit"><input type="text" id="location' +
+    '" class="input_text activity" placeholder="What did you do?"><input type="text" id="location' +
     currentLine +
-    '"class="input_text location" placeholder="New Delhi" value="New Delhi"> <button id="trip_details_input_button' +
+    '"class="input_text location" placeholder="Where were you?"> <button id="trip_details_input_button' +
     currentLine +
     '" class="trip_details_input_button"> + </button>';
 
@@ -115,10 +117,14 @@ function postTripStep(e) {
 
   tripDetailsAjaxHandler.createOne(dataToPost, result => {
     console.log(result);
+
     tripAjaxHandler.getOne(tripId, resultTrip => {
-      stepsData = resultTrip;
-      console.log(stepsData);
-      stepsData.push(tripId);
+      stepsData = resultTrip.steps;
+      stepsData.push(result);
+
+      tripAjaxHandler.updateOne(tripId, { steps: stepsData }, res =>
+        console.log("new step added")
+      );
 
       //tripAjaxHandler.updateOne (tripId, ) */
     });
@@ -131,7 +137,13 @@ function postTripStep(e) {
 
 function deleteTripStep(e) {
   e.preventDefault();
-  //  tripDetailsAjaxHandler.deleteOne ()
+ 
+  tripAjaxHandler.getOne(tripId, resultTrip => {
+  
+    tripAjaxHandler.deleteOne(resultTrip._id, res => {
+      console.log("step deleted")
+    });
+
   this.parentNode.remove();
 }
 

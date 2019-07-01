@@ -45,7 +45,7 @@ class ajaxHandler {
 
   updateOne(id, data, clbk) {
     this.instance
-      .patch(this.endpoint + id, data)
+      .patch(this.endpoint + "/" + id, data)
       .then(serverRes => clbk(serverRes.data))
       .catch(serverErr => console.log("No data patched"));
   }
