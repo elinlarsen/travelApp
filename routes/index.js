@@ -24,10 +24,11 @@ router.get("/signup", (req, res, next) => {
   res.render("signup");
 });
 
-router.get("/trips/:trip_id", (req, res, next) => {
+/*router.get("/trips/:trip_id", (req, res, next) => {
   console.log("ready to serve trip " + req.params.trip_id);
   tripHandler.getOneById(req.params.trip_id, response => res.send(response));
 });
+*/
 
 router.get("/tripdetails/:trip_id", (req, res, next) => {
   /* tripHandler.createOne({
@@ -72,7 +73,7 @@ router.post("/tripdetails", (req, res, next) => {
 
 //PATCH TRIP DETAILS
 
-router.patch("/trips/:id", (req, res, next) => {
+router.patch("/tripsdata/:id", (req, res, next) => {
   tripHandler.updateOne(
     { _id: req.params.id },
     req.body,
@@ -89,23 +90,42 @@ router.post("/trip_add", upload.single("picture"), (req, res) => {
     end_date: req.body.end_date
   });
 
-  tripHandler.createOne(newTrip);
-  res.redirect("/trips");
+  //tripHandler.createOne(newTrip, dbres => res.redirect('/trips'))
+
+  tripsDataAjaxHandler.createOne(newTrip, result => {
+    req.session.msg = {
+      status: "success",
+      txt: "Yes!! A new trip was created"
+    };
+    console.log("TRIP CREATED----------", result);
+    res.redirect("/trips");
+  });
 });
 
 // GET TRIP Data
 router.get("/tripsData", (req, res) => {
   tripHandler.getAll(resData => {
-    console.log(resData);
+    //console.log("GET ALL ----",resData)
     res.send(resData);
   });
 });
 
-/* router.delete("/tripdetails/:id", (req, res) => {
-  console.log("ready to delete");
-  stepHandler.deleteOne({ _id: req.params.id }, resData => {
-    console.log(resData);
+router.get("/tripsData/:trip_id", (req, res) => {
+  let ID = req.params.trip_id;
+  tripHandler.getOne({ _id: ID }, resData => {
+    console.log("ID ------", { _id: ID });
+    console.log("GET ONE -------", resData);
+    res.send(resData);
   });
-}); */
+});
+
+router.delete("/tripsData/:trip_id", (req, res) => {
+  let ID = req.params.trip_id;
+  tripHandler.deleteOne({ _id: ID }, resData => {
+    console.log("ID ------", { _id: ID });
+    console.log("DELETING ONE -------", resData);
+    res.redirect("/trips");
+  });
+});
 
 module.exports = router;

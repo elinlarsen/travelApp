@@ -8,7 +8,7 @@ const tripDetailsAjaxHandler = new ajaxHandler(
   "/tripdetails"
 );
 
-const tripAjaxHandler = new ajaxHandler("http://localhost:3000", "/trips");
+const tripAjaxHandler = new ajaxHandler("http://localhost:3000", "/tripsdata");
 const stepsAjaxHandler = new ajaxHandler("http://localhost:3000", "/steps");
 
 console.log("trip id is " + tripId);

@@ -18,11 +18,12 @@ outline: none;
   color: white;
   background: black;
   border:1px solid;
-  font-size: 1rem;
+  font-size: 1.2rem;
   transition: all .2s ease-in;
   transition-property:color, background;
   border-radius: .2rem;
-  padding: .5rem .8rem;
+  margin: 1rem; 
+  padding: 1rem;
 }
 
 .button-primary:hover {

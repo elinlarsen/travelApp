@@ -6,4 +6,5 @@ function extractTrip(tripId) {
     }
   
     return tripData;
-  }
+}
+
