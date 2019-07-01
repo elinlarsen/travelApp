@@ -1,10 +1,12 @@
 const geocoder = new google.maps.Geocoder();
 const currentURL = window.location.pathname;
 const tripId = currentURL.substring(currentURL.indexOf("tripdetails") + 12);
+
 const tripDetailsAjaxHandler = new ajaxHandler(
   "http://localhost:3000",
   "/tripdetails"
 );
+
 const tripAjaxHandler = new ajaxHandler("http://localhost:3000", "/trips");
 const stepsAjaxHandler = new ajaxHandler("http://localhost:3000", "/steps");
 
@@ -32,8 +34,7 @@ function extractTripSteps(tripId, clbk) {
   }
 }
 
-function showTripSteps(step) {
-  console.log(step);
+function addBlankStep() {
   currentLine = allButtonsInForm().length;
 
   let formElementHTMLContent =
@@ -50,13 +51,32 @@ function showTripSteps(step) {
     '" class="trip_details_input_button"> + </button>';
 
   let formElement = document.createElement("form");
-  formElement.id = "trip_details_form_" + step._id;
   formElement.classList.add("trip_details_form");
   formElement.innerHTML = formElementHTMLContent;
+  formElement.classList.add("blank");
 
   document
     .getElementById("trip_details_form_container")
     .appendChild(formElement);
+
+  allButtonsInForm().forEach((button, index) => {
+    if (index < currentLine) {
+      button.removeEventListener("click", postTripStep);
+      button.addEventListener("click", deleteTripStep);
+    }
+  });
+
+  allButtonsInForm().forEach(button => (button.innerHTML = "Delete step"));
+  allButtonsInForm()[currentLine].addEventListener("click", postTripStep);
+  allButtonsInForm()[currentLine].innerHTML = "Add step";
+
+  return formElement;
+}
+
+function showTripSteps(step, clbk) {
+  newForm = addBlankStep();
+  newForm.id = "trip_details_form_" + step._id;
+  newForm.classList.remove("blank");
 
   document
     .getElementById("trip_details_form_" + step._id)
@@ -71,16 +91,10 @@ function showTripSteps(step) {
     .getElementById("trip_details_form_" + step._id)
     .querySelector(".activity").value = step.other;
 
-  allButtonsInForm().forEach((button, index) => {
-    if (index < currentLine) {
-      button.removeEventListener("click", postTripStep);
-      button.addEventListener("click", deleteTripStep);
-    }
-  });
+  geocodeAddress(step.city, geocoder, map);
 
-  allButtonsInForm().forEach(button => (button.innerHTML = "Delete step"));
-  allButtonsInForm()[currentLine].addEventListener("click", postTripStep);
-  allButtonsInForm()[currentLine].innerHTML = "Add step";
+  [...document.getElementsByClassName("blank")].forEach(x => x.remove());
+  addBlankStep();
 }
 
 function allButtonsInForm() {
@@ -89,8 +103,8 @@ function allButtonsInForm() {
 
 function postTripStep(e) {
   currentLine = allButtonsInForm().length;
-
   e.preventDefault();
+  console.log("creating entry");
 
   dataToPost = {
     start_date: this.parentNode.querySelector(".start_date").value,
@@ -99,10 +113,20 @@ function postTripStep(e) {
     other: this.parentNode.querySelector(".activity").value
   };
 
-  tripDetailsAjaxHandler.createOne(dataToPost, () => console.log("test"));
-  console.log(dataToPost.city);
+  tripDetailsAjaxHandler.createOne(dataToPost, result => {
+    console.log(result);
+    tripAjaxHandler.getOne(tripId, resultTrip => {
+      stepsData = resultTrip;
+      console.log(stepsData);
+      stepsData.push(tripId);
+
+      //tripAjaxHandler.updateOne (tripId, ) */
+    });
+  });
+
   geocodeAddress(dataToPost.city, geocoder, map);
-  showTripSteps();
+
+  addBlankStep();
 }
 
 function deleteTripStep(e) {
