@@ -3,7 +3,7 @@ class dbHandler {
     this.model = model;
   }
 
-  createOne(data) {
+  createOne(data, clbk) {
     const schema = this.model["schema"]["obj"];
     const schemaKeys = Object.keys(schema);
     console.log("------------------------------");
@@ -14,9 +14,10 @@ class dbHandler {
 
     this.model
       .create(newDocument)
-      .then(dbres =>
-        console.log("this seems to be working and the result is " + dbres)
-      )
+      .then(dbres => {
+        console.log("this seems to be working and the result is " + dbres);
+        if (clbk) clbk(dbres);
+      })
       .catch(err => console.log("this is not working :", err));
   }
 

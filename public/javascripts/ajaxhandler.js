@@ -15,10 +15,21 @@ class ajaxHandler {
       .catch(serverErr => console.log("No data retrieved"));
   }
 
+  getOne(id, clbk) {
+    console.log("contacting endpoint " + this.endpoint + "/" + id);
+    this.instance.get(this.endpoint + "/" + id).then(serverRes => {
+      clbk(serverRes.data);
+    });
+  }
+  //.catch(serverErr => console.log("No data retrieved"));
+
   createOne(data, clbk) {
     this.instance
       .post(this.endpoint, data)
-      .then(serverRes => clbk(serverRes.data))
+      .then(serverRes => {
+        clbk(serverRes.data);
+        console.log(serverRes.data);
+      })
       .catch(serverErr => console.log("no data retrieved"));
   }
 
@@ -30,6 +41,13 @@ class ajaxHandler {
         console.log("No data deleted");
         clbk2(serverErr);
       });
+  }
+
+  updateOne(id, data, clbk) {
+    this.instance
+      .patch(this.endpoint + id, data)
+      .then(serverRes => clbk(serverRes.data))
+      .catch(serverErr => console.log("No data patched"));
   }
 }
 
