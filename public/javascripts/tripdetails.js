@@ -6,30 +6,34 @@ const tripDetailsAjaxHandler = new ajaxHandler(
   "/tripdetails"
 );
 const tripAjaxHandler = new ajaxHandler("http://localhost:3000", "/trips");
+const stepsAjaxHandler = new ajaxHandler("http://localhost:3000", "/steps");
 
 console.log("trip id is " + tripId);
 
 document.addEventListener("DOMContentLoaded", () => {
-  showTripSteps(tripId);
+  extractTripSteps(tripId, showTripSteps);
   map = startMap();
 });
 
-function extractTrip(tripId) {
+function extractTripSteps(tripId, clbk) {
   let tripData = {};
 
-  if (!tripId) return tripData;
+  if (!tripId) showTripSteps();
   else {
     console.log("Extracting trip " + tripId);
-    tripAjaxHandler.getOne(tripId, res => console.log(res));
-  }
 
-  return tripData;
+    tripAjaxHandler.getOne(tripId, res => {
+      res.steps.forEach((step, index) => {
+        stepsAjaxHandler.getOne(step, res => {
+          showTripSteps(res);
+        });
+      });
+    });
+  }
 }
 
-function showTripSteps(tripId) {
-  console.log("ready to show steps for " + tripId);
-
-  tripData = extractTrip(tripId);
+function showTripSteps(step) {
+  console.log(step);
   currentLine = allButtonsInForm().length;
 
   let formElementHTMLContent =
@@ -46,12 +50,26 @@ function showTripSteps(tripId) {
     '" class="trip_details_input_button"> + </button>';
 
   let formElement = document.createElement("form");
-  formElement.id = "trip_details_form" + currentLine;
+  formElement.id = "trip_details_form_" + step._id;
   formElement.classList.add("trip_details_form");
   formElement.innerHTML = formElementHTMLContent;
+
   document
     .getElementById("trip_details_form_container")
     .appendChild(formElement);
+
+  document
+    .getElementById("trip_details_form_" + step._id)
+    .querySelector(".start_date").value = step.start_date;
+  document
+    .getElementById("trip_details_form_" + step._id)
+    .querySelector(".end_date").value = step.end_date;
+  document
+    .getElementById("trip_details_form_" + step._id)
+    .querySelector(".location").value = step.city;
+  document
+    .getElementById("trip_details_form_" + step._id)
+    .querySelector(".activity").value = step.other;
 
   allButtonsInForm().forEach((button, index) => {
     if (index < currentLine) {

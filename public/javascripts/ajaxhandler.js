@@ -17,13 +17,11 @@ class ajaxHandler {
 
   getOne(id, clbk) {
     console.log("contacting endpoint " + this.endpoint + "/" + id);
-    this.instance
-      .get(this.endpoint + "/" + id)
-      .then(serverRes => {
-        clbk(serverRes.data);
-      })
-      .catch(serverErr => console.log("No data retrieved"));
+    this.instance.get(this.endpoint + "/" + id).then(serverRes => {
+      clbk(serverRes.data);
+    });
   }
+  //.catch(serverErr => console.log("No data retrieved"));
 
   createOne(data, clbk) {
     this.instance

@@ -26,14 +26,21 @@ router.get("/trips/:trip_id", (req, res, next) => {
 });
 
 router.get(["/tripdetails", "/tripdetails/:trip_id"], (req, res, next) => {
-  tripHandler.createOne({
+  /* tripHandler.createOne({
     name: "Great Trip" + Math.random(),
     start_date: "01.02.2020",
     end_date: "01.03.2020",
     steps: ["5d19bb1631633f0dac8a1838", "5d19c5ed31dd2a3f3cb691dc"]
-  });
+  }); */
 
   res.render("tripdetails");
+});
+
+router.get("/steps/:step_id", (req, res, next) => {
+  stepHandler.getOneById(req.params.step_id, response => {
+    console.log(response);
+    res.send(response);
+  });
 });
 
 router.get("/about", (req, res, next) => {
