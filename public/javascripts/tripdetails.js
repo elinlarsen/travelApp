@@ -1,4 +1,4 @@
-const geocoder = new google.maps.Geocoder();
+/*const geocoder = new google.maps.Geocoder();
 const currentURL = window.location.pathname;
 const tripId = currentURL.substring(currentURL.indexOf("tripdetails") + 12);
 var markersList = [];
@@ -128,7 +128,7 @@ function postTripStep(e) {
         console.log("new step added")
       );
 
-      //tripAjaxHandler.updateOne (tripId, ) */
+      //tripAjaxHandler.updateOne (tripId, ) 
     });
   });
 
@@ -165,7 +165,8 @@ function deleteTripStep(e) {
   markersList.splice(markersList.indexOf(markersListItemToDelete), 1);
   //.setMap(null);
 
-  this.parentNode.remove();
+    this.parentNode.remove();
+  }
 }
 
 //Functions to deal with google map API = to be exported in separate file for later
@@ -198,3 +199,5 @@ function geocodeAddress(address, geocoder, resultsMap, stepIndex) {
     }
   });
 }
+
+*/

@@ -106,26 +106,28 @@ router.post("/trip_add", upload.single("picture"), (req, res) => {
 router.get("/tripsData", (req, res) => {
   tripHandler.getAll(resData => {
     //console.log("GET ALL ----",resData)
-    res.send(resData);
-  });
-});
+    res.send(resData)
+  })
+})
 
-router.get("/tripsData/:trip_id", (req, res) => {
-  let ID = req.params.trip_id;
-  tripHandler.getOne({ _id: ID }, resData => {
-    console.log("ID ------", { _id: ID });
-    console.log("GET ONE -------", resData);
-    res.send(resData);
-  });
-});
+router.get('/tripsData/:trip_id', (req, res)=> {
+  let ID=req.params.trip_id;
+  tripHandler.getOne( {_id: ID}, resData => {
+    console.log("ID ------",{_id: ID})
+    console.log("GET ONE -------",resData)
+    res.send(resData)
+  })
+})
 
-router.delete("/tripsData/:trip_id", (req, res) => {
-  let ID = req.params.trip_id;
-  tripHandler.deleteOne({ _id: ID }, resData => {
-    console.log("ID ------", { _id: ID });
-    console.log("DELETING ONE -------", resData);
-    res.redirect("/trips");
-  });
-});
+router.delete('/tripsData/:trip_id', (req, res) =>{
+  let ID=req.params.trip_id;
+  console.log({_id: ID})
+  tripHandler.deleteOne({_id: ID}, resData => {
+    console.log("ID ------",{_id: ID})
+    console.log("DELETING ONE -------",resData)
+  })
+})
+
+
 
 module.exports = router;
