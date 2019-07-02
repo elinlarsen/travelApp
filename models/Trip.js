@@ -1,4 +1,4 @@
-mongoose=require('mongoose')
+mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const tripSchema= new Schema({
@@ -11,5 +11,5 @@ const tripSchema= new Schema({
     countries: [{type : String, enum: ["France", "Morocco", "United States"]}],
 })
 
-const tripModel=mongoose.model("tripModel", tripSchema)
-module.exports=tripModel; 
+const tripModel = mongoose.model("tripModel", tripSchema);
+module.exports = tripModel;
