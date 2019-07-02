@@ -1,5 +1,7 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
 <script src="../javascripts/maphandler.js"></script>
 <script src="../javascripts/tripdetails.js"></script>
+<script src="../javascripts/lightpick.js"></script>
 
 {{>nav}}
 
@@ -16,9 +18,10 @@
       <div class="trip_details_form_labels">
         <div class="header"> Start </div>
         <div class="header"> End </div>
-        <div class="header"> To do what </div>
+        <div class="header"> What </div>
         <div class="header"> Where </div>
-        <div class="header"> Add </div>
+        <div class="header invisible"> </div>
+        <!--<div class="header"> Add </div>-->
       </div>
 
       <form class="trip_details_form"></form>
@@ -28,3 +31,5 @@
   </div>
 
 </div>
+
+

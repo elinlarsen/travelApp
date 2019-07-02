@@ -15,6 +15,8 @@ router.get("/tripdetails/:trip_id", (req, res, next) => {
   
     tripHandler.getOneById(req.params.trip_id, tripResponse => {
       console.log("-----------", tripResponse);
+      console.log("----------- start in db", tripResponse.start_date)
+      console.log("----------- end in db", tripResponse.end_date)
       let start = changeDateFormat(tripResponse.start_date)
       let end = changeDateFormat(tripResponse.end_date)
       res.render("tripdetails", { tripResponse, start, end });

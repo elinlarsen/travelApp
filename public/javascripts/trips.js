@@ -36,7 +36,7 @@ function createTripContainer(tripInfoObject){
         <button id="${tripInfoObject._id}" class="fa fa-trash table-icon"></button>
     </div>  
      <div class="trip-container" style="background-image: url(${tripInfoObject.picture})"> 
-     ${tripInfoObject.name}
+     ${tripInfoObject.name} 
     </div>
     `
     allTripsDiv.appendChild(tripContainerEl)

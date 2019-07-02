@@ -29,6 +29,11 @@
   text-align: center;
   border-bottom: solid;
   border-width: 1px;
+  font-size : 1.3em; 
+}
+
+.invisible{
+  visibility: hidden;
 }
 
 #trip_details_form_container {
@@ -39,15 +44,17 @@
 
 #trip_details_form {
   padding: 5px;
+  
 }
 
 .trip_details_form input,
 .trip_details_form button {
   width: 19%;
   text-align: center;
-  border-radius: 3px;
+  border-radius: 5px;
   padding: 3px 0px;
   border-style: none;
+  font-size : 1em; 
 }
 
 #trip_details_map {
@@ -60,10 +67,12 @@
 }
 
 .input_button {
-  background-color: darkblue;
+  background-color: black;
   color: white;
   font-weight: bold;
   font-size: 20px;
+  border-radius: 20px;
+
 }
 
 .blank {

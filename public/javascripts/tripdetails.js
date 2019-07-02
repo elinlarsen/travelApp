@@ -3,6 +3,7 @@ const currentURL = window.location.pathname;
 const tripId = currentURL.substring(currentURL.indexOf("tripdetails") + 12);
 var markersList = [];
 
+
 const tripDetailsAjaxHandler = new ajaxHandler(
   "http://localhost:3000",
   "/tripdetails"
@@ -40,9 +41,9 @@ function addBlankStep() {
   currentLine = allButtonsInForm().length;
 
   let formElementHTMLContent =
-    '<input type="date" id="start_date' +
+    '<input type="text" id="date-picker-start' +
     currentLine +
-    '+"class="input_date start_date"><input type="date" id="end_date' +
+    '"class="input_date start_date"><input type="text" id="date-picker-end' +
     currentLine +
     '"class="input_date end_date"><input type="text" id="activity' +
     currentLine +
@@ -50,13 +51,13 @@ function addBlankStep() {
     currentLine +
     '"class="input_text location" placeholder="Where were you?"> <button id="trip_details_input_button' +
     currentLine +
-    '" class="trip_details_input_button"> + </button>';
+    '" class="trip_details_input_button input_button"> + </button>';
 
   let formElement = document.createElement("form");
   formElement.classList.add("trip_details_form");
   formElement.innerHTML = formElementHTMLContent;
   formElement.classList.add("blank");
-
+  
   document
     .getElementById("trip_details_form_container")
     .appendChild(formElement);
@@ -68,12 +69,27 @@ function addBlankStep() {
     }
   });
 
-  allButtonsInForm().forEach(button => (button.innerHTML = "Delete step"));
+  allButtonsInForm().forEach(button => (button.innerHTML = "-"));
   allButtonsInForm()[currentLine].addEventListener("click", postTripStep);
-  allButtonsInForm()[currentLine].innerHTML = "Add step";
+  allButtonsInForm()[currentLine].innerHTML = "+";
 
+  const button=document.getElementById('date-picker-start'+currentLine);
+  console.log("BUTTON -------", button)
+  new Lightpick({
+    field: document.getElementById('date-picker-start'+currentLine),
+    format: 'MM/DD/YYYY'
+  });
+
+  new Lightpick({
+    field: document.getElementById('date-picker-end'+currentLine),
+    format: 'MM/DD/YYYY'
+  });
+  
   return formElement;
 }
+
+
+
 
 function showTripSteps(step, clbk) {
   newForm = addBlankStep();

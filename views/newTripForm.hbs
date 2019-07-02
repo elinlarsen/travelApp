@@ -1,9 +1,12 @@
+<script src="../javascripts/trips.js"></script>
+<script src="../javascripts/lightpick.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
 
 {{>nav}}
 
-<script src="../javascripts/trips.js"></script>
-
 <div class="big-container product-manage-wrapper flexed-item">
+    
 
     <h1>Tell us about your future trip !</h1>
 
@@ -18,13 +21,19 @@
         <div class="form-item-wrapper">
             <label for="start_date" class="label-name label">When does it start?</label>
             <br>
-            <input type="date" name="start_date" class="input-text input" placeholder="2019/01/01" value="2019/01/01">
+            <input type="text"  id="date-picker-start" name="start_date" class="input-text input" placeholder="01/01/2020">
         </div>
 
         <div class="form-item-wrapper">
             <label for="end_date" class="label-name label">When does it end?</label>
             <br>
-            <input type="date" name="end_date" class="input-text input" placeholder="2019/10/01" value="2019/10/01">
+            <input type="text" id="date-picker-end" name="end_date" class="input-text input" placeholder="31/12/2020">
+        </div>
+
+        <div class="form-item-wrapper">
+            <label for="countries" class="label-name label">Which countries do you plan to visit ?</label>
+            <br>
+            <input type="text" id="date-picker-end" name="countries" class="input-text input" placeholder="31/12/2020">
         </div>
 
         <div class="form-item-wrapper">
@@ -38,3 +47,18 @@
     </form>
 
 </div>
+
+<script>
+   new Lightpick({
+    field: document.getElementById('date-picker-start'),
+    format: 'MM/DD/YYYY'
+    });
+
+    new Lightpick({
+    field: document.getElementById('date-picker-end'),
+    format: 'MM/DD/YYYY'
+     });
+
+</script>
+
+

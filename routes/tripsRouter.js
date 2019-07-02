@@ -5,6 +5,8 @@ const tripModel = require("../models/Trip.js");
 const tripHandler = new dbHandler(tripModel);
 const multer = require("multer");
 const upload = multer({ dest: "./public/uploads/" });
+const changeDateFormat=require("../utils/changeDateFormat")
+const moment=require("moment")
 
 // -----------------------  GET ALL TRIPS  ----------------------- 
 router.get("/trips", (req, res) => {
@@ -37,7 +39,14 @@ router.post("/trip_add", upload.single("picture"), (req, res) => {
 
 //  -----------------------  EDIT TRIP  ----------------------- 
 router.get("/trip_edit/:trip_id", (req, res) =>{
-    tripHandler.getOneById(req.params.trip_id, trip => res.render("editTripForm",{trip}) )
+    tripHandler.getOneById(req.params.trip_id, trip => {
+      let start=moment().format('L'); 
+      changeDateFormat(trip.start_date)
+      let end=moment().format('L'); 
+      changeDateFormat(trip.end_date)
+      console.log("start-------", start, "--------end--------", end)
+      res.render("editTripForm",{trip, start, end})
+    })
 })
 
 router.post("/tripsData/:id", upload.single("picture"), (req, res) => {
@@ -49,6 +58,8 @@ router.post("/tripsData/:id", upload.single("picture"), (req, res) => {
       start_date: req.body.start_date,
       end_date: req.body.end_date
     });
+    console.log("START DATE ------", req.body.start_date)
+    console.log("END DATE ------", req.body.end_date)
     tripHandler.updateOne(ID, editedTrip, dbRes => {
         console.log("Edited trip patched! ---------------- edited Trip : ", dbRes)
         res.redirect('/trips')
