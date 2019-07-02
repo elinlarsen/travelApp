@@ -59,4 +59,17 @@ app.locals.site_URL = process.env.SITE_URL;
 const index = require("./routes/index");
 app.use("/", index);
 
+const trips = require("./routes/tripsRouter");
+app.use("/", trips);
+
+const tripdetails = require("./routes/tripsdetailsRouter");
+app.use("/", tripdetails);
+
+const user = require("./routes/userRouter");
+app.use("/", user);
+
+const steps = require("./routes/stepsRouter");
+app.use("/", steps);
+
+
 module.exports = app;
