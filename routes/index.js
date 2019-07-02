@@ -53,7 +53,12 @@ router.get("/trip_add", (req, res) => {
   res.render("newTripForm");
 });
 
-//GET ABOUT
+// GET EDIT TRIP
+router.get("/trip_edit/:trip_id", (req, res) =>{
+  tripHandler.getOneById(req.params.trip_id, trip => res.render("editTripForm",{trip}) )
+})
+
+
 router.get("/steps/:step_id", (req, res, next) => {
   stepHandler.getOneById(req.params.step_id, response => {
     console.log(response);
@@ -61,6 +66,7 @@ router.get("/steps/:step_id", (req, res, next) => {
   });
 });
 
+//GET ABOUT
 router.get("/about", (req, res, next) => {
   res.render("about");
 });
@@ -72,16 +78,15 @@ router.post("/tripdetails", (req, res, next) => {
 });
 
 //PATCH TRIP DETAILS
-
 router.patch("/tripsdata/:id", (req, res, next) => {
   tripHandler.updateOne(
     { _id: req.params.id },
     req.body,
-    dbRes => "Data patched"
+    dbRes => console.log("Data patched")
   );
 });
 
-//POST ADD TRIPS
+//POST ADD TRIP
 router.post("/trip_add", upload.single("picture"), (req, res) => {
   const newTrip = new tripModel({
     name: req.body.name,
@@ -91,16 +96,25 @@ router.post("/trip_add", upload.single("picture"), (req, res) => {
   });
 
   tripHandler.createOne(newTrip, dbres => res.redirect('/trips'))
-
-  /*tripsDataAjaxHandler.createOne(newTrip, result => {
-    req.session.msg = {
-      status: "success",
-      txt: "Yes!! A new trip was created"
-    };
-    console.log("TRIP CREATED----------", result);
-    res.redirect("/trips");
-  });*/
 });
+
+
+//PATCH TRIP EDITED
+
+router.post("/tripsData/:id", upload.single("picture"), (req, res) => {
+    const ID={_id: req.params.id}
+    const editedTrip = new tripModel({
+      _id : req.params.id,
+      name: req.body.name,
+      picture: `../uploads/${req.file.filename}`,
+      start_date: req.body.start_date,
+      end_date: req.body.end_date
+    });
+    tripHandler.updateOne(ID, editedTrip, dbRes => {
+        console.log("Edited trip patched! ---------------- edited Trip : ", dbRes)
+        res.redirect('/trips')
+}) 
+})
 
 // GET TRIP Data
 router.get("/tripsData", (req, res) => {

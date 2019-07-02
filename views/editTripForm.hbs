@@ -5,35 +5,35 @@
 
 <div class="big-container product-manage-wrapper flexed-item">
 
-    <h1>Tell us about your future trip !</h1>
+    <h1>Wanna change something about your future trip ? </h1>
 
-    <form action="/trip_add" method="POST" class="add-trip-form" enctype="multipart/form-data">
+    <form action="/tripsData/{{trip._id}}" method="POST" class="add-trip-form" enctype="multipart/form-data">
 
         <div class="form-item-wrapper">
             <label for="name" class="label-name label">Name your trip</label>
             <br>
-            <input type="text" name="name" class="input-text input" placeholder="e.g Madagascar 2019" value="test name">
+            <input type="text" name="name" class="input-text input" placeholder="e.g Madagascar 2019" value={{trip.name}}>
         </div>
 
         <div class="form-item-wrapper">
             <label for="start_date" class="label-name label">When does it start?</label>
             <br>
-            <input type="date" name="start_date" class="input-text input" placeholder="2019/01/01" value="2019/01/01">
+            <input type="date" name="start_date" class="input-text input" placeholder="2019/01/01" value={{trip.start_date}}>
         </div>
 
         <div class="form-item-wrapper">
             <label for="end_date" class="label-name label">When does it end?</label>
             <br>
-            <input type="date" name="end_date" class="input-text input" placeholder="2019/10/01" value="2019/10/01">
+            <input type="date" name="end_date" class="input-text input" placeholder="2019/10/01" value={{trip.end_date}}>
         </div>
 
         <div class="form-item-wrapper">
             <label for="picture" class="label-name label">Upload a picture !</label>
             <br>
-            <input type="file" name="picture" class="input-text input" placeholder="your picture here">
+            <input type="file" name="picture" class="input-text input" placeholder={{trip.picture}}>
         </div>
 
-        <button id="add-trip-button" class="button-primary">Save this trip</button>
+        <button id="edit-trip-button" class="button-primary">Save changes</button>
 
     </form>
 
