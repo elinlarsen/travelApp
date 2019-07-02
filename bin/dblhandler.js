@@ -24,6 +24,7 @@ class dbHandler {
   getOne(data, clbk) {
     this.model
       .findOne(data)
+      .populate("steps")
       .then(res => clbk(res))
       .catch(err => console.log(err));
   }
@@ -31,7 +32,8 @@ class dbHandler {
   getOneById(id, clbk) {
     this.model
       .findById(id)
-      .then(res => {clbk(res)
+      .then(res => {
+        clbk(res);
       })
       .catch(err => console.log(err));
   }
@@ -64,10 +66,11 @@ class dbHandler {
   }
 
   deleteOne(filterObject, clbk) {
-    console.log(filterObject)
+    console.log(filterObject);
     this.model
       .findOneAndRemove(filterObject)
-      .then(res => {clbk(res);
+      .then(res => {
+        clbk(res);
       })
       .catch(err => console.log(err));
   }

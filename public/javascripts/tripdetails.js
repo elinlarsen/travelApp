@@ -3,12 +3,12 @@ const currentURL = window.location.pathname;
 const tripId = currentURL.substring(currentURL.indexOf("tripdetails") + 12);
 var markersList = [];
 
-
 const parisLatLong = { lat: 48.85, lng: 2.3488 };
 const tripDetailsAjaxHandler = new ajaxHandler(
   "http://localhost:3000",
   "/tripdetails"
 );
+
 const tripAjaxHandler = new ajaxHandler("http://localhost:3000", "/tripsdata");
 const stepsAjaxHandler = new ajaxHandler("http://localhost:3000", "/steps");
 
@@ -26,17 +26,32 @@ function extractTripSteps(tripId, clbk) {
 
   if (!tripId) showTripSteps();
   else {
-    //console.log("Extracting trip " + tripId);
-
     tripAjaxHandler.getOne(tripId, res => {
       if (res.steps.length == 0) addBlankStep();
-      else console.log("RES.start_date  is" + res.start_date); //sortedRes = sortArrayByDate(res);
-      //console.log(res);
-      res.steps.forEach((step, index) => {
-        stepsAjaxHandler.getOne(step, res => {
-          clbk(res);
+      else {
+        /* console.log("Res steps 0 is " + res.steps[0].city);
+        console.log("Res steps 1 is " + res.steps[1].city);
+        console.log("Res steps 2 is " + res.steps[2].city);
+        console.log("Res steps 3 is " + res.steps[3].city);
+        console.log("Res steps 4 is " + res.steps[4].city);*/
+
+        sortedResSteps = res.steps.sort((a, b) => {
+          if (a.start_date > b.start_date) return 1;
+          else return -1;
         });
-      });
+
+        /*  console.log("Sorted Res steps 0 is " + sortedResSteps[0].city);
+        console.log("Sorted Res steps 1 is " + sortedResSteps[1].city);
+        console.log("Sorted Res steps 2 is " + sortedResSteps[2].city);
+        console.log("Sorted Res steps 3 is " + sortedResSteps[3].city);
+        console.log("Sorted Res steps 4 is " + sortedResSteps[4].city);*/
+
+        sortedResSteps.forEach((step, index) => {
+          // stepsAjaxHandler.getOne(step._id, res => {
+          clbk(step);
+          // });
+        });
+      }
     });
   }
 }
@@ -61,7 +76,7 @@ function addBlankStep() {
   formElement.classList.add("trip_details_form");
   formElement.innerHTML = formElementHTMLContent;
   formElement.classList.add("blank");
-  
+
   document
     .getElementById("trip_details_form_container")
     .appendChild(formElement);
@@ -77,23 +92,20 @@ function addBlankStep() {
   allButtonsInForm()[currentLine].addEventListener("click", postTripStep);
   allButtonsInForm()[currentLine].innerHTML = "+";
 
-  const button=document.getElementById('date-picker-start'+currentLine);
-  console.log("BUTTON -------", button)
+  const button = document.getElementById("date-picker-start" + currentLine);
+
   new Lightpick({
-    field: document.getElementById('date-picker-start'+currentLine),
-    format: 'MM/DD/YYYY'
+    field: document.getElementById("date-picker-start" + currentLine),
+    format: "MM/DD/YYYY"
   });
 
   new Lightpick({
-    field: document.getElementById('date-picker-end'+currentLine),
-    format: 'MM/DD/YYYY'
+    field: document.getElementById("date-picker-end" + currentLine),
+    format: "MM/DD/YYYY"
   });
-  
+
   return formElement;
 }
-
-
-
 
 function showTripSteps(step, clbk) {
   newForm = addBlankStep();
