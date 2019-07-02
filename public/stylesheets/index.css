@@ -6,17 +6,43 @@
 @import "./addtripform.css";
 @import './button.css';
 
+
+
+:root {
+  --nav: #29293d;
+  --trip-container: #3f51b5;
+  --nav-hover: gray; 
+  --text-color : white; 
+
+
+}
+
 * {
   box-sizing: border-box;
   font-family: 'Source Sans Pro', sans-serif;
+  /*font-family: "Nunito", sans-serif;*/
 }
 
+
+body{
+    margin:0;
+    padding:0;
+}
+
+h1{
+    text-align: center; 
+    font-size: 2.5em;
+    margin:0;
+    padding: 3%;
+}
+
+
 .main_background {
-  background-image: url("../images/cover.jpg");
+  background-image: url("../images/cover2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;
-  height: 98vh;
+  height: 100vh;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -56,6 +82,8 @@
   color: #242222;
   cursor: pointer;
   text-decoration: none;
+  font-size: 1em; 
+  font-weight: bold; 
 }
 
 .main_link:hover {
