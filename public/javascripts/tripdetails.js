@@ -1,8 +1,7 @@
 const geocoder = new google.maps.Geocoder();
 const currentURL = window.location.pathname;
 const tripId = currentURL.substring(currentURL.indexOf("tripdetails") + 12);
-var markersList = [];
-
+const parisLatLong = { lat: 48.85, lng: 2.3488 };
 const tripDetailsAjaxHandler = new ajaxHandler(
   "http://localhost:3000",
   "/tripdetails"
@@ -10,11 +9,13 @@ const tripDetailsAjaxHandler = new ajaxHandler(
 const tripAjaxHandler = new ajaxHandler("http://localhost:3000", "/tripsdata");
 const stepsAjaxHandler = new ajaxHandler("http://localhost:3000", "/steps");
 
+var map = {};
+
 //console.log("trip id is " + tripId);
 
 document.addEventListener("DOMContentLoaded", () => {
   extractTripSteps(tripId, showTripSteps);
-  map = startMap();
+  map = new mapHandler("trip_details_map", 5, parisLatLong);
 });
 
 function extractTripSteps(tripId, clbk) {
@@ -26,12 +27,13 @@ function extractTripSteps(tripId, clbk) {
 
     tripAjaxHandler.getOne(tripId, res => {
       if (res.steps.length == 0) addBlankStep();
-      else
-        res.steps.forEach((step, index) => {
-          stepsAjaxHandler.getOne(step, res => {
-            showTripSteps(res);
-          });
+      else console.log("RES.start_date  is" + res.start_date); //sortedRes = sortArrayByDate(res);
+      //console.log(res);
+      res.steps.forEach((step, index) => {
+        stepsAjaxHandler.getOne(step, res => {
+          clbk(res);
         });
+      });
     });
   }
 }
@@ -80,16 +82,25 @@ function showTripSteps(step, clbk) {
   newForm.id = step._id;
   newForm.classList.remove("blank");
 
-  document.getElementById(step._id).querySelector(".start_date").value =
-    step.start_date;
-  document.getElementById(step._id).querySelector(".end_date").value =
-    step.end_date;
+  console.log("Start date is " + changeDateFormat(step.start_date));
+
+  document
+    .getElementById(step._id)
+    .querySelector(".start_date").value = changeDateFormat(step.start_date);
+  document
+    .getElementById(step._id)
+    .querySelector(".end_date").value = changeDateFormat(step.end_date);
   document.getElementById(step._id).querySelector(".location").value =
     step.city;
   document.getElementById(step._id).querySelector(".activity").value =
     step.other;
 
-  geocodeAddress(step.city, geocoder, map, step._id);
+  map.geoCodeAddress(step.city, result => {
+    map.addMarker(result, step._id, step.city);
+    displayMapConnections();
+  });
+
+  //geocodeAddress(step.city, geocoder, map, step._id);
 
   [...document.getElementsByClassName("blank")].forEach(x => x.remove());
   addBlankStep();
@@ -121,7 +132,17 @@ function postTripStep(e) {
       );
 
       stepsData = resultTrip.steps;
-      geocodeAddress(dataToPost.city, geocoder, map, result);
+      if (dataToPost.city) {
+        map.geoCodeAddress(dataToPost.city, resultLocation => {
+          map.addMarker(resultLocation, result);
+          displayMapConnections();
+          console.log(map.markersList);
+        });
+      } else {
+        map.addMarker(null, result);
+        displayMapConnections();
+      }
+      // geocodeAddress(dataToPost.city, geocoder, map, result);
       stepsData.push(result);
 
       tripAjaxHandler.updateOne(tripId, { steps: stepsData }, res =>
@@ -138,63 +159,69 @@ function postTripStep(e) {
 function deleteTripStep(e) {
   e.preventDefault();
   let stepToDelete = this.parentNode.id;
-  console.log("step to Deletes is " + stepToDelete);
+  // console.log("step to Deletes is " + stepToDelete);
 
   tripAjaxHandler.getOne(tripId, resultTrip => {
     stepsData = resultTrip.steps;
-    console.log("Before deleting, steps are " + stepsData);
-    console.log(
-      "Ready to remove step at the following index: " +
-        stepsData.indexOf(stepToDelete)
-    );
+    // console.log("Before deleting, steps are " + stepsData);
+    //console.log(
+    //   "Ready to remove step at the following index: " +
+    //    stepsData.indexOf(stepToDelete)
+    //);
+    map.deleteMarker(stepsData.indexOf(stepToDelete));
+    map = new mapHandler("trip_details_map", 5, parisLatLong);
+    refreshMap();
     stepsData.splice(stepsData.indexOf(stepToDelete), 1);
-    console.log("Steps data is now " + stepsData);
+    // console.log("Steps data is now " + stepsData);
 
     tripAjaxHandler.updateOne(tripId, { steps: stepsData }, res => {
-      console.log("step removed");
+      //    console.log("step removed");
     });
   });
 
   //console.log(markersList);
 
-  markersListItemToDelete = markersList.find(x => {
+  /*  markersListItemToDelete = map.markersList.find(x => {
     return toString(x.stepIndex) == toString(stepToDelete);
   });
   //console.log(markersListItemToDelete.marker);
   markersListItemToDelete.marker.setMap(null);
-  markersList.splice(markersList.indexOf(markersListItemToDelete), 1);
-  //.setMap(null);
+  map.markersList.splice(map.markersList.indexOf(markersListItemToDelete), 1);
+  //.setMap(null); */
 
   this.parentNode.remove();
 }
 
-//Functions to deal with google map API = to be exported in separate file for later
-
-var markers = [];
-
-function startMap() {
-  map = new google.maps.Map(document.getElementById("trip_details_map"), {
-    zoom: 5,
-    center: { lat: 48.85, lng: 2.3488 }
-  });
-
-  //geocodeAddress("Paris", geocoder, map);
-  return map;
+function refreshMap() {
+  map = new mapHandler("trip_details_map", 5, parisLatLong);
 }
 
-function geocodeAddress(address, geocoder, resultsMap, stepIndex) {
-  geocoder.geocode({ address: address }, function(results, status) {
-    if (status === "OK") {
-      resultsMap.setCenter(results[0].geometry.location);
+function displayMarker() {}
 
-      let marker = new google.maps.Marker({
-        map: resultsMap,
-        position: results[0].geometry.location
-      });
-
-      markersList.push({ marker, stepIndex });
-    } else {
-      alert("Geocode was not successful for the following reason: " + status);
+function displayMapConnections() {
+  if (map.markersList.length >= 2) {
+    for (i = 2; i <= map.markersList.length; i++) {
+      map.displayOrHideMarkers(
+        map.markersList[i - 2].marker,
+        map.markersList[i - 1].marker,
+        "display"
+      );
     }
-  });
+  }
+}
+
+function deleteMapConnections() {
+  if (map.markersList.length >= 2) {
+    for (i = 2; i <= map.markersList.length; i++) {
+      map.displayOrHideMarkers(
+        map.markersList[i - 2].marker,
+        map.markersList[i - 1].marker,
+        "hide"
+      );
+    }
+  }
+}
+
+function sortArrayByDate(Array) {
+  return Array.sort((a, b) => new Date(a) - new Date(b));
 }
