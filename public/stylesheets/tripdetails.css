@@ -1,7 +1,7 @@
-#wrapper-trip-details{
+#wrapper-trip-details {
   height: 90vh;
   background-repeat: no-repeat;
-  background-size:  100% 100%;
+  background-size: 100% 100%;
 }
 
 #trip_details_container {
@@ -37,6 +37,10 @@
   width: 70%;
 }
 
+#trip_details_form {
+  padding: 5px;
+}
+
 .trip_details_form input,
 .trip_details_form button {
   width: 19%;
@@ -60,4 +64,8 @@
   color: white;
   font-weight: bold;
   font-size: 20px;
+}
+
+.blank {
+  background-color: lightgray;
 }

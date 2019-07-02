@@ -16,7 +16,7 @@ class ajaxHandler {
   }
 
   getOne(id, clbk) {
-    console.log(`contacting endpoint ${this.endpoint}/${id}`);
+    //console.log(`contacting endpoint ${this.endpoint}/${id}`);
     this.instance
       .get(`${this.endpoint}/${id}`)
       .then(serverRes => {

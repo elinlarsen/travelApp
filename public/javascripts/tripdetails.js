@@ -7,11 +7,10 @@ const tripDetailsAjaxHandler = new ajaxHandler(
   "http://localhost:3000",
   "/tripdetails"
 );
-
 const tripAjaxHandler = new ajaxHandler("http://localhost:3000", "/tripsdata");
 const stepsAjaxHandler = new ajaxHandler("http://localhost:3000", "/steps");
 
-console.log("trip id is " + tripId);
+//console.log("trip id is " + tripId);
 
 document.addEventListener("DOMContentLoaded", () => {
   extractTripSteps(tripId, showTripSteps);
@@ -23,7 +22,7 @@ function extractTripSteps(tripId, clbk) {
 
   if (!tripId) showTripSteps();
   else {
-    console.log("Extracting trip " + tripId);
+    //console.log("Extracting trip " + tripId);
 
     tripAjaxHandler.getOne(tripId, res => {
       if (res.steps.length == 0) addBlankStep();
@@ -113,9 +112,14 @@ function postTripStep(e) {
   };
 
   tripDetailsAjaxHandler.createOne(dataToPost, result => {
-    console.log(result);
+    //  console.log(result);
 
     tripAjaxHandler.getOne(tripId, resultTrip => {
+      [...document.getElementsByClassName("blank")][0].id = result;
+      [...document.getElementsByClassName("blank")][0].classList.remove(
+        "blank"
+      );
+
       stepsData = resultTrip.steps;
       geocodeAddress(dataToPost.city, geocoder, map, result);
       stepsData.push(result);
@@ -151,14 +155,14 @@ function deleteTripStep(e) {
     });
   });
 
-  console.log(markersList);
-  console.log(stepToDelete);
+  //console.log(markersList);
 
-  console.log(
-    markersList.find(x => {
-      return x.stepIndex == stepToDelete;
-    })
-  );
+  markersListItemToDelete = markersList.find(x => {
+    return toString(x.stepIndex) == toString(stepToDelete);
+  });
+  //console.log(markersListItemToDelete.marker);
+  markersListItemToDelete.marker.setMap(null);
+  markersList.splice(markersList.indexOf(markersListItemToDelete), 1);
   //.setMap(null);
 
   this.parentNode.remove();
