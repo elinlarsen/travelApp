@@ -9,20 +9,13 @@
    
     <div class="wrapper-trip-container" >
 
+        <form action="/trip_add" class="form-button-add trip-container" >
+            <input  class="add-button-input" type="submit" value="+" />
+        </form>
+
         <div class="cta-trip invisible">
             <a href="/tripdetails/${tripInfoObject._id}" class="fa fa-eye table-icon" ></a> 
             <a href="/trip_edit/${tripInfoObject._id}" class="fa fa-edit table-icon"></a>
             <button id="${tripInfoObject._id}" class="fa table-icon"></button>
         </div>
-
-        <form action="/trip_add" class="form-button-add trip-container" >
-            <input  class="add-button-input" type="submit" value="+" />
-        </form>
-</div>
-
-
-
-</div>
-
-
 </div>

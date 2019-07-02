@@ -1,61 +1,6 @@
 
 const currentURL = window.location.pathname;
 const tripsDataAjaxHandler = new ajaxHandler("http://localhost:3000","/tripsData");
-import Match from './Match.js'
-
-// --------- Fake users ---------
-const user1={
-        "_id": "1",
-        "first_name": "elin",
-        "last_name": "larsen", 
-        "trips": [
-            {   _id : 'trip11',
-                countries: ['france', 'italy'],
-                start_date : "2019-07-15T00:00:00.000+00:00",
-                end_date: "2019-07-19T00:00:00.000+00:00",
-            },{
-                _id : 'trip12',
-                countries : ['UK'],
-                start_date : "2019-08-18T00:00:00.000+00:00",
-                end_date: "2019-09-29T00:00:00.000+00:00",
-            }],
-        "picture" : "https://randomuser.me/api/portraits/women/65.jpg",
-        "friends": ["2", "5"]
-    };
-const user2=  {
-    "_id": "2",
-    "first_name": "yasin",
-    "last_name": "hegdal", 
-    "trips": [
-        {   _id : 'trip21',
-            countries: ['france', 'morocco', 'spain'], 
-            start_date : "2019-07-18T00:00:00.000+00:00",
-            end_date: "2019-07-29T00:00:00.000+00:00",
-
-        },{
-            _id : 'trip22',
-            countries : ['US'],
-            start_date : "2019-10-19T00:00:00.000+00:00",
-            end_date: "2019-11-19T00:00:00.000+00:00",
-        }],
-    "picture" : "https://randomuser.me/api/portraits/men/65.jpg",
-    "friends": ["5", "3"],
-};
-const user3={
-    "_id": "3",
-    "firstname": "user3name",
-    "lastname": "lastname3", 
-    "trip": ['trip33', 'trip'],
-    "picture" : "https://randomuser.me/api/portraits/men/55.jpg",
-    "friends": ["2"]
-
-};
-
-const match= new Match(user1, user2)
-console.log("match class----", match)
-console.log(match.isFriend())
-
-console.log(match. matchAllTrips())
 
 // --------- Event Listener ---------
 document.addEventListener("DOMContentLoaded", () => {
@@ -82,15 +27,16 @@ function createTripContainer(tripInfoObject){
     let tripContainerEl=document.createElement("div");    
     tripContainerEl.className="wrapper-trip-container";
     tripContainerEl.id=tripInfoObject._id;
-    tripContainerEl.innerHTML=` 
+    tripContainerEl.innerHTML=`  
+     <div class="trip-container" style="background-image: url(${tripInfoObject.picture})"> 
+     ${tripInfoObject.name} 
+    </div>
+
     <div class="cta-trip visible" >
         <a href="/tripdetails/${tripInfoObject._id}" class="fa fa-eye table-icon" ></a> 
         <a href="/trip_edit/${tripInfoObject._id}" class="fa fa-edit table-icon"></a>
         <button id="${tripInfoObject._id}" class="fa fa-trash table-icon"></button>
-    </div>  
-     <div class="trip-container" style="background-image: url(${tripInfoObject.picture})"> 
-     ${tripInfoObject.name} 
-    </div>
+    </div> 
     `
     allTripsDiv.appendChild(tripContainerEl)
 }

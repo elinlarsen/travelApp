@@ -21,7 +21,7 @@
 
 .cta-trip{
     display: flex; 
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     justify-content: space-between; 
     align-items: center; 
 }
@@ -36,14 +36,14 @@
     margin : 2%; 
     background-color : var(--text-color);
     display : flex; 
-    flex-flow: row; 
+    flex-flow: column; 
     justify-content: center; 
     align-items: center; 
 }
 
 .trip-container{
-    height: 350px;
-    width: 350px;
+    height: 300px;
+    width: 300px;
     border: 1px solid var(--trip-container); 
     border-radius: 50px; 
     display : flex; 
@@ -53,29 +53,9 @@
     font-size : 2em; 
     font-family: 'Source Sans Pro'; 
     background-repeat:no-repeat;
-    background-size: 350px 350px;
+    background-size: 300px 300px;
     text-transform: uppercase;
     text-align: center; 
     color : white;
 
-}
-
-.form-button-add{
-    display : flex;
-    flex-flow: column; 
-    justify-content: center; 
-    align-items: center; 
-
-}
-.add-button-input{
-    height: 80px; 
-    width: 80px; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    text-align: center;
-    font-size: 30px;
-    color: rgba(255,255,255,1);
-    border-radius: 50%;
-    background-color :  #3f51b5;
 }

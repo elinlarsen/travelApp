@@ -21,9 +21,10 @@ outline: none;
   font-size: 1.2rem;
   transition: all .2s ease-in;
   transition-property:color, background;
-  border-radius: .2rem;
+  border-radius: 1rem;
   margin: 1rem; 
   padding: 1rem;
+  width: 30vw; 
 }
 
 .button-primary:hover {
@@ -41,6 +42,28 @@ outline: none;
 
 .button-ternary:hover {
   color:black
+}
+
+
+.form-button-add{
+  display : flex;
+  flex-flow: column; 
+  justify-content: center; 
+  align-items: center; 
+  padding: 0 2wv; 
+}
+
+.add-button-input{
+  height: 80px; 
+  width: 80px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  text-align: center;
+  font-size: 50px;
+  color: rgba(255,255,255,1);
+  border-radius: 50%;
+  background-color :  #3f51b5;
 }
 
 /* .arrow-button .btn-text {

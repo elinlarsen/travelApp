@@ -3,6 +3,7 @@ class dbHandler {
     this.model = model;
   }
 
+
   createOne(data, clbk) {
     const schema = this.model["schema"]["obj"];
     const schemaKeys = Object.keys(schema);
@@ -21,9 +22,15 @@ class dbHandler {
       .catch(err => console.log("this is not working :", err));
   }
 
+  insertMany(dataArray, clbk){
+    dataArray.forEach(data => this.createOne(data, clbk))
+
+  }
+
   getOne(data, clbk) {
     this.model
       .findOne(data)
+      .populate("trips")
       .populate("steps")
       .then(res => clbk(res))
       .catch(err => console.log(err));
