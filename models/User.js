@@ -15,7 +15,7 @@ const userSchema= new Schema({
     },
     mobile_phone_number: {type : Number, require: true, unique : true},
     email: {type : String, require: true, unique : true},
-    trip: [{type: Schema.Types.ObjectId , ref: "tripModel"}], // array of ids 
+    trips: [{type: Schema.Types.ObjectId , ref: "tripModel"}], // array of ids 
     picture: {type : String, unique : true}, 
     friends:[{type: Schema.Types.ObjectId , ref: "userModel"}]// nested array of ids of others users
 })

@@ -1,8 +1,40 @@
 
 const currentURL = window.location.pathname;
 const tripsDataAjaxHandler = new ajaxHandler("http://localhost:3000","/tripsData");
+import Match from './Match.js'
 
+// --------- Fake users ---------
+const user1={
+        "_id": "1",
+        "first_name": "elin",
+        "last_name": "larsen", 
+        "trips": ['trip11','trip12'],
+        "picture" : "https://randomuser.me/api/portraits/women/65.jpg",
+        "friends": ["2", "5"]
+    };
+const user2=  {
+    "_id": "2",
+    "first_name": "yasin",
+    "last_name": "hegdal", 
+    "trips": ['trip12', 'trip13', 'trip22'],
+    "picture" : "https://randomuser.me/api/portraits/men/65.jpg",
+    "friends": ["5", "3"],
+};
+const user3={
+    "_id": "3",
+    "firstname": "user3name",
+    "lastname": "lastname3", 
+    "trip": ['trip33', 'trip'],
+    "picture" : "https://randomuser.me/api/portraits/men/55.jpg",
+    "friends": ["2"]
 
+};
+
+const match= new Match(user1, user2)
+console.log("match class----", match)
+console.log(match.isFriend())
+
+console.log(match. matchAllTrips())
 
 // --------- Event Listener ---------
 document.addEventListener("DOMContentLoaded", () => {
