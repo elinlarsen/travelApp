@@ -90,16 +90,16 @@ router.post("/trip_add", upload.single("picture"), (req, res) => {
     end_date: req.body.end_date
   });
 
-  //tripHandler.createOne(newTrip, dbres => res.redirect('/trips'))
+  tripHandler.createOne(newTrip, dbres => res.redirect('/trips'))
 
-  tripsDataAjaxHandler.createOne(newTrip, result => {
+  /*tripsDataAjaxHandler.createOne(newTrip, result => {
     req.session.msg = {
       status: "success",
       txt: "Yes!! A new trip was created"
     };
     console.log("TRIP CREATED----------", result);
     res.redirect("/trips");
-  });
+  });*/
 });
 
 // GET TRIP Data
