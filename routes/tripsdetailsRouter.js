@@ -3,7 +3,7 @@ const router = express.Router();
 const dbHandler = require("../bin/dblhandler.js");
 const tripModel = require("../models/Trip.js");
 tripHandler = new dbHandler(tripModel);
-
+const changeDateFormat=require("../utils/changeDateFormat")
 
 // ----------------------- TRIP DETAILS ----------------------- 
 router.get("/tripdetails/:trip_id", (req, res, next) => {
@@ -15,7 +15,9 @@ router.get("/tripdetails/:trip_id", (req, res, next) => {
   
     tripHandler.getOneById(req.params.trip_id, tripResponse => {
       console.log("-----------", tripResponse);
-      res.render("tripdetails", { tripResponse });
+      let start = changeDateFormat(tripResponse.start_date)
+      let end = changeDateFormat(tripResponse.end_date)
+      res.render("tripdetails", { tripResponse, start, end });
     });
   });
 
