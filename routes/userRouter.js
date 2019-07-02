@@ -15,4 +15,10 @@ router.get("/login", (req, res, next) => {
 });
 
 
+// -----------------------  FRIENDS ----------------------- 
+router.get('/friends', (req, res, next) => {
+    res.render("friends")
+})
+
+
 module.exports = router;

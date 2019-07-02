@@ -5,7 +5,7 @@
     flex-flow: row wrap; 
     justify-content: center; 
     align-items: center; 
-    padding : 2%;
+    padding : 0px 2%;
 }
 .invisible{
     visibility: hidden;

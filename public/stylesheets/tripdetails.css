@@ -20,8 +20,8 @@
   display: flex;
   justify-content: space-between;
   text-align: center;
-  font-weight: bold;
   padding: 5px 0px;
+  
 }
 
 .trip_details_form_labels .header {
@@ -30,6 +30,7 @@
   border-bottom: solid;
   border-width: 1px;
   font-size : 1.3em; 
+  color : white;
 }
 
 .invisible{
