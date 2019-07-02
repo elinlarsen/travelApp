@@ -14,53 +14,74 @@ export default class {
     }
 
     matchTripsPair(trip1, trip2){
-        var match; 
+        var matchCountries=false; 
+        var matchDates = {
+            meetup:"false",
+            recommandation: "false",
+            advisor:null,
+        }
         let countries1=trip1.countries; 
         let countries2=trip2.countries;
-        let start1=trip1.start_date
-        let start2=trip2.start_date
-        let end1=trip1.end_date
-        let end2=trip2.end_date
+        let start1=trip1.start_date;
+        let start2=trip2.start_date;
+        let end1=trip1.end_date;
+        let end2=trip2.end_date;
 
-        countries1.forEach( country => {
+        console.log("--------------------------------")
+        console.log("countries2--------", countries2)
+
+        countries1.forEach( (country, index) => {
+            console.log(`country in the loop ${index} : ${country}`)
             if( countries2.includes(country)){
+                
+                matchCountries=true;
+                console.log("MATCHHHHHH", matchCountries)
                 if( end1 < start2) {
-                    match={
+                    matchDates={
+                        matchedCountry: `${country}` ,  
                         meetup: "false",
                         recommendation: "true",
                         advisor : this.user1._id,
                         }
                     }   
                 else if(end2 < start1){
-                    match={
+                    matchDates={
+                        matchedCountry: `${country}` ,   
                         meetup: "false",
                         recommendation: "true",
                         advisor : this.user2._id,
                         }
                     }
                 else if( start1==start2 || end1==end2 || start2<end1 || start1<end2 ){
-                    match={
+                    matchDates={
+                        matchedCountry: `${country}` , 
                         meetup:"true",
                         recommandation: "false",
-                        advisor:null,
+                        advisor:"both",
                     }
                 }
             }
         });
-        return match
+        return {
+            "matchCountries": matchCountries , 
+            "matchDates": matchDates}
     }
 
     matchAllTrips(){
         var matchArr=[];
+        var matchTrue=[];
         const trips1=this.user1.trips
         const trips2 =this.user2.trips
         trips1.forEach( (trip1, index1) => {
             trips2.forEach( (trip2, index2) => {
-                if (index1<index2){
-                    matchArr[index1,index2] = this.matchTripsPair(trip1, trip2)
-                }
-
+                    let id1= trip1._id;
+                    let id2=trip2._id;
+                    matchArr[[id1, id2]] = this.matchTripsPair(trip1, trip2)
+                    this.matchTripsPair(trip1, trip2).matchCountries==true 
+                    ? matchTrue[[id1, id2]] = this.matchTripsPair(trip1, trip2).matchDates 
+                    : matchTrue[[id1, id2]] = false;
             })
         })
+        return matchTrue
     }
 }

@@ -8,7 +8,17 @@ const user1={
         "_id": "1",
         "first_name": "elin",
         "last_name": "larsen", 
-        "trips": ['trip11','trip12'],
+        "trips": [
+            {   _id : 'trip11',
+                countries: ['france', 'italy'],
+                start_date : "2019-07-15T00:00:00.000+00:00",
+                end_date: "2019-07-19T00:00:00.000+00:00",
+            },{
+                _id : 'trip12',
+                countries : ['UK'],
+                start_date : "2019-08-18T00:00:00.000+00:00",
+                end_date: "2019-09-29T00:00:00.000+00:00",
+            }],
         "picture" : "https://randomuser.me/api/portraits/women/65.jpg",
         "friends": ["2", "5"]
     };
@@ -16,7 +26,18 @@ const user2=  {
     "_id": "2",
     "first_name": "yasin",
     "last_name": "hegdal", 
-    "trips": ['trip12', 'trip13', 'trip22'],
+    "trips": [
+        {   _id : 'trip21',
+            countries: ['france', 'morocco', 'spain'], 
+            start_date : "2019-07-18T00:00:00.000+00:00",
+            end_date: "2019-07-29T00:00:00.000+00:00",
+
+        },{
+            _id : 'trip22',
+            countries : ['US'],
+            start_date : "2019-10-19T00:00:00.000+00:00",
+            end_date: "2019-11-19T00:00:00.000+00:00",
+        }],
     "picture" : "https://randomuser.me/api/portraits/men/65.jpg",
     "friends": ["5", "3"],
 };
