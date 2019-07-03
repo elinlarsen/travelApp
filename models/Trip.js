@@ -8,7 +8,7 @@ const tripSchema= new Schema({
     start_date: {type: Date}, 
     end_date : {type: Date},
     steps: [{type: Schema.Types.ObjectId , ref: "stepModel"}], // nested array of child (steps) reference ids   
-    countries: [{type : String, enum: ["France", "Morocco", "United States"]}],
+    countries: [{type : String}],
 })
 
 const tripModel = mongoose.model("tripModel", tripSchema);
