@@ -2,8 +2,6 @@
 const currentURL = window.location.pathname;
 const tripsDataAjaxHandler = new ajaxHandler("http://localhost:3000","/tripsData");
 
-
-
 // --------- Event Listener ---------
 document.addEventListener("DOMContentLoaded", () => {
     showTrips();
@@ -29,15 +27,16 @@ function createTripContainer(tripInfoObject){
     let tripContainerEl=document.createElement("div");    
     tripContainerEl.className="wrapper-trip-container";
     tripContainerEl.id=tripInfoObject._id;
-    tripContainerEl.innerHTML=` 
+    tripContainerEl.innerHTML=`  
+     <div class="trip-container" style="background-image: url(${tripInfoObject.picture})"> 
+     ${tripInfoObject.name} 
+    </div>
+
     <div class="cta-trip visible" >
         <a href="/tripdetails/${tripInfoObject._id}" class="fa fa-eye table-icon" ></a> 
         <a href="/trip_edit/${tripInfoObject._id}" class="fa fa-edit table-icon"></a>
         <button id="${tripInfoObject._id}" class="fa fa-trash table-icon"></button>
-    </div>  
-     <div class="trip-container" style="background-image: url(${tripInfoObject.picture})"> 
-     ${tripInfoObject.name} 
-    </div>
+    </div> 
     `
     allTripsDiv.appendChild(tripContainerEl)
 }

@@ -1,0 +1,40 @@
+#main-friends{
+    display : flex; 
+    flex-flow: column nowrap; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+#friends-details-container{
+    display : flex; 
+    flex-flow: row nowrap; 
+    justify-content: center; 
+    align-items: flex-start;
+
+}
+
+#friends_labels-container{
+    display : flex; 
+    flex-flow: row nowrap; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.friend-wrapper{
+    padding: 0 2vw; 
+    display : flex; 
+    flex-flow: column nowrap; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.round{
+    height: 120px;
+    width: 120px; 
+    border-radius: 50%;
+}
+
+.friend-name{
+    font-size: 1.2rem; 
+    font-weight: bold; 
+}

@@ -1,16 +1,25 @@
+#options_container ul li a i{
+    color : white; 
+    font-size: 1.5rem; 
+    padding-left:3vw; 
+
+}
 #main_nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: black;
-    color: white; }
+    color: var(--nav-text);
+    padding: 1vh 0px;
+}
   
 #options_container {
 width: 100%;
 margin: 0px;
 padding: 0px;
 display: flex;
-justify-content: space-evenly; }
+justify-content: flex-start; 
+}
 
 #options_container ul {
 display: flex;
@@ -20,14 +29,16 @@ padding: 0px; }
 
 #options_container ul li {
 list-style: none;
-padding: 2vw;
+/*padding: 2vw;*/
 cursor: pointer; }
 
 #options_container ul a:hover, #log_details p:hover {
 color: var(--nav-hover) }
 
 #options_container ul li a {
-   
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     text-decoration: none;
     color: var(--nav-text); 
 }
@@ -38,19 +49,26 @@ color: var(--nav-hover) }
     /*width: 20%;*/
     padding: 0px }
 
-#log_details p {
-    font-size: 1.1rem;
-    width: 50%;
-    cursor: pointer; }
+
+
+#log_details  i{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    cursor: pointer;
+    font-size: 2rem;
+    color: white; 
+    padding:0 2vw; 
+    }
     
 #small_picture {
-    width: 20vw;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding: 1vw }
 
 #log_image {
-    width: 25%;
-    border-radius: 20px; }
+    /*width: 25%;*/
+    height: 50px;
+    border-radius: 40px; }
   
