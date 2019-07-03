@@ -39,6 +39,7 @@ class dbHandler {
   getOneById(id, clbk) {
     this.model
       .findById(id)
+      .populate("trips")
       .then(res => {
         clbk(res);
       })
@@ -48,6 +49,7 @@ class dbHandler {
   getAll(clbk) {
     this.model
       .find({})
+      .populate("trips")
       .then(res => clbk(res))
       .catch(err => console.log(err));
   }

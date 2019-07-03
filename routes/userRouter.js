@@ -19,14 +19,21 @@ router.get("/login", (req, res, next) => {
 // -----------------------  FRIENDS ----------------------- 
 router.get('/friends', (req, res, next) => {
     // -----------------------  INSERT FAKE DATA ----------------------- 
-    //try{userHandler.insertMany(fakeUsers, dbres =>{res.render("friends")})}
-    //catch{
-        res.render("friends")
-    //}    
+    //userHandler.insertMany(fakeUsers, dbres =>console.log("users added in db !!", dbres))
+    res.render("friends")
+   
 })
 
 router.get("/userData", (req, res, next) =>{
     userHandler.getAll(resData => {
+        console.log("GET ALL ----",resData)
+        res.send(resData)
+      })
+})
+
+router.get("/userData/:id", (req, res, next) =>{
+    let ID={_id: req.params.id}
+    userHandler.getOneById(ID, resData => {
         console.log("GET ALL ----",resData)
         res.send(resData)
       })
