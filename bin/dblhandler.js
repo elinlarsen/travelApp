@@ -61,6 +61,7 @@ class dbHandler {
       .findOneAndUpdate(filterObject, data)
       .then(dbres => {
         clbk(dbres);
+        console.log("patching");
       })
       .catch(err => console.log(err));
   }

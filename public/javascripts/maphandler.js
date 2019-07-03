@@ -8,7 +8,7 @@ class mapHandler {
 
     this.map = new google.maps.Map(document.getElementById(this.mapId), {
       zoom: this.zoom,
-      center: this.center
+      center: center
     });
   }
 
@@ -28,16 +28,23 @@ class mapHandler {
     });
   }
 
-  addMarker(position, index, newlocation) {
+  addMarker(position, index, newlocation, label) {
     // console.log("Marker position is " + position);
+
+    console.log("label to mark is " + label);
 
     let marker = new google.maps.Marker({
       map: this.map,
-      position: position
+      position: position,
+      label: { text: String(label) }
     });
 
     //    console.log(newlocation);
     this.markersList.push({ marker, index, location: newlocation });
+    this.map.setCenter({
+      lat: this.markersList[this.markersList.length - 1].marker.position.lat(),
+      lng: this.markersList[this.markersList.length - 1].marker.position.lng()
+    });
     //   console.log(this.markersList);
   }
 

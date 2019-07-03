@@ -29,27 +29,12 @@ function extractTripSteps(tripId, clbk) {
     tripAjaxHandler.getOne(tripId, res => {
       if (res.steps.length == 0) addBlankStep();
       else {
-        /* console.log("Res steps 0 is " + res.steps[0].city);
-        console.log("Res steps 1 is " + res.steps[1].city);
-        console.log("Res steps 2 is " + res.steps[2].city);
-        console.log("Res steps 3 is " + res.steps[3].city);
-        console.log("Res steps 4 is " + res.steps[4].city);*/
-
         sortedResSteps = res.steps.sort((a, b) => {
           if (a.start_date > b.start_date) return 1;
           else return -1;
         });
-
-        /*  console.log("Sorted Res steps 0 is " + sortedResSteps[0].city);
-        console.log("Sorted Res steps 1 is " + sortedResSteps[1].city);
-        console.log("Sorted Res steps 2 is " + sortedResSteps[2].city);
-        console.log("Sorted Res steps 3 is " + sortedResSteps[3].city);
-        console.log("Sorted Res steps 4 is " + sortedResSteps[4].city);*/
-
         sortedResSteps.forEach((step, index) => {
-          // stepsAjaxHandler.getOne(step._id, res => {
           clbk(step);
-          // });
         });
       }
     });
@@ -58,18 +43,19 @@ function extractTripSteps(tripId, clbk) {
 
 function addBlankStep() {
   currentLine = allButtonsInForm().length;
+  randomIdNumber = String(Math.random());
 
   let formElementHTMLContent =
-    '<input type="text" id="date-picker-start' +
-    currentLine +
-    '"class="input_date start_date"><input type="text" id="date-picker-end' +
-    currentLine +
+    '<input required type="text" id="date-picker-start' +
+    randomIdNumber +
+    '"class="input_date start_date"><input required type="text" id="date-picker-end' +
+    randomIdNumber +
     '"class="input_date end_date"><input type="text" id="activity' +
-    currentLine +
+    randomIdNumber +
     '" class="input_text activity" placeholder="What did you do?"><input type="text" id="location' +
-    currentLine +
+    randomIdNumber +
     '"class="input_text location" placeholder="Where were you?"> <button id="trip_details_input_button' +
-    currentLine +
+    randomIdNumber +
     '" class="trip_details_input_button input_button"> + </button>';
 
   let formElement = document.createElement("form");
@@ -95,12 +81,12 @@ function addBlankStep() {
   const button = document.getElementById("date-picker-start" + currentLine);
 
   new Lightpick({
-    field: document.getElementById("date-picker-start" + currentLine),
+    field: document.getElementById("date-picker-start" + randomIdNumber),
     format: "MM/DD/YYYY"
   });
 
   new Lightpick({
-    field: document.getElementById("date-picker-end" + currentLine),
+    field: document.getElementById("date-picker-end" + randomIdNumber),
     format: "MM/DD/YYYY"
   });
 
@@ -108,11 +94,12 @@ function addBlankStep() {
 }
 
 function showTripSteps(step, clbk) {
+  console.log("ready to display trip step");
   newForm = addBlankStep();
   newForm.id = step._id;
   newForm.classList.remove("blank");
 
-  console.log("Start date is " + changeDateFormat(step.start_date));
+  //console.log("Start date is " + changeDateFormat(step.start_date));
 
   document
     .getElementById(step._id)
@@ -126,7 +113,10 @@ function showTripSteps(step, clbk) {
     step.other;
 
   map.geoCodeAddress(step.city, result => {
-    map.addMarker(result, step._id, step.city);
+    label = map.markersList.length + 1;
+
+    map.addMarker(result, step._id, step.city, label);
+    console.log("label is " + label);
     displayMapConnections();
   });
 
@@ -141,71 +131,88 @@ function allButtonsInForm() {
 }
 
 function postTripStep(e) {
-  currentLine = allButtonsInForm().length;
+  //currentLine = allButtonsInForm().length;
   e.preventDefault();
+
   console.log("creating entry");
 
-  dataToPost = {
-    start_date: this.parentNode.querySelector(".start_date").value,
-    end_date: this.parentNode.querySelector(".end_date").value,
-    city: this.parentNode.querySelector(".location").value,
-    other: this.parentNode.querySelector(".activity").value
-  };
+  if (
+    !this.parentNode.querySelector(".start_date").value &&
+    !this.parentNode.querySelector(".end_date").value
+  )
+    window.alert("please enter valid dates");
+  else {
+    dataToPost = {
+      start_date: this.parentNode.querySelector(".start_date").value,
+      end_date: this.parentNode.querySelector(".end_date").value,
+      city: this.parentNode.querySelector(".location").value,
+      other: this.parentNode.querySelector(".activity").value
+    };
 
-  tripDetailsAjaxHandler.createOne(dataToPost, result => {
-    //  console.log(result);
+    tripDetailsAjaxHandler.createOne(dataToPost, result => {
+      //  console.log(result);
 
-    tripAjaxHandler.getOne(tripId, resultTrip => {
-      [...document.getElementsByClassName("blank")][0].id = result;
-      [...document.getElementsByClassName("blank")][0].classList.remove(
-        "blank"
-      );
+      tripAjaxHandler.getOne(tripId, resultTrip => {
+        [...document.getElementsByClassName("blank")][0].id = result;
+        [...document.getElementsByClassName("blank")][0].classList.remove(
+          "blank"
+        );
 
-      stepsData = resultTrip.steps;
-      if (dataToPost.city) {
-        map.geoCodeAddress(dataToPost.city, resultLocation => {
-          map.addMarker(resultLocation, result);
+        stepsData = resultTrip.steps;
+        if (dataToPost.city) {
+          map.geoCodeAddress(dataToPost.city, resultLocation => {
+            map.addMarker(resultLocation, result);
+            displayMapConnections();
+            console.log(map.markersList);
+          });
+        } else {
+          map.addMarker(null, result);
           displayMapConnections();
-          console.log(map.markersList);
+        }
+
+        let stepsIds = [];
+        stepsData.forEach(step => stepsIds.push(step._id));
+        stepsIds.push(result);
+        console.log(stepsIds);
+
+        console.log("The new ste data are " + stepsData);
+
+        tripAjaxHandler.updateOne(tripId, { steps: stepsIds }, res => {
+          //extractTripSteps(tripId, showTripSteps);
+          document.location.reload();
+          console.log(res);
         });
-      } else {
-        map.addMarker(null, result);
-        displayMapConnections();
-      }
-      // geocodeAddress(dataToPost.city, geocoder, map, result);
-      stepsData.push(result);
-
-      tripAjaxHandler.updateOne(tripId, { steps: stepsData }, res =>
-        console.log("new step added")
-      );
-
-      //tripAjaxHandler.updateOne (tripId, ) */
+      });
     });
-  });
 
-  addBlankStep();
+    addBlankStep();
+  }
 }
 
 function deleteTripStep(e) {
   e.preventDefault();
   let stepToDelete = this.parentNode.id;
-  // console.log("step to Deletes is " + stepToDelete);
+  console.log("step to delete is " + stepToDelete);
 
   tripAjaxHandler.getOne(tripId, resultTrip => {
-    stepsData = resultTrip.steps;
-    // console.log("Before deleting, steps are " + stepsData);
-    //console.log(
-    //   "Ready to remove step at the following index: " +
-    //    stepsData.indexOf(stepToDelete)
-    //);
-    map.deleteMarker(stepsData.indexOf(stepToDelete));
+    let stepIds = [];
+    resultTrip.steps.forEach(step => stepIds.push(step._id));
+    console.log("Before deleting, steps are " + stepIds);
+    console.log(
+      "Ready to remove step at the following index: " +
+        stepIds.indexOf(stepToDelete)
+    );
+
+    /*
+    map.deleteMarker(stepsIds.indexOf(stepToDelete));
     map = new mapHandler("trip_details_map", 5, parisLatLong);
-    refreshMap();
-    stepsData.splice(stepsData.indexOf(stepToDelete), 1);
+    refreshMap(); */
+
+    stepIds.splice(stepIds.indexOf(stepToDelete), 1);
     // console.log("Steps data is now " + stepsData);
 
-    tripAjaxHandler.updateOne(tripId, { steps: stepsData }, res => {
-      //    console.log("step removed");
+    tripAjaxHandler.updateOne(tripId, { steps: stepIds }, res => {
+      document.location.reload();
     });
   });
 
