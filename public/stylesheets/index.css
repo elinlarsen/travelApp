@@ -2,43 +2,38 @@
 @import "./nav.css";
 @import "./tripdetails.css";
 @import "./utilityclasses.css";
-@import "./trips.css"; 
+@import "./trips.css";
 @import "./addtripform.css";
-@import './button.css';
+@import "./button.css";
 @import "./lightpick.css";
 @import "./friends.css";
-
-
+@import "./loginandsignup.css";
 
 :root {
   --nav: #29293d;
   --trip-container: #3f51b5;
-  --nav-hover: gray; 
-  --text-color : white; 
-
-
+  --nav-hover: gray;
+  --text-color: white;
 }
 
 * {
   box-sizing: border-box;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   /*font-family: "Nunito", sans-serif;*/
 }
 
-
-body{
-    margin:0;
-    padding:0;
+body {
+  margin: 0;
+  padding: 0;
 }
 
-h1{
-    text-align: center; 
-    font-size: 2.5em;
-    margin:0;
-    padding-top: 2% ;
-    padding-bottom: 1%; 
+h1 {
+  text-align: center;
+  font-size: 2.5em;
+  margin: 0;
+  padding-top: 2%;
+  padding-bottom: 1%;
 }
-
 
 .main_background {
   background-image: url("../images/cover2.jpg");
@@ -85,10 +80,14 @@ h1{
   color: #242222;
   cursor: pointer;
   text-decoration: none;
-  font-size: 1em; 
-  font-weight: bold; 
+  font-size: 1em;
+  font-weight: bold;
 }
 
 .main_link:hover {
   color: black;
+}
+
+#login_status {
+  color: white;
 }

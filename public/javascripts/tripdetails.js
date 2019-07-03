@@ -1,48 +1,55 @@
 const geocoder = new google.maps.Geocoder();
 const currentURL = window.location.pathname;
 const tripId = currentURL.substring(currentURL.indexOf("tripdetails") + 12);
-var markersList = [];
-
 const parisLatLong = { lat: 48.85, lng: 2.3488 };
 const tripDetailsAjaxHandler = new ajaxHandler(
   "http://localhost:3000",
   "/tripdetails"
 );
-
 const tripAjaxHandler = new ajaxHandler("http://localhost:3000", "/tripsdata");
 const stepsAjaxHandler = new ajaxHandler("http://localhost:3000", "/steps");
 
-var map = {};
-
-//console.log("trip id is " + tripId);
-
 document.addEventListener("DOMContentLoaded", () => {
-  extractTripSteps(tripId, showTripSteps);
   map = new mapHandler("trip_details_map", 5, parisLatLong);
+  extractTripSteps(tripId, showTripStepsInForm, showTripStepsInMap);
 });
 
-function extractTripSteps(tripId, clbk) {
+function refreshMap() {
+  map = new mapHandler("trip_details_map", 5, parisLatLong);
+}
+
+//Data extraction functions//
+
+function extractTripSteps(tripId, clbk1, clbk2, clbk3) {
   let tripData = {};
 
-  if (!tripId) showTripSteps();
-  else {
+  if (!tripId) {
+    showTripStepsInForm();
+    console.log("no trip id");
+  } else {
     tripAjaxHandler.getOne(tripId, res => {
-      if (res.steps.length == 0) addBlankStep();
-      else {
+      if (res.steps.length == 0) {
+        addBlankStep();
+        assignEventListeners();
+      } else {
         sortedResSteps = res.steps.sort((a, b) => {
           if (a.start_date > b.start_date) return 1;
           else return -1;
         });
-        sortedResSteps.forEach((step, index) => {
-          clbk(step);
-        });
+        clbk1(sortedResSteps);
+        clbk2(sortedResSteps);
       }
     });
   }
 }
 
+//DOM Manipulation function
+
 function addBlankStep() {
-  currentLine = allButtonsInForm().length;
+  allInputButtonsInForm = [
+    ...document.getElementsByClassName("trip_details_input_button")
+  ];
+  currentLine = allInputButtonsInForm.length;
   randomIdNumber = String(Math.random());
 
   let formElementHTMLContent =
@@ -52,11 +59,13 @@ function addBlankStep() {
     randomIdNumber +
     '"class="input_date end_date"><input type="text" id="activity' +
     randomIdNumber +
-    '" class="input_text activity" placeholder="What did you do?"><input type="text" id="location' +
+    '" class="input_text activity" placeholder="Your plans??"><input type="text" id="location' +
     randomIdNumber +
-    '"class="input_text location" placeholder="Where were you?"> <button id="trip_details_input_button' +
+    '"class="input_text location" placeholder="What are your plans?"> <div class="button_container"> <button id="trip_details_input_button' +
     randomIdNumber +
-    '" class="trip_details_input_button input_button"> + </button>';
+    '" class="trip_details_input_button input_button"> + </button><button id="trip_details_input_button2' +
+    randomIdNumber +
+    '" class="trip_details_update_button input_button"> Update </button> </div>';
 
   let formElement = document.createElement("form");
   formElement.classList.add("trip_details_form");
@@ -66,17 +75,6 @@ function addBlankStep() {
   document
     .getElementById("trip_details_form_container")
     .appendChild(formElement);
-
-  allButtonsInForm().forEach((button, index) => {
-    if (index < currentLine) {
-      button.removeEventListener("click", postTripStep);
-      button.addEventListener("click", deleteTripStep);
-    }
-  });
-
-  allButtonsInForm().forEach(button => (button.innerHTML = "-"));
-  allButtonsInForm()[currentLine].addEventListener("click", postTripStep);
-  allButtonsInForm()[currentLine].innerHTML = "+";
 
   const button = document.getElementById("date-picker-start" + currentLine);
 
@@ -93,65 +91,78 @@ function addBlankStep() {
   return formElement;
 }
 
-function showTripSteps(step, clbk) {
-  console.log("ready to display trip step");
-  newForm = addBlankStep();
-  newForm.id = step._id;
-  newForm.classList.remove("blank");
+function showTripStepsInForm(steps, clbk) {
+  [...document.getElementsByClassName("trip_details_form")].forEach(x =>
+    x.remove()
+  );
 
-  //console.log("Start date is " + changeDateFormat(step.start_date));
+  steps.forEach(step => {
+    console.log("Adding a blank step for " + step._id);
 
-  document
-    .getElementById(step._id)
-    .querySelector(".start_date").value = changeDateFormat(step.start_date);
-  document
-    .getElementById(step._id)
-    .querySelector(".end_date").value = changeDateFormat(step.end_date);
-  document.getElementById(step._id).querySelector(".location").value =
-    step.city;
-  document.getElementById(step._id).querySelector(".activity").value =
-    step.other;
+    newForm = addBlankStep();
+    newForm.id = step._id;
+    newForm.classList.remove("blank");
 
-  map.geoCodeAddress(step.city, result => {
-    label = map.markersList.length + 1;
+    console.log("Populating step for " + step._id);
 
-    map.addMarker(result, step._id, step.city, label);
-    console.log("label is " + label);
-    displayMapConnections();
+    document
+      .getElementById(step._id)
+      .querySelector(".start_date").value = changeDateFormat(step.start_date);
+    document
+      .getElementById(step._id)
+      .querySelector(".end_date").value = changeDateFormat(step.end_date);
+    document.getElementById(step._id).querySelector(".location").value =
+      step.city;
+    document.getElementById(step._id).querySelector(".activity").value =
+      step.other;
+    [...document.getElementsByClassName("blank")].forEach(x => x.remove());
+    addBlankStep();
   });
 
-  //geocodeAddress(step.city, geocoder, map, step._id);
-
-  [...document.getElementsByClassName("blank")].forEach(x => x.remove());
-  addBlankStep();
+  assignEventListeners();
 }
 
-function allButtonsInForm() {
-  return [...document.getElementsByClassName("trip_details_input_button")];
+function showTripStepsInMap(steps) {
+  refreshMap();
+
+  map.markersList = [];
+
+  steps.forEach(step => {
+    map.geoCodeAddress(step.city, result => {
+      console.log("adding marker");
+      startDate = document.getElementById(step._id).querySelector(".start_date")
+        .value;
+
+      map.addMarker(
+        result,
+        step._id,
+        step.city,
+        map.markersList.length + 1,
+        startDate
+      );
+    });
+  });
 }
 
 function postTripStep(e) {
-  //currentLine = allButtonsInForm().length;
+  console.log(this);
+
   e.preventDefault();
 
-  console.log("creating entry");
-
   if (
-    !this.parentNode.querySelector(".start_date").value &&
-    !this.parentNode.querySelector(".end_date").value
+    !this.parentNode.parentNode.querySelector(".start_date").value &&
+    !this.parentNode.parentNode.querySelector(".end_date").value
   )
     window.alert("please enter valid dates");
   else {
     dataToPost = {
-      start_date: this.parentNode.querySelector(".start_date").value,
-      end_date: this.parentNode.querySelector(".end_date").value,
-      city: this.parentNode.querySelector(".location").value,
-      other: this.parentNode.querySelector(".activity").value
+      start_date: this.parentNode.parentNode.querySelector(".start_date").value,
+      end_date: this.parentNode.parentNode.querySelector(".end_date").value,
+      city: this.parentNode.parentNode.querySelector(".location").value,
+      other: this.parentNode.parentNode.querySelector(".activity").value
     };
 
     tripDetailsAjaxHandler.createOne(dataToPost, result => {
-      //  console.log(result);
-
       tripAjaxHandler.getOne(tripId, resultTrip => {
         [...document.getElementsByClassName("blank")][0].id = result;
         [...document.getElementsByClassName("blank")][0].classList.remove(
@@ -159,28 +170,17 @@ function postTripStep(e) {
         );
 
         stepsData = resultTrip.steps;
-        if (dataToPost.city) {
-          map.geoCodeAddress(dataToPost.city, resultLocation => {
-            map.addMarker(resultLocation, result);
-            displayMapConnections();
-            console.log(map.markersList);
-          });
-        } else {
-          map.addMarker(null, result);
-          displayMapConnections();
-        }
 
         let stepsIds = [];
         stepsData.forEach(step => stepsIds.push(step._id));
         stepsIds.push(result);
         console.log(stepsIds);
 
-        console.log("The new ste data are " + stepsData);
+        console.log("The new steps are" + stepsData);
 
         tripAjaxHandler.updateOne(tripId, { steps: stepsIds }, res => {
-          //extractTripSteps(tripId, showTripSteps);
-          document.location.reload();
-          console.log(res);
+          extractTripSteps(tripId, showTripStepsInForm, showTripStepsInMap);
+          //    document.location.reload();
         });
       });
     });
@@ -191,11 +191,12 @@ function postTripStep(e) {
 
 function deleteTripStep(e) {
   e.preventDefault();
-  let stepToDelete = this.parentNode.id;
+  let stepToDelete = this.parentNode.parentNode.id;
   console.log("step to delete is " + stepToDelete);
 
   tripAjaxHandler.getOne(tripId, resultTrip => {
     let stepIds = [];
+
     resultTrip.steps.forEach(step => stepIds.push(step._id));
     console.log("Before deleting, steps are " + stepIds);
     console.log(
@@ -203,62 +204,75 @@ function deleteTripStep(e) {
         stepIds.indexOf(stepToDelete)
     );
 
-    /*
-    map.deleteMarker(stepsIds.indexOf(stepToDelete));
-    map = new mapHandler("trip_details_map", 5, parisLatLong);
-    refreshMap(); */
-
     stepIds.splice(stepIds.indexOf(stepToDelete), 1);
     // console.log("Steps data is now " + stepsData);
 
     tripAjaxHandler.updateOne(tripId, { steps: stepIds }, res => {
-      document.location.reload();
+      extractTripSteps(tripId, showTripStepsInForm, showTripStepsInMap);
+      console.log("updated after deletion");
     });
   });
+  this.parentNode.parentNode.remove();
+}
 
-  //console.log(markersList);
+function updateTripStep(e) {
+  e.preventDefault();
 
-  /*  markersListItemToDelete = map.markersList.find(x => {
-    return toString(x.stepIndex) == toString(stepToDelete);
+  if (
+    !this.parentNode.parentNode.querySelector(".start_date").value &&
+    !this.parentNode.parentNode.querySelector(".end_date").value
+  )
+    window.alert("please enter valid dates");
+  else {
+    dataToPost = {
+      start_date: this.parentNode.parentNode.querySelector(".start_date").value,
+      end_date: this.parentNode.parentNode.querySelector(".end_date").value,
+      city: this.parentNode.parentNode.querySelector(".location").value,
+      other: this.parentNode.parentNode.querySelector(".activity").value
+    };
+
+    stepsAjaxHandler.updateOne(
+      this.parentNode.parentNode.id,
+      dataToPost,
+      result => {
+        console.log("Updated at " + result);
+        extractTripSteps(tripId, showTripStepsInForm, showTripStepsInMap);
+      }
+    );
+  }
+
+  //postTripStepBound = postTripStep.bind(this);
+  //postTripStepBound(e);
+
+  /* deleteTripStepBound = deleteTripStep.bind(this);
+  deleteTripStepBound(e); */
+}
+
+function assignEventListeners() {
+  console.log("hello");
+  allInputButtonsInForm = [
+    ...document.getElementsByClassName("trip_details_input_button")
+  ];
+
+  allUpdateButtonsInForm = [
+    ...document.getElementsByClassName("trip_details_update_button")
+  ];
+
+  allInputButtonsInForm.forEach((button, index) => {
+    if (index < currentLine) {
+      button.removeEventListener("click", postTripStep);
+      button.addEventListener("click", deleteTripStep);
+    }
   });
-  //console.log(markersListItemToDelete.marker);
-  markersListItemToDelete.marker.setMap(null);
-  map.markersList.splice(map.markersList.indexOf(markersListItemToDelete), 1);
-  //.setMap(null); */
 
-  this.parentNode.remove();
-}
+  allInputButtonsInForm.forEach(button => (button.innerHTML = "Delete"));
+  allInputButtonsInForm[currentLine].addEventListener("click", postTripStep);
+  allInputButtonsInForm[currentLine].innerHTML = "Add";
 
-function refreshMap() {
-  map = new mapHandler("trip_details_map", 5, parisLatLong);
-}
-
-function displayMarker() {}
-
-function displayMapConnections() {
-  if (map.markersList.length >= 2) {
-    for (i = 2; i <= map.markersList.length; i++) {
-      map.displayOrHideMarkers(
-        map.markersList[i - 2].marker,
-        map.markersList[i - 1].marker,
-        "display"
-      );
-    }
-  }
-}
-
-function deleteMapConnections() {
-  if (map.markersList.length >= 2) {
-    for (i = 2; i <= map.markersList.length; i++) {
-      map.displayOrHideMarkers(
-        map.markersList[i - 2].marker,
-        map.markersList[i - 1].marker,
-        "hide"
-      );
-    }
-  }
-}
-
-function sortArrayByDate(Array) {
-  return Array.sort((a, b) => new Date(a) - new Date(b));
+  allUpdateButtonsInForm.forEach((button, index) => {
+    if (index < allUpdateButtonsInForm.length - 1) {
+      console.log(index);
+      button.addEventListener("click", updateTripStep);
+    } else button.style.display = "none";
+  });
 }

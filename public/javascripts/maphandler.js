@@ -28,24 +28,46 @@ class mapHandler {
     });
   }
 
-  addMarker(position, index, newlocation, label) {
-    // console.log("Marker position is " + position);
-
-    console.log("label to mark is " + label);
-
+  addMarker(position, index, newLocation, label, startDate) {
     let marker = new google.maps.Marker({
-      map: this.map,
-      position: position,
-      label: { text: String(label) }
+      position: position
+      //label: this.markersList.length.toString()
     });
 
     //    console.log(newlocation);
-    this.markersList.push({ marker, index, location: newlocation });
+    this.markersList.push({
+      marker,
+      index: index,
+      location: newLocation,
+      startDate: startDate
+    });
+
+    this.sortMarkersByDate();
+
     this.map.setCenter({
       lat: this.markersList[this.markersList.length - 1].marker.position.lat(),
       lng: this.markersList[this.markersList.length - 1].marker.position.lng()
     });
-    //   console.log(this.markersList);
+
+    let markersListSize = this.markersList.length;
+
+    this.markersList.forEach((markerItem, index) => {
+      markerItem.marker.setLabel((index + 1).toString());
+      markerItem.marker.setMap(this.map);
+    });
+
+    this.connectAllMarkers();
+  }
+
+  sortMarkersByDate() {
+    this.markersList = this.markersList.sort((a, b) => {
+      if (
+        convertToJavascriptDateFormat(a.startDate) >
+        convertToJavascriptDateFormat(b.startDate)
+      )
+        return 1;
+      else return -1;
+    });
   }
 
   deleteMarker(index) {
@@ -59,7 +81,7 @@ class mapHandler {
     //console.log(this.markersList);
   }
 
-  displayOrHideMarkers(marker1, marker2, action) {
+  displayOrHideMarkersConnections(marker1, marker2, action) {
     let coordinates = [
       {
         lat: marker1.position.lat(),
@@ -82,5 +104,58 @@ class mapHandler {
     //console.log(action);
     if (action === "display") line.setMap(this.map);
     if (action === "hide") line.setMap(null);
+  }
+
+  displayMarker() {}
+
+  displayMapConnections() {
+    console.log("ready to display connections");
+
+    if (this.markersList.length >= 2) {
+      for (let i = 2; i <= this.markersList.length; i++) {
+        this.displayOrHideMarkersConnections(
+          this.markersList[i - 2].marker,
+          this.markersList[i - 1].marker,
+          "display"
+        );
+      }
+    }
+  }
+
+  deleteMapConnections() {
+    if (map.markersList.length >= 2) {
+      for (i = 2; i <= map.markersList.length; i++) {
+        map.displayOrHideMarkersConnections(
+          map.markersList[i - 2].marker,
+          map.markersList[i - 1].marker,
+          "hide"
+        );
+      }
+    }
+  }
+
+  connectAllMarkers() {
+    console.log("connecting");
+
+    let markersListSize = this.markersList.length;
+    console.log(this.markersList);
+
+    console.log("At this stage, marker list size is " + markersListSize);
+    if (markersListSize > 1) {
+      for (let i = 2; i <= markersListSize; i++) {
+        console.log(
+          "connecting " +
+            this.markersList[i - 1].location +
+            " and " +
+            this.markersList[i - 2].location
+        );
+
+        this.displayOrHideMarkersConnections(
+          this.markersList[i - 2].marker,
+          this.markersList[i - 1].marker,
+          "display"
+        );
+      }
+    }
   }
 }

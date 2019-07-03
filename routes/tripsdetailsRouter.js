@@ -19,7 +19,7 @@ router.get("/tripdetails/:trip_id", (req, res, next) => {
     console.log("----------- end in db", tripResponse.end_date);
     let start = changeDateFormat(tripResponse.start_date);
     let end = changeDateFormat(tripResponse.end_date);
-    res.render("tripdetails", { tripResponse, start, end });
+    res.render("tripdetails", { tripResponse, start, end, logInText });
   });
 });
 

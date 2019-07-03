@@ -11,4 +11,10 @@ router.get("/steps/:step_id", (req, res, next) => {
   });
 });
 
+router.patch("/steps/:id", (req, res, next) => {
+  stepHandler.updateOne({ _id: req.params.id }, req.body, dbRes => {
+    res.send(dbRes);
+  });
+});
+
 module.exports = router;

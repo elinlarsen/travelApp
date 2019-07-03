@@ -24,6 +24,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+//Checking status for every route
+
 // Express View engine setup
 app.use(
   require("node-sass-middleware")({
@@ -41,16 +43,29 @@ app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 hbs.registerPartials(__dirname + "/views/partials");
 
 //session
-/*
-app.use(session({
-  secret: "basic-auth-secret",
-  cookie: { maxAge: 60000 },
-  store: new MongoStore({
-    mongooseConnection: mongoose.connection,
-    ttl: 24 * 60 * 60 // 1 day
+
+app.use(
+  session({
+    secret: "basic-auth-secret",
+    cookie: { maxAge: 60000 },
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection,
+      ttl: 24 * 60 * 60 // 1 day
+    })
   })
-}));
-*/
+);
+
+app.use(function(req, res, next) {
+  let logInStatus;
+
+  if (req.session) {
+    logInStatus = req.session.currentUser ? true : false;
+    if (logInStatus) logInText = "Hello " + req.session.currentUser.username;
+    else logInText = "Please sign in or create an account";
+  }
+
+  next();
+});
 
 // default value for title local
 app.locals.title = "Travel App";
