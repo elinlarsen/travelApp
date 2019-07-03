@@ -1,8 +1,12 @@
 
 {{>nav}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
-<script type = "module" src="../javascripts/trips.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script>
+
+<!-- <script src="../javascripts/trips.js"></script> -->
 <script src="../javascripts/lightpick.js"></script>
+<script src="../javascripts/jquery.flexdatalist.min.js"></script>
+
 
 <div class="big-container product-manage-wrapper flexed-item">
     <h1>Wanna change something about your future trip ? </h1>
@@ -29,6 +33,24 @@
         </div>
 
         <div class="form-item-wrapper">
+            <label for="countries" class="label-name label">Which countries do you plan to visit ?</label>
+            <br>
+            <input type='text'
+                name='countries'
+                data-value-property='name'
+                data-data='countries.json'
+                class='flexdatalist input-text input'
+                data-search-in='name'
+                multiple='multiple'
+                placeholder='Write one or multiple country names'
+                data-visible-properties='["name","capital","continent"]'
+                data-selection-required='true'
+                data-min-length='1'
+                data-toggle-selected='true'              
+                >  
+        </div>
+
+        <div class="form-item-wrapper">
             <label for="picture" class="label-name label">Upload a picture !</label>
             <br>
             <input type="file" name="picture" class="input-text input" placeholder={{trip.picture}}>
@@ -50,5 +72,16 @@
     field: document.getElementById('date-picker-end'),
     format: 'MM/DD/YYYY'
      });
+
+    $('.flexdatalist').flexdatalist({       
+    valueProperty: 'name',
+    searchIn: 'name',
+    data: 'countries.json',
+
+    //minLength: 1,
+    //selectionRequired: true,
+    //visibleProperties: ["name","capital","continent"],
+     });
+
 </script>
 

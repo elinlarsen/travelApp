@@ -1,7 +1,7 @@
 const currentURL = window.location.pathname;
 const userAjaxHandler = new ajaxHandler("http://localhost:3000", "/userData");
 
-import Match from './Match.js'
+//import Match from './Match.js'
 
 
 
