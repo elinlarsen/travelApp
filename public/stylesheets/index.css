@@ -13,19 +13,12 @@
 
 :root {
   --nav: #29293d;
-  --trip-container: #3f51b5;
-  --nav-hover: gray;
+  --trip-container: #29293d;
+  --nav-hover: grey;
   --text-color: white;
+  --background: #faf9f8;
+  --dark-background: #e0dcdc;
 }
-
-/*
-color : color: #343a40;
-    background-color: #faf9f8
-    color: #12b886;
-     color: #0b7253;
-     #faf9f8
-
-*/
 
 * {
   box-sizing: border-box;

@@ -28,10 +28,11 @@ function createTripContainer(tripInfoObject){
     let tripContainerEl=document.createElement("div");    
     tripContainerEl.className="wrapper-trip-container";
     tripContainerEl.id=tripInfoObject._id;
+    //<div class="trip-container" style="background-image: url(${tripInfoObject.picture})"> 
     tripContainerEl.innerHTML=`  
-     <div class="trip-container" style="background-image: url(${tripInfoObject.picture})"> 
-     ${tripInfoObject.name} 
-    </div>
+    <img  class="trip-container"src='${tripInfoObject.picture}' >
+    
+    <span> ${tripInfoObject.name}  </span>
 
     <div class="cta-trip visible" >
         <a href="/tripdetails/${tripInfoObject._id}" class="fa fa-eye table-icon" ></a> 
