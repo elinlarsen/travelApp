@@ -7,9 +7,9 @@
 <script src="../javascripts/lightpick.js"></script>
 <script src="../javascripts/jquery.flexdatalist.min.js"></script>
 
-
+<div class="main-body">
 <div class="big-container product-manage-wrapper flexed-item">
-    <h1>Wanna change something about your future trip ? </h1>
+    <h1>Edit your trip!</h1>
     
     <form action="/tripsData/{{trip._id}}" method="POST" class="add-trip-form" enctype="multipart/form-data">
         <div class="form-item-wrapper">
@@ -18,18 +18,16 @@
             <input type="text" name="name" class="input-text input" placeholder="e.g Madagascar 2019" value={{trip.name}}>
         </div>
 
-        <div class="form-item-wrapper">
-            
+        <div class="form-item-wrapper"> 
             <label for="start_date" class="label-name label">When does it start?</label>
             <br>
-            <input type="text" id="date-picker-start" name="start_date" class="input-text input"  value={{start}}><p id="result-start"></p>
+            <input type="text" id="date-picker-start" name="start_date" class="input-text input"  value={{start}}>
         </div>
 
         <div class="form-item-wrapper">
             <label for="end_date" class="label-name label">When does it end?</label>
             <br>
             <input type="text" id="date-picker-end" name="end_date" class="input-text input"  value={{end}}>
-            <p id="result-end">  </p>
         </div>
 
         <div class="form-item-wrapper">
@@ -59,9 +57,9 @@
         <button id="edit-trip-button" class="button-primary">Save changes</button>
 
     </form>
-
 </div>
-
+</div>
+{{>footer}}
 <script>
    new Lightpick({
     field: document.getElementById('date-picker-start'),
@@ -84,4 +82,5 @@
      });
 
 </script>
+
 

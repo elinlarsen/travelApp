@@ -1,13 +1,28 @@
-#wrapper-trip-details {
-  height: 90vh;
+#img-background{
+  height: 30vh;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
+#wrapper-trip-details {
+  display: flex; 
+  flex-flow : column; 
+  justify-content: center; 
+  align-items: center; 
+  width: 100%; 
+  margin: 0; 
+  padding: 0;
+}
+
 #trip_details_container {
+  width: 90%; 
+  height: 50vh;
   display: flex;
-  height: 75vh;
-  /*background-color: lightgrey;*/
+  flex-flow: row nowrap; 
+  justify-content: space-around; 
+  align-items: flex-start; 
+   /*height: 50vh;
+  background-color: lightgrey;*/
 }
 
 #trip_details_form_container {

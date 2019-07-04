@@ -1,0 +1,28 @@
+.footer {
+  bottom: 0;
+  position: fixed;
+  height: 5vh;
+  width: 100%;
+  background: black;
+  color: var(--text-color);
+}
+
+footer p {
+  font-size: 1rem;
+  padding-left: 2vw; 
+}
+
+footer a{
+  font-size: 1rem;
+  padding-right: 2vw;
+  text-decoration: none; 
+  color : var(--text-color)
+}
+
+.footer.flexed-item{
+  display : flex; 
+  flex-flow: row nowrap;
+  justify-content: space-between; 
+  align-items: center; 
+
+}

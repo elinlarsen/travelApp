@@ -1,5 +1,6 @@
 @import "./main.css";
 @import "./nav.css";
+@import "./footer.css";
 @import "./tripdetails.css";
 @import "./utilityclasses.css";
 @import "./trips.css"; 
@@ -9,21 +10,30 @@
 @import "./friends.css";
 @import "jquery.flexdatalist.min.css";
 
+/*
+color : color: #343a40;
+    background-color: #faf9f8
+    color: #12b886;
+     color: #0b7253;
+     #faf9f8
 
+*/
 
 :root {
   --nav: #29293d;
-  --trip-container: #3f51b5;
-  --nav-hover: gray; 
+  --trip-container: #29293d;
+  --nav-hover: grey; 
   --text-color : white; 
+  --background: #faf9f8; 
 
 
 }
 
 * {
   box-sizing: border-box;
-  font-family: 'Source Sans Pro', sans-serif;
-  /*font-family: "Nunito", sans-serif;*/
+  /*font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Nunito", sans-serif;*/
+  font-family: monospace; 
 }
 
 
@@ -34,14 +44,19 @@ body{
 
 h1{
     text-align: center; 
-    font-size: 2.5em;
+    font-size: 2em;
+    padding-top : 3vh;
+    padding-bottom : 2vh;
     margin:0;
-    padding-top: 2% ;
-    padding-bottom: 1%; 
 }
 
+.main-body{
+  padding-top : 10vh; /*because of the fixed nav bar*/
+  background-color : var(--background);
+  height: 100vh; 
+}
 
-.main_background {
+.main_background{
   background-image: url("../images/cover2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
