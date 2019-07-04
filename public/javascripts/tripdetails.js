@@ -8,7 +8,7 @@ const tripDetailsAjaxHandler = new ajaxHandler(
   "http://localhost:3000",
   "/tripdetails"
 );
-const tripAjaxHandler = new ajaxHandler("http://localhost:3000", "/tripsdata");
+const tripAjaxHandler = new ajaxHandler("http://localhost:3000", "tripsData");
 const stepsAjaxHandler = new ajaxHandler("http://localhost:3000", "/steps");
 
 document.addEventListener("DOMContentLoaded", () => {

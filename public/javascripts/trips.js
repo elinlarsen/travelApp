@@ -5,7 +5,10 @@ const usersDataAjaxHandler = new ajaxHandler("http://localhost:3000","/usersData
 
 
 const u= "users";
-const userId = currentURL.substring(currentURL.indexOf(u) + u.length);
+const t="trips"; 
+console.log("currentURL",currentURL )
+const userId = currentURL.substring(currentURL.indexOf(u) + u.length+1,currentURL.length-u.length-1 );
+console.log("userId",userId)
 
 // --------- Event Listener ---------
 document.addEventListener("DOMContentLoaded", () => {
@@ -14,11 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 // --------- Creating and delement DOM elements ---------
-function showPublicTrips(){ 
-    
+function showPublicTrips(){    
     tripsDataAjaxHandler.getAll(trips => {
-        trips.forEach( trip => createTripContainer(trip))
-        
+        trips.forEach( trip => createTripContainer(trip))        
     }) 
 }
 

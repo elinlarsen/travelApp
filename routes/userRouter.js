@@ -17,13 +17,13 @@ router.get("/signup", (req, res, next) => {
 
 router.post("/signup", upload.single("picture"), (req, res, next) => {
   const { first_name, last_name, username, email, password } = req.body;
-  picture = `../uploads/${req.file.filename}`;
+  picture = `/../uploads/${req.file.filename}`;
 
   console.log(req.body);
   userModel
     .findOne({ first_name: first_name, last_name: last_name })
     .then(queryResult => {
-      console.log("q" + queryResult);
+      console.log("queryResult (the user exist or not ?)" + queryResult);
       if (queryResult !== null) {
         console.log("user found");
         res.render("auth/signup", {
@@ -43,7 +43,7 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
         //console.log (userObject);
         userModel
           .create(user)
-          .then(() => {
+          .then((dbRes) => {
             req.session.currentUser = user;
             req.session.picture = user.picture;
 
@@ -51,24 +51,24 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
             logInLink = "/trips";
             logInPicture = user.picture;
 
-            res.render("trips", {
+            /*res.render("trips", {
               logInText,
               logInLink,
               logInPicture
             });
-
-            console.log("Account created");
+            */
+            res.redirect(`/users/${dbRes._id}/trips/`)
+            console.log("Account created ---- dbres", dbRes);
           })
-          .catch(err => console.log("sign up did not work"));
+          .catch(err => console.log("sign up did not work", err));
       }
     })
     .catch(err => "username query does not work");
 
-  /*    userHandler.createOne(req.body, response => {
-    console.log(req.body);
-    console.log("entry created");
-  }); */
 });
+
+
+
 
 router.get("/login", (req, res, next) => {
   res.render("auth/login");
@@ -76,7 +76,7 @@ router.get("/login", (req, res, next) => {
 
 router.post("/login", (req, res, next) => {
   const { email, password } = req.body;
-  //console.log(req.body)
+  
   userModel.findOne({ email }).then(user => {
     if (!user) {
       console.log("no user ");
@@ -88,8 +88,7 @@ router.post("/login", (req, res, next) => {
       });
     } else {
       if (bcrypt.compareSync(password, user.password)) {
-        //let logInStatus = req.session.currentUser ? true : false;
-
+      
         req.session.currentUser = user;
         req.session.picture = user.picture;
 
@@ -97,11 +96,7 @@ router.post("/login", (req, res, next) => {
         logInLink = "/trips";
         logInPicture = user.picture;
 
-        res.render("trips", {
-          logInText,
-          logInLink,
-          logInPicture
-        });
+        res.redirect(`/users/${user._id}/trips`);
       } else {
         console.log("error pwd");
         res.render("auth/login", { errorMessage: "Incorrect password !" });
@@ -113,7 +108,9 @@ router.post("/login", (req, res, next) => {
 // -----------------------  FRIENDS -----------------------
 router.get("/friends", (req, res, next) => {
   // -----------------------  INSERT FAKE DATA -----------------------
-  //try{userHandler.insertMany(fakeUsers, dbres =>{res.render("friends")})}
+  //try{
+    userHandler.insertMany(fakeUsers, dbres =>{res.render("friends")})
+  //}
   //catch{
   res.render("friends", { logInText, logInPicture, logInLink });
   //}
@@ -134,8 +131,10 @@ router.get("/usersData/:id", (req, res, next) => {
 });
 
 router.get("/logout", (req, res, next) => {
-  req.session.currentUser = null;
-  res.redirect("/");
+  req.session.destroy((err) => {
+    console.log("logout")
+    res.render("auth/login")
+  });
 });
 
 module.exports = router;

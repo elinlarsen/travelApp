@@ -38,7 +38,10 @@ router.get("/trips", (req, res) => {
   //todo : create route /users/:id/trips
 
 router.get("/users/:id/trips", (req, res) => {
-  res.render("trips")
+  res.render("trips", {
+    logInText,
+    logInLink,
+    logInPicture})
 });  
 // /tripsdetails/:id
 
@@ -63,7 +66,7 @@ router.post("/trip_add", upload.single("picture"), (req, res) => {
     start_date: req.body.start_date,
     end_date: req.body.end_date,
     countries: countriesArr,
-    picture: `../uploads/${req.file.filename}`
+    picture: `/../uploads/${req.file.filename}`
   });
   tripHandler.createOne(newTrip, dbres => {
     console.log("dbres -------", dbres);
@@ -81,8 +84,7 @@ router.get("/trip_edit/:trip_id", (req, res) => {
     console.log("start-------", start, "--------end--------", end);
     res.render(
       "editTripForm",
-      { trip, start, end },
-      { logInText, logInPicture, logInLink }
+      { trip, start, end, logInText, logInPicture, logInLink }
     );
   });
 });
@@ -95,7 +97,7 @@ router.post("/tripsData/:id", upload.single("picture"), (req, res) => {
     _id: req.params.id,
     countries: countriesArr,
     name: req.body.name,
-    picture: `../uploads/${req.file.filename}`,
+    picture: `/../uploads/${req.file.filename}`,
     start_date: req.body.start_date,
     end_date: req.body.end_date
   });
@@ -104,7 +106,10 @@ router.post("/tripsData/:id", upload.single("picture"), (req, res) => {
   console.log("END DATE ------", req.body.end_date);
   tripHandler.updateOne(ID, editedTrip, dbRes => {
     console.log("Edited trip patched! ---------------- edited Trip : ", dbRes);
-    res.redirect("/trips");
+    console.log("req.session.currentUser", req.session.currentUser)
+    let ID=req.session.currentUser._id;
+    
+    res.redirect(`/users/${ID}/trips/`);
   });
 });
 

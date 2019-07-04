@@ -12,7 +12,7 @@ router.get("/tripdetails/:trip_id", (req, res, next) => {
       start_date: "01.02.2020",
       end_date: "01.03.2020"
     }); */
-
+console.log("req.params.trip_id", req.params.trip_id)
   tripHandler.getOneById(req.params.trip_id, tripResponse => {
     console.log("-----------", tripResponse);
     console.log("----------- start in db", tripResponse.start_date);
@@ -35,7 +35,7 @@ router.post("/tripdetails", (req, res, next) => {
   stepHandler.createOne(req.body, dbRes => res.send(dbRes._id));
 });
 
-router.patch("/tripsdata/:id", (req, res, next) => {
+router.patch("/tripsData/:id", (req, res, next) => {
   tripHandler.updateOne({ _id: req.params.id }, req.body, dbRes => {
     res.send(dbRes);
   });

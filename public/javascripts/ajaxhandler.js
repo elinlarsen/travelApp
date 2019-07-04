@@ -23,7 +23,7 @@ class ajaxHandler {
         clbk(serverRes.data);
       })
       .catch(serverErr =>
-        console.log("ERROR WHILE GETTING ONE DATA : ", serverErr)
+        console.log("ajaxhandler getOne function error : ERROR WHILE GETTING ONE DATA : ", serverErr)
       );
   }
 
