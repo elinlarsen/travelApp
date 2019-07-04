@@ -1,25 +1,36 @@
 
 const currentURL = window.location.pathname;
 const tripsDataAjaxHandler = new ajaxHandler("http://localhost:3000","/tripsData");
+const usersDataAjaxHandler = new ajaxHandler("http://localhost:3000","/usersData");
 
+
+const u= "users";
+const t="trips"; 
+console.log("currentURL",currentURL )
+const userId = currentURL.substring(currentURL.indexOf(u) + u.length+1,currentURL.length-u.length-1 );
+console.log("userId",userId)
 
 // --------- Event Listener ---------
 document.addEventListener("DOMContentLoaded", () => {
-    showTrips();
+    // have to catch the url and depinding on the url, function showTrips (public) or function showUserTrips()
+    !userId ? showPublicTrips(): showUserTrips(userId)
 })
 
 // --------- Creating and delement DOM elements ---------
-function showTrips(){ 
-    
+function showPublicTrips(){    
     tripsDataAjaxHandler.getAll(trips => {
-        trips.forEach( trip => createTripContainer(trip))
-        
-        const trashButtons=document.querySelectorAll(".fa-trash")
-        trashButtons.forEach(link => {
-            //console.log(link)
-            link.onclick = deleteTripElement;
-        })
+        trips.forEach( trip => createTripContainer(trip))        
     }) 
+}
+
+function showUserTrips(userId){
+    usersDataAjaxHandler.getOne(userId, dbRes => {
+        dbRes.trips.forEach ( userTrip => {
+            createTripContainer(userTrip)
+        })
+    })
+    const trashButtons=document.querySelectorAll(".fa-trash")
+    trashButtons.forEach(link => {link.onclick = deleteTripElement})
 }
 
 
