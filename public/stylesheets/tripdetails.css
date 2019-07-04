@@ -5,7 +5,7 @@
 #img-background {
   height: 30vh;
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: 100%;
 }
 
 #wrapper-trip-details {
@@ -121,4 +121,13 @@
   height: 20vh;
   border-bottom-style: solid;
   border-bottom-color: black;
+}
+
+.title {
+  width: 60%;
+  text-align: center;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px;
+  border-bottom-style: solid;
 }

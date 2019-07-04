@@ -20,10 +20,11 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
   picture = `../uploads/${req.file.filename}`;
 
   console.log(req.body);
+
   userModel
     .findOne({ first_name: first_name, last_name: last_name })
     .then(queryResult => {
-      console.log("q" + queryResult);
+      console.log("query result " + queryResult);
       if (queryResult !== null) {
         console.log("user found");
         res.render("auth/signup", {
@@ -43,11 +44,11 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
         //console.log (userObject);
         userModel
           .create(user)
-          .then(() => {
+          .then(dbRes => {
             req.session.currentUser = user;
             req.session.picture = user.picture;
 
-            logInText = "Welcome " + req.session.currentUser.username;
+            logInText = "Welcome " + req.session.currentUser.first_name;
             logInLink = "/trips";
             logInPicture = user.picture;
 
@@ -57,17 +58,12 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
               logInPicture
             });
 
-            console.log("Account created");
+            console.log("Account created" + dbRes);
           })
           .catch(err => console.log("sign up did not work"));
       }
     })
     .catch(err => "username query does not work");
-
-  /*    userHandler.createOne(req.body, response => {
-    console.log(req.body);
-    console.log("entry created");
-  }); */
 });
 
 router.get("/login", (req, res, next) => {
@@ -93,7 +89,7 @@ router.post("/login", (req, res, next) => {
         req.session.currentUser = user;
         req.session.picture = user.picture;
 
-        logInText = "Welcome " + req.session.currentUser.username;
+        logInText = "Welcome " + req.session.currentUser.first_name;
         logInLink = "/trips";
         logInPicture = user.picture;
 

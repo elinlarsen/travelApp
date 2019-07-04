@@ -61,7 +61,7 @@ app.use(function(req, res, next) {
   if (req.session) {
     logInStatus = req.session.currentUser ? true : false;
     if (logInStatus) {
-      logInText = "Hello " + req.session.currentUser.username;
+      logInText = "Hello " + req.session.currentUser.first_name;
       logInPicture = req.session.currentUser.picture;
       logInLink = "/trips";
       console.log("Picture for hello is " + logInPicture);
