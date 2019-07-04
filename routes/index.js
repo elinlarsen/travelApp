@@ -6,8 +6,7 @@ tripHandler = new dbHandler(tripModel);
 const stepsModel = require("../models/Step.js");
 stepHandler = new dbHandler(stepsModel);
 
-
-// -----------------------  main pages ----------------------- 
+// -----------------------  main pages -----------------------
 
 router.get("/", (req, res, next) => {
   res.render("index");
@@ -17,11 +16,9 @@ router.get("/main", (req, res, next) => {
   res.render("main");
 });
 
-// ----------------------- ABOUT ----------------------- 
+// ----------------------- ABOUT -----------------------
 router.get("/about", (req, res, next) => {
   res.render("about");
 });
-
-
 
 module.exports = router;

@@ -1,33 +1,38 @@
-#img-background{
+#wrapper_all_trips {
+  height: 90vh;
+}
+
+#img-background {
   height: 30vh;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
 #wrapper-trip-details {
-  display: flex; 
-  flex-flow : column; 
-  justify-content: center; 
-  align-items: center; 
-  width: 100%; 
-  margin: 0; 
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0;
   padding: 0;
 }
 
 #trip_details_container {
-  width: 90%; 
+  width: 90%;
   height: 50vh;
   display: flex;
-  flex-flow: row nowrap; 
-  justify-content: space-around; 
-  align-items: flex-start; 
-   /*height: 50vh;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  /*height: 50vh;
   background-color: lightgrey;*/
 }
 
 #trip_details_form_container {
   display: flex;
   flex-direction: column;
+  height: 60vh;
 }
 
 .trip_details_form_labels,
@@ -36,19 +41,18 @@
   justify-content: space-between;
   text-align: center;
   padding: 5px 0px;
-  
 }
 
 .trip_details_form_labels .header {
   width: 19%;
+  color: black;
   text-align: center;
   border-bottom: solid;
   border-width: 1px;
-  font-size : 1.3em; 
-  color : white;
+  font-size: 1.3em;
 }
 
-.invisible{
+.invisible {
   visibility: hidden;
 }
 
@@ -60,21 +64,35 @@
 
 #trip_details_form {
   padding: 5px;
-  
 }
 
 .trip_details_form input,
-.trip_details_form button {
+.trip_details_form .button_container {
   width: 19%;
   text-align: center;
   border-radius: 5px;
   padding: 3px 0px;
   border-style: none;
-  font-size : 1em; 
+  font-size: 1em;
+}
+
+.button_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.trip_details_form button {
+  width: 45%;
+  text-align: center;
+  border-radius: 5px;
+  padding: 3px 0px;
+  border-style: none;
+  font-size: 1em;
 }
 
 #trip_details_map {
   width: 50%;
+  height: 50vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,9 +106,19 @@
   font-weight: bold;
   font-size: 20px;
   border-radius: 20px;
-
 }
 
 .blank {
   background-color: lightgray;
+}
+
+.title h1 {
+  border-bottom-style: solid;
+  border-bottom-color: black;
+}
+
+.image_banner {
+  height: 20vh;
+  border-bottom-style: solid;
+  border-bottom-color: black;
 }

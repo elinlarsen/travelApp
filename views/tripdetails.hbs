@@ -8,33 +8,33 @@
 
 <div class="main-body">
 
-    <div id="img-background" style="background-image: url({{tripResponse.picture}})">
-    </div>
-       
-    <div id="wrapper-trip-details">
-      <section class='title'>
-          <h2>{{tripResponse.name}} </h2>
-          <span>from {{start}} to {{end}} </span> <br>
-          <span>visiting {{tripResponse.countries}}  </span>
-      </section>
+  <div id="img-background" style="background-image: url({{tripResponse.picture}})">
+  </div>
 
-      <div id="trip_details_container" class="medium_padding">
-            <div id="trip_details_form_container" class="medium_padding">
-                  <div class="trip_details_form_labels">
-                    <div class="header"> Start </div>
-                    <div class="header"> End </div>
-                    <div class="header"> What </div>
-                    <div class="header"> Where </div>
-                    <div class="header invisible"> </div>
-                    <!--<div class="header"> Add </div>-->
-                  </div>
+  <div id="wrapper-trip-details">
+    <section class='title'>
+      <h2>{{tripResponse.name}} </h2>
+      <span>from {{start}} to {{end}} </span> <br>
+      <span>visiting {{tripResponse.countries}} </span>
+    </section>
 
-                  <form class="trip_details_form"></form>
-            </div>
-                <div id="trip_details_map">  Trip details map</div>  
-          </div>
+    <div id="trip_details_container" class="medium_padding">
+      <div id="trip_details_form_container" class="medium_padding">
+        <div class="trip_details_form_labels">
+          <div class="header"> Start </div>
+          <div class="header"> End </div>
+          <div class="header"> What </div>
+          <div class="header"> Where </div>
+          <div class="header invisible"> </div>
+          <!--<div class="header"> Add </div>-->
+        </div>
+
+        <form class="trip_details_form"></form>
+
+      </div>
+      <div id="trip_details_map"> Trip details map</div>
     </div>
+
+  </div>
 </div>
 {{>footer}}
-
-

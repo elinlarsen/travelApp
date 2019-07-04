@@ -3,59 +3,50 @@
 @import "./footer.css";
 @import "./tripdetails.css";
 @import "./utilityclasses.css";
-@import "./trips.css"; 
+@import "./trips.css";
 @import "./addtripform.css";
-@import './button.css';
+@import "./button.css";
 @import "./lightpick.css";
 @import "./friends.css";
+@import "./loginandsignup.css";
 @import "jquery.flexdatalist.min.css";
-
-/*
-color : color: #343a40;
-    background-color: #faf9f8
-    color: #12b886;
-     color: #0b7253;
-     #faf9f8
-
-*/
 
 :root {
   --nav: #29293d;
   --trip-container: #29293d;
-  --nav-hover: grey; 
-  --text-color : white; 
-  --background: #faf9f8; 
-  --dark-background : #e0dcdc; ;
+  --nav-hover: grey;
+  --text-color: white;
+  --background: #faf9f8;
+  --dark-background: #e0dcdc;
 }
 
 * {
   box-sizing: border-box;
   /*font-family: 'Source Sans Pro', sans-serif;
   font-family: "Nunito", sans-serif;*/
-  font-family: monospace; 
+  font-family: monospace;
 }
 
-
-body{
-    margin:0;
-    padding:0;
+body {
+  margin: 0;
+  padding: 0;
 }
 
-h1{
-    text-align: center; 
-    font-size: 2em;
-    padding-top : 3vh;
-    padding-bottom : 2vh;
-    margin:0;
+h1 {
+  text-align: center;
+  font-size: 2em;
+  padding-top: 3vh;
+  padding-bottom: 2vh;
+  margin: 0;
 }
 
-.main-body{
-  padding-top : 10vh; /*because of the fixed nav bar*/
-  background-color : var(--background);
-  height: 100vh; 
+.main-body {
+  padding-top: 10vh; /*because of the fixed nav bar*/
+  background-color: var(--background);
+  height: 100vh;
 }
 
-.main_background{
+.main_background {
   background-image: url("../images/cover2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -100,10 +91,14 @@ h1{
   color: #242222;
   cursor: pointer;
   text-decoration: none;
-  font-size: 1em; 
-  font-weight: bold; 
+  font-size: 1em;
+  font-weight: bold;
 }
 
 .main_link:hover {
   color: black;
+}
+
+#login_status {
+  color: white;
 }
