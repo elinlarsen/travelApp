@@ -32,7 +32,7 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
       } else {
         console.log("I am dealing with a new user");
         const hashpwd = bcrypt.hashSync(password, salt);
-        userObject = {
+        user = {
           first_name,
           last_name,
           username,
@@ -42,9 +42,21 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
         };
         //console.log (userObject);
         userModel
-          .create(userObject)
+          .create(user)
           .then(() => {
-            res.redirect("/trips");
+            req.session.currentUser = user;
+            req.session.picture = user.picture;
+
+            logInText = "Welcome " + req.session.currentUser.username;
+            logInLink = "/trips";
+            logInPicture = user.picture;
+
+            res.render("trips", {
+              logInText,
+              logInLink,
+              logInPicture
+            });
+
             console.log("Account created");
           })
           .catch(err => console.log("sign up did not work"));
@@ -77,10 +89,18 @@ router.post("/login", (req, res, next) => {
     } else {
       if (bcrypt.compareSync(password, user.password)) {
         //let logInStatus = req.session.currentUser ? true : false;
+
         req.session.currentUser = user;
+        req.session.picture = user.picture;
+
         logInText = "Welcome " + req.session.currentUser.username;
+        logInLink = "/trips";
+        logInPicture = user.picture;
+
         res.render("trips", {
-          logInText
+          logInText,
+          logInLink,
+          logInPicture
         });
       } else {
         console.log("error pwd");
@@ -95,7 +115,7 @@ router.get("/friends", (req, res, next) => {
   // -----------------------  INSERT FAKE DATA -----------------------
   //try{userHandler.insertMany(fakeUsers, dbres =>{res.render("friends")})}
   //catch{
-  res.render("friends");
+  res.render("friends", { logInText, logInPicture, logInLink });
   //}
 });
 
@@ -111,6 +131,11 @@ router.get("/usersData/:id", (req, res, next) => {
     console.log("GET ALL ----", resData);
     res.send(resData);
   });
+});
+
+router.get("/logout", (req, res, next) => {
+  req.session.currentUser = null;
+  res.redirect("/");
 });
 
 module.exports = router;
