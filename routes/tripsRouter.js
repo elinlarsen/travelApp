@@ -52,15 +52,17 @@ router.get("/trip_add", (req, res) => {
 router.post("/trip_add", upload.single("picture"), (req, res) => {
     let countriesArr = req.body.countries.split(",")
     console.log("countries -------", countriesArr)
-  const newTrip = new tripModel({
-      countries: countriesArr,
-      name: req.body.name,
-      picture: `../uploads/${req.file.filename}`,
-      start_date: req.body.start_date,
-      end_date: req.body.end_date
-    });
     console.log("req.body -----------", req.body)
-    tripHandler.createOne(newTrip, dbres => res.redirect('/trips'))
+  const newTrip = new tripModel({    
+      name: req.body.name,
+      start_date: req.body.start_date,
+      end_date: req.body.end_date,
+      countries: countriesArr,
+      picture: `../uploads/${req.file.filename}`,
+    });
+    tripHandler.createOne(newTrip, dbres => {
+      console.log("dbres -------", dbres)
+      res.redirect('/trips')})
 });
 
 
@@ -88,6 +90,7 @@ router.post("/tripsData/:id", upload.single("picture"), (req, res) => {
       start_date: req.body.start_date,
       end_date: req.body.end_date
     });
+    console.log("ID ----------- ",ID)
     console.log("START DATE ------", req.body.start_date)
     console.log("END DATE ------", req.body.end_date)
     tripHandler.updateOne(ID, editedTrip, dbRes => {
