@@ -1,54 +1,48 @@
 <nav id="main_nav">
 
   <div id="options_container">
-
-    <ul>
-      <!--
-      <li> <a href="/trips">Plan your trip </a>  </li>
-      <li> <a href="/share">Share your trips  </a></li>
-      <li> <a href="/friends"> Your trip buddies</a> </li>
-      <li> <a href="/trips"> Your trip journals</a> </li>
-      <li> <a href="/trips"> Dashboard </a></li>
-      -->
-      <li>
         <a href="/users/{{userId}}/trips">
           <i class=" icon fa fa-suitcase"></i>
           <span class="onhover">Plan a trip</span>
         </a>
 
-      </li>
-      <li>
         <a href="/users/{{userId}}/friends">
           <i class="icon fa fa-users"></i>
           <span class="onhover">Your network</span>
         </a>
-      </li>
-      <li>
+
         <a href="/users/{{userId}}/share">
           <i class="icon fa fa-share-alt"></i>
           <span class="onhover">Share a trip</span>
         </a>
 
-      </li>
-      <li>
+
         <a href="/users/{{userId}}/add_friends">
           <i class="icon fa fa-user-plus"></i>
           <span class="onhover">Add a friend</span>
         </a>
-
-      </li>
-
-
-
-    </ul>
-
   </div>
 
   <div id="log_details">
 
-    <a id="login_status" href="{{logInLink}}"> {{logInText}} </a>
-    <div id="small_picture"> <img id="log_image" src="{{logInPicture}}"> </div>
-    <a href="/logout" id="logoutlink"> <i id="signout" class="fa fa-sign-out"></i> </a>
+
+        <div class="login-wrapper">
+            <a   id="login_status" href="{{logInLink}}"> {{logInText}} </a>
+            <img class ="icon" id="log_image" src="{{logInPicture}}"> 
+            <!-- <span class="onhover"> Your profile</span>
+            <div id="small_picture">        
+            </div>   -->
+        </div>
+       
+
+
+    <div class ="logout">
+        <a class="logout-icon" href="/logout" id="logoutlink"> <i id="signout" class=" icon fa fa-sign-out"></i> </a>
+       <!-- <span class="onhover"> Sign out</span> -->
+    </div>
+    
+
+        
 
   </div>
 

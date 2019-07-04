@@ -1,17 +1,13 @@
-#options_container ul li a i {
-  color: white;
-  font-size: 1.5rem;
-  padding-left: 3vw;
-}
 #main_nav {
   display: flex;
+  justify-content: space-between;
+  flex-flow : row; 
+  align-items: flex-start;
   position: fixed;
   width: 100%;
-  justify-content: space-between;
-  align-items: center;
   background-color: black;
   color: var(--nav-text);
-  padding: 1vh 0px;
+  padding-top: 3vh;
 }
 
 #options_container {
@@ -22,7 +18,7 @@
   justify-content: flex-start;
   align-items: center;
 }
-
+/*
 #options_container ul {
   display: flex;
   justify-content: flex-start;
@@ -32,8 +28,70 @@
 
 #options_container ul li {
   list-style: none;
-  /*padding: 2vw;*/
+  /*padding: 2vw;
   cursor: pointer;
+}
+
+#log_details i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 2rem;
+  color: white;
+  /*padding: 0 2vw;
+  width: 50%;
+}
+
+
+#log_details,
+#log_details a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+    font-size: 16px;
+}
+*/
+
+#log_details {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+  align-items: flex-start; 
+  text-decoration: none;
+  padding: 0px;
+  width: 40vw; 
+}
+
+.logout a{
+  display: flex;
+  flex-flow: column nowrap; 
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  font-size: 35px;
+  color : white; 
+  padding: 0 3vw; 
+  padding-top: 0.5vw; 
+}
+
+
+
+#options_container a {
+  display: flex;
+  flex-flow: column; 
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  color: var(--nav-text);
+  padding: 0px 1vw;
+}
+
+#options_container a i {
+  color: white;
+  font-size: 1.5rem;
+  /*padding-left: 3vw;*/
 }
 
 .onhover {
@@ -45,42 +103,18 @@
   visibility: visible;
 }
 
-#options_container ul li a:hover,
+#options_container  a:hover,
 #log_details p:hover {
   color: var(--nav-hover);
 }
 
-#options_container ul li a {
-  display: flex;
-  /* flex-flow: column; */
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  color: var(--nav-text);
-  padding: 0px 1vw;
-}
 
-#log_details {
-  display: flex;
-  justify-content: flex-end;
-  /*width: 20%;*/
-  padding: 0px;
-}
-
-#log_details i {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  font-size: 2rem;
-  color: white;
-  padding: 0 2vw;
-}
 
 #small_picture {
   display: flex;
+  flex-flow: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   padding: 1vw;
 }
 
@@ -90,22 +124,21 @@
   border-radius: 40px;
 }
 
-#log_details {
-  width: 30%;
-}
 
-#log_details,
-#log_details a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-}
-
-#log_details a {
-  font-size: 16px;
-}
-
-#logoutlink {
+/*#logoutlink {
   justify-self: end;
+}*/
+
+.login-wrapper{
+
+  min-width: 12vw; 
+  display : flex; 
+  flex-flow: row nowrap; 
+  justify-content: space-evenly; 
+  align-items: center; 
+}
+
+#login_status{
+  width: 100%; 
+  padding: 0 2vw; 
 }

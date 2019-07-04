@@ -44,7 +44,8 @@ h1 {
 .main-body {
   padding-top: 10vh; /*because of the fixed nav bar*/
   background-color: var(--background);
-  height: 100vh;
+  min-height: 100vh;
+  max-height: fit-content; 
 }
 
 .main_background {

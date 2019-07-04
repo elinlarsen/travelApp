@@ -18,12 +18,7 @@ export default class {
 
     matchTripsPair(trip1, trip2){
         var matchCountries=false; 
-        var matchDates = {
-            country: "",
-            meetup:"false",
-            recommandation: "false",
-            advisor:null,
-        }
+        var matchDates = {};
         let countries1=trip1.countries; 
         let countries2=trip2.countries;
         let start1=changeDateFormat(trip1.start_date);
@@ -43,7 +38,7 @@ export default class {
 */
         countries1.forEach( (country, index) => {
             country=country.replace(/\s/g, '');
-            countries1.forEach(country2 =>{
+            countries2.forEach(country2 =>{
                 country2=country2.replace(/\s/g, '')  
                 if(country2==country && country!=""){
                     //console.log("matched for country -------", country)
