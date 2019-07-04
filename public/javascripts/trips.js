@@ -7,7 +7,7 @@ const usersDataAjaxHandler = new ajaxHandler("http://localhost:3000","/usersData
 const u= "users";
 const t="trips"; 
 console.log("currentURL",currentURL )
-const userId = currentURL.substring(currentURL.indexOf(u) + u.length+1,currentURL.length-u.length-1 );
+const userId = currentURL.substring(currentURL.indexOf(u) + u.length+1,currentURL.length-t.length-1 );
 console.log("userId",userId)
 
 // --------- Event Listener ---------
@@ -39,11 +39,16 @@ function createTripContainer(tripInfoObject){
     let tripContainerEl=document.createElement("div");    
     tripContainerEl.className="wrapper-trip-container";
     tripContainerEl.id=tripInfoObject._id;
+    countries=tripInfoObject.countries.join(", ")
+    start=changeDateFormat(tripInfoObject.start_date)
+    end=changeDateFormat(tripInfoObject.start_date)
     //<div class="trip-container" style="background-image: url(${tripInfoObject.picture})"> 
     tripContainerEl.innerHTML=`  
     <img  class="trip-container"src='${tripInfoObject.picture}' >
     
     <span> ${tripInfoObject.name}  </span>
+    <span> in ${countries}  </span>
+    <span> ${start} - ${end}  </span>
 
     <div class="cta-trip visible" >
         <a href="/tripdetails/${tripInfoObject._id}" class="fa fa-eye table-icon" ></a> 

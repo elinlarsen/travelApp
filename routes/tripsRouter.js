@@ -16,6 +16,8 @@ const upload = multer({ dest: "./public/uploads/" });
 const changeDateFormat = require("../utils/changeDateFormat");
 const moment = require("moment");
 
+const ensureAuthenticated=require("../bin/ensureAuth.js")
+
 //-----------------------  INSERT countries in db -----------------------
 //do it once !
 //countryHandler.insertMany(countries, dbres =>console.log("countries inserted in db"))
@@ -27,7 +29,7 @@ router.get("/countries.json", (req, res) => {
   });
 });
 
-router.get("/trip_edit/countries.json", (req, res) => {
+router.get("/trip_edit/countries.json", ensureAuthenticated, (req, res) => {
   countryHandler.getAll(resData => {
     res.send(resData);
   });
@@ -40,10 +42,10 @@ router.get("/trips", (req, res) => {
 
   //todo : create route /users/:id/trips
 
-router.get("/users/:id/trips", (req, res) => {
-  let id=req.params.id;
+router.get("/users/:id/trips", ensureAuthenticated, (req, res) => {
+  let userId=req.params.id;
   res.render("trips", {
-    id,
+    userId,
     logInText,
     logInLink,
     logInPicture})
@@ -52,13 +54,12 @@ router.get("/users/:id/trips", (req, res) => {
 
 router.get("/tripsData", (req, res) => {
   tripHandler.getAll(resData => {
-    //console.log("GET ALL ----",resData)
     res.send(resData);
   });
 });
 
 // ----------------------- ADD TRIP  -----------------------
-router.get("/trip_add/:id", (req, res) => {
+router.get("/trip_add/:id", ensureAuthenticated, (req, res) => {
   let userId = req.session.currentUser._id;
   res.render("newTripForm", { userId,logInText, logInPicture, logInLink });
 });
@@ -95,13 +96,15 @@ router.post("/trip_add/:id", upload.single("picture"), (req, res) => {
 });
 
 //  -----------------------  EDIT TRIP  -----------------------
-router.get("/trip_edit/:trip_id", (req, res) => {
+router.get("/trip_edit/:trip_id", ensureAuthenticated, (req, res) => {
   tripHandler.getOneById(req.params.trip_id, trip => {
     let start = moment().format("L");
-    changeDateFormat(trip.start_date);
+    start=changeDateFormat(trip.start_date);
     let end = moment().format("L");
-    changeDateFormat(trip.end_date);
+    end=changeDateFormat(trip.end_date);
     console.log("start-------", start, "--------end--------", end);
+    console.log("trip", trip)
+    
     res.render(
       "editTripForm",
       { trip, start, end, logInText, logInPicture, logInLink }

@@ -6,6 +6,12 @@
 
 }
 
+span{
+    font-weight: 1;
+    font-size: 1rem; 
+    margin: 0.3vh 0; 
+}
+
 #all-trips{
     display : flex; 
     width : 100%; 
@@ -31,6 +37,7 @@
     flex-flow: row nowrap;
     justify-content: space-between; 
     align-items: center; 
+    margin: 0.6rem 0;
 }
 
 .cta-trip a{

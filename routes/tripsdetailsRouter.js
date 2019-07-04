@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const dbHandler = require("../bin/dblhandler.js");
 const tripModel = require("../models/Trip.js");
-tripHandler = new dbHandler(tripModel);
+const tripHandler = new dbHandler(tripModel);
 const changeDateFormat = require("../utils/changeDateFormat");
+const ensureAuthenticated=require("../bin/ensureAuth.js")
 
 // ----------------------- TRIP DETAILS -----------------------
 router.get("/tripdetails/:trip_id", (req, res, next) => {

@@ -3,10 +3,15 @@ const userAjaxHandler = new ajaxHandler("http://localhost:3000", "/usersData");
 import Match from './Match.js'
 
 
-const currentUserId="5d1c94888bfeca2479ef27ca" // TO CHANGE WHEN THE USER LOGIN and to define
-var currentUser=null;
+const u= "users";
+const f="friends"; 
+console.log("currentURL",currentURL )
+const userId = currentURL.substring(currentURL.indexOf(u) + u.length+1,currentURL.length-f.length-1 );
+console.log("userId",userId)
 
-userAjaxHandler.getOne(currentUserId, result => currentUser=result)
+var currentUser=null;
+//const currentUserId="5d1c94888bfeca2479ef27ca" // TO CHANGE WHEN THE USER LOGIN and to define
+userAjaxHandler.getOne(userId, result => currentUser=result)
 console.log('------------------------------------------------------------')
 
 // as a middleware used in app.js
@@ -28,15 +33,16 @@ function computeMatch(user2, allUsers){
                     let result= {
                         friend,
                         tripPair,
-                        country : matchArray[tripPair].country,
-                        dates : matchArray[tripPair].dates,
-                        advisor: matchArray[tripPair].advisor,
-                        meetup: matchArray[tripPair].meetup,
-                        reco: matchArray[tripPair].reco,
+                        "country" : matchArray[tripPair].country,
+                        "dates" : matchArray[tripPair].dates,
+                        "advisor": matchArray[tripPair].advisor,
+                        "meetup": matchArray[tripPair].meetup,
+                        "reco": matchArray[tripPair].reco,
                     }
                     if(matchArray[tripPair].meetup==true)matchedFriends.push(result)
                     if (matchArray[tripPair].advisor===friend._id)advisors.push(result)
-                    if (matchArray[tripPair].advisor===user2._id)advisees.push(result)                   
+                    if (matchArray[tripPair].advisor===user2._id)advisees.push(result)  
+                    console.log("result --------", result )                 
                 })
             }  
             else { console.log(`${user.username} and ${user2.username} ARE NOT friends`)}            
@@ -79,18 +85,20 @@ function createFriendContainer(userObject){
         let message="";
         console.log("userObject", userObject )   
         console.log("userObject.advisor", userObject.advisor )  
+        console.log("userObject.advisor", userObject.advisor )  
         console.log("userObject.meetup", userObject.meetup)  
-        if (userObject.meetup==true){message= "Meet up in"}
-        else if (userObject.advisor==userObject.friend._id){message = "Get some advice about your next trip in"}
-        else if (userObject.recommandation==true && userObject.advisor!=userObject.friend._id)
-        {message = "Give some advice about his/her next trip in"}
+        if (userObject.meetup==true)
+            {message= "Meet up in"}
+        else if (userObject.advisor==userObject.friend._id)
+            {message = "Get some advice about your trip in"}
+        else if (userObject.reco==true && userObject.advisor!=userObject.friend._id)
+            {message = `Give some advice about ${userObject.friend.username} trip in`}
         friendContainer.innerHTML=`
         <img class="friend-pic round" src=${userObject.friend.picture}>
         <section class="friend-trip-description" id="section-${userObject.friend._id}"> 
             <p class="friend-username" style="text-align: center">${userObject.friend.username}</p> 
             <span class="common-country"> ${message} ${userObject.country}</span>
-            <span class="common-start"> from ${start} </span>
-            <span class="common-end"> to ${end} </span>    
+            <span class="common-start">  ${start} - ${end}</span>  
         </section>`
         //<span class="friend-trip-link"> Look at his ${trip} ! ${end} </span>
         }

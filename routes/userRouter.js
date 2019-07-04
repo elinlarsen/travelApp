@@ -9,6 +9,7 @@ const upload = multer({ dest: "./public/uploads/" });
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 const salt = bcrypt.genSaltSync(bcryptSalt);
+const ensureAuthenticated=require("../bin/ensureAuth.js")
 
 // -----------------------  SIGN UP -----------------------
 router.get("/signup", (req, res, next) => {
@@ -106,15 +107,22 @@ router.post("/login", (req, res, next) => {
 });
 
 // -----------------------  FRIENDS -----------------------
-router.get("/friends", (req, res, next) => {
+router.get("/friends", ensureAuthenticated, (req, res, next) => {
+
   // -----------------------  INSERT FAKE DATA -----------------------
   //try{
-    userHandler.insertMany(fakeUsers, dbres =>{res.render("friends")})
+    //userHandler.insertMany(fakeUsers, dbres =>{res.render("friends")})
   //}
   //catch{
-  res.render("friends", { logInText, logInPicture, logInLink });
+    res.redirect(`/users/${dbRes._id}/friends/`)
+  
   //}
 });
+
+router.get("/users/:id/friends/", ensureAuthenticated, (req, res, next)=>{
+  let userId=req.params.id
+  res.render("friends", { userId, logInText, logInPicture, logInLink });
+})
 
 router.get("/usersData", (req, res, next) => {
   userHandler.getAll(resData => {

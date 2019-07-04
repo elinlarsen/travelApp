@@ -4,7 +4,7 @@ function changeDateFormat(dateMongo){
     let month=date.getMonth()+1
     month=month <10 ? [0, month].join("") : month
     let year=date.getFullYear()
-    return `${day}/${month}/${year}`
+    return `${month}/${day}/${year}`
   
   }
 

@@ -1,49 +1,55 @@
 {{>nav}}
 
-{{errorMessage}}
+<div class="main-body">
 
-<div class="form-header">
+  {{errorMessage}}
 
-  <h1 class="form-title">Start your journey now </h1>
-  <p class="form-subtitle"> Plan trips and travel with your friends </p>
+  <div class="form-header">
+
+    <h1 class="form-title">Start your journey now </h1>
+    <p class="form-subtitle"> Plan trips and travel with your friends </p>
+
+  </div>
+
+  <form action="/signup" method="POST" id="form_user" enctype="multipart/form-data">
+
+    <div class="form-item-wrapper flexed-item">
+      <label for="first_name" class="label-ref label">First Name</label>
+      <input type="text" name="first_name" class="input-text input" placeholder="Albert" value="firstname" required>
+    </div>
+
+    <div class="form-item-wrapper flexed-item">
+      <label for="last_name" class="label-ref label">Last Name</label>
+      <input type="text" name="last_name" class="input-text input" placeholder="Biceps" required value="lastname">
+    </div>
+
+    <div class="form-item-wrapper flexed-item">
+      <label for="username" class="label-ref label">Your username</label>
+      <input type="text" name="username" class="input-text input" placeholder="dummy" value="username">
+    </div>
+
+    <div class="form-item-wrapper flexed-item">
+      <label for="email" class="label-ref label">Email</label>
+      <input type="email" name="email" class="input-text input" placeholder="albert.biceps@gmail.com"
+        value="email@email.com" required>
+    </div>
+    <div class="form-item-wrapper flexed-item">
+      <label for="password" class="label-ref label">Password</label>
+      <input type="password" name="password" class="input-text input" placeholder="••••••" value="test" required>
+    </div>
+
+    <div class="form-item-wrapper">
+      <label for="picture" class="label-name label">Upload a picture !</label>
+      <br>
+      <input type="file" name="picture" class="input-text input" placeholder={{trip.picture}}>
+    </div>
+
+    <button class="button-primary white">Create Account</button>
+  </form>
+  <p class="form-sub-infos">Already have an account ? <a href="/login" class="button-link-form">Sign In</a></p>
+
+  </div>
 
 </div>
 
-<form action="/signup" method="POST" id="form_user" enctype="multipart/form-data">
-
-  <div class="form-item-wrapper flexed-item">
-    <label for="first_name" class="label-ref label">First Name</label>
-    <input type="text" name="first_name" class="input-text input" placeholder="Albert" value="firstname" required>
-  </div>
-
-  <div class="form-item-wrapper flexed-item">
-    <label for="last_name" class="label-ref label">Last Name</label>
-    <input type="text" name="last_name" class="input-text input" placeholder="Biceps" required value="lastname">
-  </div>
-
-  <div class="form-item-wrapper flexed-item">
-    <label for="username" class="label-ref label">Your username</label>
-    <input type="text" name="username" class="input-text input" placeholder="dummy" value="username">
-  </div>
-
-  <div class="form-item-wrapper flexed-item">
-    <label for="email" class="label-ref label">Email</label>
-    <input type="email" name="email" class="input-text input" placeholder="albert.biceps@gmail.com"
-      value="email@email.com" required>
-  </div>
-  <div class="form-item-wrapper flexed-item">
-    <label for="password" class="label-ref label">Password</label>
-    <input type="password" name="password" class="input-text input" placeholder="••••••" value="test" required>
-  </div>
-
-  <div class="form-item-wrapper">
-    <label for="picture" class="label-name label">Upload a picture !</label>
-    <br>
-    <input type="file" name="picture" class="input-text input" placeholder={{trip.picture}}>
-  </div>
-
-  <button class="button-primary white">Create Account</button>
-</form>
-<p class="form-sub-infos">Already have an account ? <a href="/login" class="button-link-form">Sign In</a></p>
-
-</div>
+{{footer}}

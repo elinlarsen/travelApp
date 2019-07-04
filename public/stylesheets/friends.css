@@ -7,13 +7,18 @@
 
 #friends-details-container{
     display : flex; 
-    flex-flow: row nowrap; 
+    width: 80vw;  
+    height: 60vh; 
+    padding: 5vh;
+    flex-flow: row wrap; 
     justify-content: center; 
     align-items: flex-start;
 
 }
 
 #friends_labels-container{
+    padding-top: 2vh;
+    padding-bottom: 4vh;
     display : flex; 
     flex-flow: row nowrap; 
     justify-content: center; 
@@ -21,7 +26,8 @@
 }
 
 .friend-wrapper{
-    padding: 0 2vw; 
+    padding: 2vw; 
+    width: 30vw; 
     display : flex; 
     flex-flow: column nowrap; 
     justify-content: center; 
@@ -33,7 +39,11 @@
     flex-flow: column nowrap; 
     justify-content: center; 
     align-items: center; 
+}
 
+.friend-trip-description{
+    text-align: center; 
+    line-height: 1.5rem; 
 }
 
 .round{

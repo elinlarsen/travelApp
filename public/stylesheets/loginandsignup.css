@@ -1,8 +1,9 @@
-/* SIGNUP */
+ /*SIGNUP */
 .sign.form-container {
   padding: 0 1.2rem;
   display: flex;
   flex-direction: column;
+  justify-content: center; 
   align-items: center;
   padding-top: 3.5%;
   height: calc(100vh - (84px));
@@ -12,7 +13,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 2.2rem;
+  margin-bottom: 1rem;
 }
 
 .sign.form-container .form-title {
@@ -22,7 +23,7 @@
 }
 
 #form_user .form-item-wrapper:last-child {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
 }
 
 #form_user {
@@ -34,20 +35,14 @@
 }
 
 #form_user .form-item-wrapper {
-  padding: 5px;
+  padding: 20px;
   align-items: center;
   justify-content: center;
 }
 
-.form-subtitle {
-}
 
 .form-sub-infos {
-  font-size: 0.9rem;
-}
-
-#form_user .button-primary {
-  margin: 1.5rem 0 1rem 0;
+  font-size: 1rem;
 }
 
 .button-link-form {
@@ -58,4 +53,8 @@
 .button-link-form:hover {
   color: rgb(52, 52, 255);
   border-bottom: 1px solid rgb(52, 52, 255);
+}
+
+.label-ref{
+  margin-bottom: 1rem; 
 }
