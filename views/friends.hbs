@@ -2,22 +2,22 @@
 
 <script type="module" src="../javascripts/friends.js"></script>
 
-<h1> Your trip buddies</h1>
+<div class="main-body">
+        <h1> Your trip buddies</h1>
 
-<div id="main-friends">
+        <div id="main-friends">
 
-      <div id="friends_labels-container">
+            <div id="friends_labels-container">
 
-             <button class="button-primary" type="submit" id="all-friends">All</button>          
-            <button class=" button-primary" type="submit" id="friends-match">Meet up</button>
-            <button class=" button-primary" type="submit" id="friends-reco">Get recommandations</button>
+                    <button class="button-secondary" type="submit" id="all-friends">All</button>          
+                    <button class="button-secondary" type="submit" id="friends-match">Meet up</button>
+                    <button class="button-secondary" type="submit" id="get-reco">Get advice</button>
+                    <button class="button-secondary" type="submit" id="give-reco">Give advice</button>
 
-      </div>
+            </div>
 
-      <div id="friends-details-container">
-        <form action="/friend_add" class="form-button-add round" >
-            <input  class="add-button-input" type="submit" value="+" />
-        </form>
-      </div>
-
+            <div id="friends-details-container">
+            </div>
+        </div>
 </div>
+{{>footer}}

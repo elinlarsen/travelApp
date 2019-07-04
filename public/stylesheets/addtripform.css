@@ -1,13 +1,16 @@
 
 
 .form-item-wrapper {
+    display : flex;
     flex-direction: column;
-    margin-bottom: 1.1rem;
+    justify-content: center; 
+    align-items: center; 
+    margin-bottom: 0.5rem;
   }
 
 .add-trip-form{
   display: flex; 
-  flex-flow: column; 
+  flex-flow: column nowrap; 
   justify-content: center; 
   align-items: center; 
   padding: 2% 5%; 
@@ -21,7 +24,7 @@
 .input {
   text-align: center; 
   margin:0rem;
-  padding: .7rem;
+  padding: .5rem;
   border: none;
   border: 1px solid black;
   border-radius: .2rem;

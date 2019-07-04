@@ -27,18 +27,16 @@ export default class {
         let end1=trip1.end_date;
         let end2=trip2.end_date;
 
-        console.log("--------------------------------")
-        console.log("countries2--------", countries2)
 
         countries1.forEach( (country, index) => {
-            console.log(`country in the loop ${index} : ${country}`)
+            //console.log(`country in the loop ${index} : ${country}`)
             if( countries2.includes(country)){
                 
                 matchCountries=true;
-                console.log("MATCHHHHHH", matchCountries)
+                //console.log("MATCHHHHHH", matchCountries)
                 if( end1 < start2) {
                     matchDates={
-                        matchedCountry: `${country}` ,  
+                        "country": country ,  
                         meetup: "false",
                         recommendation: "true",
                         advisor : this.user1._id,
@@ -46,7 +44,7 @@ export default class {
                     }   
                 else if(end2 < start1){
                     matchDates={
-                        matchedCountry: `${country}` ,   
+                        "country": country ,  
                         meetup: "false",
                         recommendation: "true",
                         advisor : this.user2._id,
@@ -54,10 +52,14 @@ export default class {
                     }
                 else if( start1==start2 || end1==end2 || start2<end1 || start1<end2 ){
                     matchDates={
-                        matchedCountry: `${country}` , 
+                        "country": country ,
                         meetup:"true",
                         recommandation: "false",
                         advisor:"both",
+                        dates : {
+                            start : start1 > start2 ? start1 : start1,
+                            end : end1 < end2 ? end1 : end2,
+                            },
                     }
                 }
             }

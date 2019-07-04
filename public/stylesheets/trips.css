@@ -1,11 +1,18 @@
+#body-trip{
+    display : flex; 
+    flex-flow: column wrap; 
+    justify-content: center; 
+    align-items: center; 
 
+}
 
 #all-trips{
     display : flex; 
+    width : 100%; 
     flex-flow: row wrap; 
     justify-content: center; 
     align-items: center; 
-    padding : 0px 2%;
+    padding : 0px;
 }
 .invisible{
     visibility: hidden;
@@ -42,10 +49,11 @@
 }
 
 .trip-container{
-    height: 300px;
-    width: 300px;
+    height: 25vh;
+    width: 25vh;
+    /*
     border: 1px solid var(--trip-container); 
-    border-radius: 50px; 
+    border-radius: 50px; */
     display : flex; 
     flex-flow: row; 
     justify-content: center; 
@@ -53,9 +61,12 @@
     font-size : 2em; 
     font-family: 'Source Sans Pro'; 
     background-repeat:no-repeat;
-    background-size: 300px 300px;
+    background-size: 25vh 25vh;
     text-transform: uppercase;
     text-align: center; 
     color : white;
+}
 
+span{
+    font-weight: bold; 
 }

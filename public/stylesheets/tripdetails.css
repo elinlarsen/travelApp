@@ -1,18 +1,38 @@
 #wrapper_all_trips {
   height: 90vh;
+}
+
+#img-background {
+  height: 30vh;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
-#trip_details_container {
+#wrapper-trip-details {
   display: flex;
-  height: 75vh;
-  /*background-color: lightgrey;*/
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#trip_details_container {
+  width: 90%;
+  height: 50vh;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  /*height: 50vh;
+  background-color: lightgrey;*/
 }
 
 #trip_details_form_container {
   display: flex;
   flex-direction: column;
+  height: 60vh;
 }
 
 .trip_details_form_labels,
@@ -25,11 +45,11 @@
 
 .trip_details_form_labels .header {
   width: 19%;
+  color: black;
   text-align: center;
   border-bottom: solid;
   border-width: 1px;
   font-size: 1.3em;
-  color: white;
 }
 
 .invisible {
@@ -72,6 +92,7 @@
 
 #trip_details_map {
   width: 50%;
+  height: 50vh;
   display: flex;
   justify-content: center;
   align-items: center;

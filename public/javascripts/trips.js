@@ -2,6 +2,7 @@
 const currentURL = window.location.pathname;
 const tripsDataAjaxHandler = new ajaxHandler("http://localhost:3000","/tripsData");
 
+
 // --------- Event Listener ---------
 document.addEventListener("DOMContentLoaded", () => {
     showTrips();
