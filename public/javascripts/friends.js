@@ -15,21 +15,25 @@ console.log('------------------------------------------------------------')
 function computeMatch(user2, allUsers){
     var allFriends=[]; var matchedFriends=[];var advisors=[]; var advisees=[]
         allUsers.forEach( user => {            
-            let match= new Match(user, user2)            
+            let match= new Match(user, user2)    
             if( user._id != user2._id && match.isFriend() ){  
                 console.log(`${user.username} and ${user2.username} are friends !!!!`)
                 let friend=user;
                 allFriends.push({"friend" : friend},) 
                 let matchArray= match.matchAllTrips()
+
                 let tripPairs= Object.keys(matchArray)
                 tripPairs.forEach(tripPair => {
                     let result= {
-                        "friend" : friend,
-                        "country" : matchArray[tripPair].country,
-                        "tripPair" : tripPair,
-                        "dates" : matchArray[tripPair].dates,
+                        friend,
+                        tripPair,
+                        country : matchArray[tripPair].country,
+                        dates : matchArray[tripPair].dates,
+                        advisor: matchArray[tripPair].advisor,
+                        meetup: matchArray[tripPair].meetup,
+                        reco: matchArray[tripPair].reco,
                     }
-                    if(matchArray[tripPair].meetup=="true")matchedFriends.push(result)
+                    if(matchArray[tripPair].meetup==true)matchedFriends.push(result)
                     if (matchArray[tripPair].advisor===friend._id)advisors.push(result)
                     if (matchArray[tripPair].advisor===user2._id)advisees.push(result)                   
                 })
@@ -60,15 +64,34 @@ function createFriendContainer(userObject){
     
     friendContainer.innerHTML=`
             <img class="friend-pic round" src=${userObject.friend.picture}>
-            <span class="country-name">${userObject.friend.username}</span>`
+            
+            <section class="friend-trip-description" id="section-${userObject.friend._id}"> 
+                <span class="friend-username">${userObject.friend.username}</span>
+            </section>
+            `
+
+
     if(userObject.dates!= undefined){
         friendContainer.id=userObject.friend._id;
         let start=changeDateFormat(userObject.dates.start)
         let end =changeDateFormat(userObject.dates.end)
-        friendContainer.innerHTML+=`
-        <span> Meet up in ${userObject.country}</span>
-        <span> From ${start} </span>
-        <span> to ${end} </span>`
+        let message="";
+        console.log("userObject", userObject )   
+        console.log("userObject.advisor", userObject.advisor )  
+        console.log("userObject.meetup", userObject.meetup)  
+        if (userObject.meetup==true){message= "Meet up in"}
+        else if (userObject.advisor==userObject.friend._id){message = "Get some advice about your next trip in"}
+        else if (userObject.recommandation==true && userObject.advisor!=userObject.friend._id)
+        {message = "Give some advice about his/her next trip in"}
+        friendContainer.innerHTML=`
+        <img class="friend-pic round" src=${userObject.friend.picture}>
+        <section class="friend-trip-description" id="section-${userObject.friend._id}"> 
+            <p class="friend-username" style="text-align: center">${userObject.friend.username}</p> 
+            <span class="common-country"> ${message} ${userObject.country}</span>
+            <span class="common-start"> from ${start} </span>
+            <span class="common-end"> to ${end} </span>    
+        </section>`
+        //<span class="friend-trip-link"> Look at his ${trip} ! ${end} </span>
         }
     else{friendContainer.id=userObject._id;}
     allTripsDiv.append(friendContainer);
@@ -94,7 +117,7 @@ function showMeetUpFriends(user2){
         m.length===0 ? 
         createMessageElement(" None of your friends are travelling to the same location and time as you."): 
         m.forEach( result => {
-            console.log(result)
+            //console.log(result)
             createFriendContainer(result)
             //addFriendInfo(friend)
         })
@@ -107,6 +130,7 @@ function showGetAdvisorsFriends(user2){
         let ad=computeMatch(user2, allUsers).advisors
         ad.length===0 ? 
         createMessageElement(" None of your friends can advise you on your next trip.") : 
+        console.log("res : ", ad)
         ad.forEach( friend => createFriendContainer(friend))
 
     })

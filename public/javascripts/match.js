@@ -3,58 +3,78 @@ export default class {
         this.user1=user1;
         this.user2=user2;
         this.userModel=userModel
+        this.id1=user1._id;
+        this.id2=user2._id;
+        this.trips1=user1.trips;
+        this.trips2 =user2.trips;
     }
 
     isFriend(){
         var res;
-        let id1=this.user1._id; 
         let friends2=this.user2.friends
-        friends2.includes(id1) ?  res=true : res=false
+        friends2.includes(this.id1) ?  res=true : res=false
         return res
     }
 
     matchTripsPair(trip1, trip2){
         var matchCountries=false; 
         var matchDates = {
+            country: "",
             meetup:"false",
             recommandation: "false",
             advisor:null,
         }
         let countries1=trip1.countries; 
         let countries2=trip2.countries;
-        let start1=trip1.start_date;
-        let start2=trip2.start_date;
-        let end1=trip1.end_date;
-        let end2=trip2.end_date;
+        let start1=changeDateFormat(trip1.start_date);
+        let start2=changeDateFormat(trip2.start_date);
+        let end1=changeDateFormat(trip1.end_date);
+        let end2=changeDateFormat(trip2.end_date);
 
-
+        let dateNow= getCurrentDate()
+        
+        /*console.log("start1 -----", start1)
+        console.log("end1 -----", end1)
+        console.log("dateNow -----", dateNow)
+        console.log("start2 -----", start2)
+        console.log("end2 -----", end2)
+        console.log("end2 < dateNow< start1 -----", end2 < dateNow && dateNow < start1)
+        console.log("end1 < dateNow < start2-----", end1 < dateNow && dateNow< start2)
+*/
         countries1.forEach( (country, index) => {
-            //console.log(`country in the loop ${index} : ${country}`)
+
             if( countries2.includes(country)){
                 
                 matchCountries=true;
-                //console.log("MATCHHHHHH", matchCountries)
-                if( end1 < start2) {
+                if( end1 < dateNow && dateNow< start2) {
                     matchDates={
-                        "country": country ,  
-                        meetup: "false",
-                        recommendation: "true",
-                        advisor : this.user1._id,
+                        country: country ,  
+                        meetup: false,
+                        reco: true,
+                        advisor : this.id1, 
+                        dates: {
+                            start : start2,
+                            end: end2
+                        }
                         }
                     }   
-                else if(end2 < start1){
+                else if(end2 < dateNow && dateNow < start1){
                     matchDates={
-                        "country": country ,  
-                        meetup: "false",
-                        recommendation: "true",
-                        advisor : this.user2._id,
+                        country: country,  
+                        meetup: false,
+                        reco: true,
+                        advisor : this.id2,
+                        dates : {
+                            start : start1,
+                            end: end1
+                        }
                         }
                     }
-                else if( start1==start2 || end1==end2 || start2<end1 || start1<end2 ){
+                else if(   (start1 > dateNow && start2> dateNow) && (start1==start2 || end1==end2 || start2<end1 || start1<end2) ){
                     matchDates={
-                        "country": country ,
-                        meetup:"true",
-                        recommandation: "false",
+                        country: country ,
+                        meetup:true,
+                        reco: false,
                         advisor:"both",
                         dates : {
                             start : start1 > start2 ? start1 : start1,
@@ -64,18 +84,15 @@ export default class {
                 }
             }
         });
-        return {
-            "matchCountries": matchCountries , 
-            "matchDates": matchDates}
+        return { "matchCountries": matchCountries , 
+                 "matchDates": matchDates}
     }
 
     matchAllTrips(){
         var matchArr=[];
         var matchTrue=[];
-        const trips1=this.user1.trips
-        const trips2 =this.user2.trips
-        trips1.forEach( (trip1, index1) => {
-            trips2.forEach( (trip2, index2) => {
+        this.trips1.forEach( (trip1) => {
+            this.trips2.forEach( (trip2) => {
                     let id1= trip1._id;
                     let id2=trip2._id;
                     matchArr[[id1, id2]] = this.matchTripsPair(trip1, trip2)
@@ -84,6 +101,7 @@ export default class {
                     : matchTrue[[id1, id2]] = false;
             })
         })
+        console.log("matchTrue ARRAY ---", matchTrue)
         return matchTrue
     }
 }

@@ -28,6 +28,14 @@
     align-items: center; 
 }
 
+.friend-trip-description{
+    display : flex; 
+    flex-flow: column nowrap; 
+    justify-content: center; 
+    align-items: center; 
+
+}
+
 .round{
     height: 120px;
     width: 120px; 
