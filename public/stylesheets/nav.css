@@ -89,3 +89,23 @@
   height: 50px;
   border-radius: 40px;
 }
+
+#log_details {
+  width: 30%;
+}
+
+#log_details,
+#log_details a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+#log_details a {
+  font-size: 16px;
+}
+
+#logoutlink {
+  justify-self: end;
+}
