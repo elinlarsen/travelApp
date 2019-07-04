@@ -1,12 +1,19 @@
+const bcrypt = require("bcrypt");
+const bcryptSalt = 10;
+const salt = bcrypt.genSaltSync(bcryptSalt);
+
+
+
 module.exports=[{
     _id : "5d1be0e138c22d0b783ad1b1",
     first_name: "elin",
     last_name: "larsen",
     username : "elinl", 
-    password : "test", 
+    password : bcrypt.hashSync("test", salt), 
     email: "email@email.com",
-    mobile_phone_number: "+6",
-    trips: [ '5d1b0a1aa8b720d7c8872879', '5d1c9221f1e55023cfc2fde6'],
+    //mobile_phone_number: "+6",
+    trips: [ "5d1b0a1aa8b720d7c8872879",
+        "5d1c9221f1e55023cfc2fde6"],
     picture : "https://randomuser.me/api/portraits/women/65.jpg",
     friends: ["5d1be0e138c22d0b783ad1b2", "5d1be0e138c22d0b783ad1b3"]
     },
@@ -15,9 +22,9 @@ module.exports=[{
     first_name: "yasin",
     last_name: "hegdal",
     username : "yasineb", 
-    password : "test", 
+    password : bcrypt.hashSync("test", salt), 
     email: "yh@email.com",
-    mobile_phone_number: "+61", 
+    //mobile_phone_number: "+61", 
     trips: ['5d1b37935154bae295419489'],
     picture : "https://randomuser.me/api/portraits/men/65.jpg",
     friends: ["5d1be0e138c22d0b783ad1b1", "5d1be0e138c22d0b783ad1b3"],
@@ -27,10 +34,10 @@ module.exports=[{
     first_name: "guillaume",
     last_name: "lastname3", 
     username : "guillaumea", 
-    password : "test", 
+    password : bcrypt.hashSync("test", salt), 
     email: "email3@email.com",
-    mobile_phone_number: "+63",
-    trip: [ "5d1b565d385ff1e7312b820c"],
+    //mobile_phone_number: "+63",
+    trips: [ "5d1b565d385ff1e7312b820c"],
     picture : "https://randomuser.me/api/portraits/men/55.jpg",
     friends: ["5d1c9360a33d7f23f761eb22", "5d1c9360a33d7f23f761eb23"],
     }

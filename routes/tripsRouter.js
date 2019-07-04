@@ -4,6 +4,9 @@ const dbHandler = require("../bin/dblhandler.js");
 const tripModel = require("../models/Trip.js");
 const tripHandler = new dbHandler(tripModel);
 
+const userModel = require("../models/User.js");
+const userHandler=new dbHandler(userModel)
+
 const countryModel = require("../models/Country.js");
 const countryHandler = new dbHandler(countryModel);
 const countries = require("../bin/countries.js");
@@ -38,7 +41,9 @@ router.get("/trips", (req, res) => {
   //todo : create route /users/:id/trips
 
 router.get("/users/:id/trips", (req, res) => {
+  let id=req.params.id;
   res.render("trips", {
+    id,
     logInText,
     logInLink,
     logInPicture})
@@ -53,11 +58,15 @@ router.get("/tripsData", (req, res) => {
 });
 
 // ----------------------- ADD TRIP  -----------------------
-router.get("/trip_add", (req, res) => {
-  res.render("newTripForm", { logInText, logInPicture, logInLink });
+router.get("/trip_add/:id", (req, res) => {
+  let userId = req.session.currentUser._id;
+  res.render("newTripForm", { userId,logInText, logInPicture, logInLink });
 });
 
-router.post("/trip_add", upload.single("picture"), (req, res) => {
+
+router.post("/trip_add/:id", upload.single("picture"), (req, res) => {
+  console.log(" hello world this is a post")
+  let userId= req.params.id;
   let countriesArr = req.body.countries.split(",");
   console.log("countries -------", countriesArr);
   console.log("req.body -----------", req.body);
@@ -68,9 +77,20 @@ router.post("/trip_add", upload.single("picture"), (req, res) => {
     countries: countriesArr,
     picture: `/../uploads/${req.file.filename}`
   });
+
   tripHandler.createOne(newTrip, dbres => {
-    console.log("dbres -------", dbres);
-    res.redirect("/trips");
+      console.log(" ------- -------dbres -------  -------", dbres);
+
+      let newtripId=dbres._id
+      console.log("tripsId", newtripId)
+
+      userHandler.getOne({_id: userId }, (user) => {
+        existingTrips=user.trips
+        existingTrips.push(newtripId)
+        userHandler.updateOne(  {_id: userId } , {trips : existingTrips}, (dbres) =>{
+            res.redirect(`/users/${userId}/trips`)
+        })  
+      })
   });
 });
 
