@@ -17,6 +17,8 @@ router.get("/signup", (req, res, next) => {
 
 router.post("/signup", upload.single("picture"), (req, res, next) => {
   const { first_name, last_name, username, email, password } = req.body;
+  picture = `../uploads/${req.file.filename}`;
+
   console.log(req.body);
   userModel
     .findOne({ first_name: first_name, last_name: last_name })
@@ -34,6 +36,7 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
           first_name,
           last_name,
           username,
+          picture,
           email,
           password: hashpwd
         };
@@ -41,7 +44,7 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
         userModel
           .create(userObject)
           .then(() => {
-            //  res.redirect("/");
+            res.redirect("/trips");
             console.log("Account created");
           })
           .catch(err => console.log("sign up did not work"));

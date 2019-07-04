@@ -1,4 +1,4 @@
-#wrapper-trip-details {
+#wrapper_all_trips {
   height: 90vh;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -89,4 +89,15 @@
 
 .blank {
   background-color: lightgray;
+}
+
+.title h1 {
+  border-bottom-style: solid;
+  border-bottom-color: black;
+}
+
+.image_banner {
+  height: 20vh;
+  border-bottom-style: solid;
+  border-bottom-color: black;
 }
