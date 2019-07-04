@@ -40,6 +40,9 @@ justify-content: flex-start;
 
 .onhover{
     visibility: hidden;
+    padding: 1vh 0px;
+    padding-right: 1vw;  
+
 }
 .icon:hover ~ .onhover{
     visibility: visible;
