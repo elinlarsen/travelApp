@@ -60,10 +60,19 @@ app.use(function(req, res, next) {
 
   if (req.session) {
     logInStatus = req.session.currentUser ? true : false;
-    if (logInStatus) logInText = "Hello " + req.session.currentUser.username;
-    else logInText = "Please sign in or create an account";
+    if (logInStatus) {
+      logInText = "Hello " + req.session.currentUser.username;
+      logInPicture = req.session.currentUser.picture;
+      logInLink = "/trips";
+      console.log("Picture for hello is " + logInPicture);
+    } else {
+      logInText = "Please sign in or create an account";
+      logInLink = "/login";
+      logInPicture = null;
+    }
   }
 
+  console.log("log in picture is " + logInPicture);
   next();
 });
 
