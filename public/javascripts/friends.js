@@ -2,6 +2,7 @@ const currentURL = window.location.pathname;
 const userAjaxHandler = new ajaxHandler("http://localhost:3000", "/usersData");
 import Match from './Match.js'
 
+
 const currentUserId="5d1c94888bfeca2479ef27ca" // TO CHANGE WHEN THE USER LOGIN and to define
 var currentUser=null;
 
