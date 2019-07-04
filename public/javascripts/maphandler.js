@@ -34,6 +34,8 @@ class mapHandler {
       //label: this.markersList.length.toString()
     });
 
+    // this.markersList.forEach(marker => marker.setLabel(null));
+
     //    console.log(newlocation);
     this.markersList.push({
       marker,
@@ -56,7 +58,7 @@ class mapHandler {
       markerItem.marker.setMap(this.map);
     });
 
-    this.connectAllMarkers();
+    setTimeout(() => this.connectAllMarkers(), 400);
   }
 
   sortMarkersByDate() {

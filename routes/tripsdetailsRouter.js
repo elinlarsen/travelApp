@@ -13,7 +13,11 @@ router.get("/tripdetails/:trip_id", (req, res, next) => {
       start_date: "01.02.2020",
       end_date: "01.03.2020"
     }); */
-console.log("req.params.trip_id", req.params.trip_id)
+
+  if (req.session.currentUser) userId = req.session.currentUser._id;
+  else userId = "";
+
+  console.log("req.params.trip_id", req.params.trip_id);
   tripHandler.getOneById(req.params.trip_id, tripResponse => {
     console.log("-----------", tripResponse);
     console.log("----------- start in db", tripResponse.start_date);
@@ -26,7 +30,8 @@ console.log("req.params.trip_id", req.params.trip_id)
       end,
       logInText,
       logInPicture,
-      logInLink
+      logInLink,
+      userId
     });
   });
 });

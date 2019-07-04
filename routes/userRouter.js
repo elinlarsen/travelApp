@@ -21,6 +21,7 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
   picture = `/../uploads/${req.file.filename}`;
 
   console.log(req.body);
+
   userModel
     .findOne({ first_name: first_name, last_name: last_name })
     .then(queryResult => {
@@ -44,11 +45,11 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
         //console.log (userObject);
         userModel
           .create(user)
-          .then((dbRes) => {
+          .then(dbRes => {
             req.session.currentUser = user;
             req.session.picture = user.picture;
 
-            logInText = "Welcome " + req.session.currentUser.username;
+            logInText = "Welcome " + req.session.currentUser.first_name;
             logInLink = "/trips";
             logInPicture = user.picture;
 
@@ -58,18 +59,14 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
               logInPicture
             });
             */
-            res.redirect(`/users/${dbRes._id}/trips/`)
+            res.redirect(`/users/${dbRes._id}/trips/`);
             console.log("Account created ---- dbres", dbRes);
           })
           .catch(err => console.log("sign up did not work", err));
       }
     })
     .catch(err => "username query does not work");
-
 });
-
-
-
 
 router.get("/login", (req, res, next) => {
   res.render("auth/login");
@@ -77,7 +74,7 @@ router.get("/login", (req, res, next) => {
 
 router.post("/login", (req, res, next) => {
   const { email, password } = req.body;
-  
+
   userModel.findOne({ email }).then(user => {
     if (!user) {
       console.log("no user ");
@@ -89,11 +86,10 @@ router.post("/login", (req, res, next) => {
       });
     } else {
       if (bcrypt.compareSync(password, user.password)) {
-      
         req.session.currentUser = user;
         req.session.picture = user.picture;
 
-        logInText = "Welcome " + req.session.currentUser.username;
+        logInText = "Welcome " + req.session.currentUser.first_name;
         logInLink = "/trips";
         logInPicture = user.picture;
 
@@ -139,9 +135,9 @@ router.get("/usersData/:id", (req, res, next) => {
 });
 
 router.get("/logout", (req, res, next) => {
-  req.session.destroy((err) => {
-    console.log("logout")
-    res.render("auth/login")
+  req.session.destroy(err => {
+    console.log("logout");
+    res.render("auth/login");
   });
 });
 
