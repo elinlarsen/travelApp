@@ -36,6 +36,13 @@ router.get("/trips", (req, res) => {
     res.render("trips");
 });
 
+  //todo : create route /users/:id/trips
+
+router.get("/users/:id/trips", (req, res) => {
+  res.render("trips")
+});  
+// /tripsdetails/:id
+
 router.get("/tripsData", (req, res) => {
     tripHandler.getAll(resData => {
       //console.log("GET ALL ----",resData)

@@ -99,13 +99,13 @@ router.get("/friends", (req, res, next) => {
   //}
 });
 
-router.get("/userData", (req, res, next) => {
+router.get("/usersData", (req, res, next) => {
   userHandler.getAll(resData => {
     console.log("GET ALL ----", resData);
     res.send(resData);
   });
 });
-router.get("/userData/:id", (req, res, next) => {
+router.get("/usersData/:id", (req, res, next) => {
   let ID = { _id: req.params.id };
   userHandler.getOneById(ID, resData => {
     console.log("GET ALL ----", resData);

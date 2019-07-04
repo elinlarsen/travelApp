@@ -1,6 +1,8 @@
 const geocoder = new google.maps.Geocoder();
 const currentURL = window.location.pathname;
-const tripId = currentURL.substring(currentURL.indexOf("tripdetails") + 12);
+const td= "tripdetails"
+const len= td.length
+const tripId = currentURL.substring(currentURL.indexOf(td) + len);
 const parisLatLong = { lat: 48.85, lng: 2.3488 };
 const tripDetailsAjaxHandler = new ajaxHandler(
   "http://localhost:3000",
