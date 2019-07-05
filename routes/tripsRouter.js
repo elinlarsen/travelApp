@@ -86,11 +86,14 @@ router.post("/trip_add", upload.single("picture"), (req, res) => {
 
 //  -----------------------  EDIT TRIP  -----------------------
 router.get("/trip_edit/:trip_id", ensureAuthenticated, (req, res) => {
-  tripHandler.getOneById(req.params.trip_id, trip => {
+  tripId= req.params.trip_id
+  tripHandler.getOneById(tripId, trip => {
+    
     let start = moment().format("L");
     start=changeDateFormat(trip.start_date);
     let end = moment().format("L");
     end=changeDateFormat(trip.end_date);
+    
     console.log("start-------", start, "--------end--------", end);
     console.log("trip", trip)
     
@@ -102,7 +105,7 @@ router.get("/trip_edit/:trip_id", ensureAuthenticated, (req, res) => {
 });
 
 router.post("/tripsData/:id", upload.single("picture"), (req, res) => {
-  const ID = { _id: req.params.id };
+  const tripId = { _id: req.params.id };
   let countriesArr = req.body.countries.split(",");
   console.log("countries -------", countriesArr);
   const editedTrip = new tripModel({
@@ -113,15 +116,13 @@ router.post("/tripsData/:id", upload.single("picture"), (req, res) => {
     start_date: req.body.start_date,
     end_date: req.body.end_date
   });
-  console.log("ID ----------- ", ID);
-  console.log("START DATE ------", req.body.start_date);
-  console.log("END DATE ------", req.body.end_date);
-  tripHandler.updateOne(ID, editedTrip, dbRes => {
+
+  tripHandler.updateOne(tripId, editedTrip, dbRes => {
     console.log("Edited trip patched! ---------------- edited Trip : ", dbRes);
     console.log("req.session.currentUser", req.session.currentUser)
-    let ID=req.session.currentUser._id;
+    let userId=req.session.currentUser._id;
     
-    res.redirect(`/users/${ID}/trips/`);
+    res.redirect(`/users/${userId}/trips/`);
   });
 });
 
