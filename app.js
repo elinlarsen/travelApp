@@ -55,26 +55,28 @@ app.use(
   })
 );
 
-app.use(function(req, res, next) {
-  let logInStatus;
+function isLoggedIn(req, res, next) {
+  app.locals.isLoggedIn = Boolean(req.session.currentUser);
+  next();
+}
+app.use(isLoggedIn);
 
-  if (req.session) {
-    logInStatus = req.session.currentUser ? true : false;
-    if (logInStatus) {
-      logInText = "Hello " + req.session.currentUser.first_name;
-      logInPicture = req.session.currentUser.picture;
-      logInLink = "/trips";
-      console.log("Picture for hello is " + logInPicture);
-    } else {
-      logInText = "Please sign in or create an account";
-      logInLink = "/login";
-      logInPicture = null;
-    }
-  }
 
-  console.log("log in picture is " + logInPicture);
+app.use(function (req, res, next) {
+  console.log('Time:', Date.now());
   next();
 });
+
+
+function logInUser(req, res, next){
+  if (req.session.currentUser) {
+    app.locals.logInUser=req.session.currentUser
+  }
+  next();
+}
+
+app.use(logInUser);
+
 
 // default value for title local
 app.locals.title = "Travel App";

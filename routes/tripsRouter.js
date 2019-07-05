@@ -36,19 +36,15 @@ router.get("/trip_edit/countries.json", ensureAuthenticated, (req, res) => {
 });
 
 // -----------------------  GET ALL TRIPS  -----------------------
-router.get("/trips", (req, res) => {
-  res.render("trips", { logInText, logInPicture, logInLink });
+router.get("/trips", ensureAuthenticated, (req, res) => {
+  res.render("trips");
 });
 
   //todo : create route /users/:id/trips
 
 router.get("/users/:id/trips", ensureAuthenticated, (req, res) => {
   let userId=req.params.id;
-  res.render("trips", {
-    userId,
-    logInText,
-    logInLink,
-    logInPicture})
+  res.render("trips", {userId,})
 });  
 // /tripsdetails/:id
 
@@ -60,8 +56,7 @@ router.get("/tripsData", (req, res) => {
 
 // ----------------------- ADD TRIP  -----------------------
 router.get("/trip_add/:id", ensureAuthenticated, (req, res) => {
-  let userId = req.session.currentUser._id;
-  res.render("newTripForm", { userId,logInText, logInPicture, logInLink });
+  res.render("newTripForm");
 });
 
 
@@ -80,11 +75,7 @@ router.post("/trip_add/:id", upload.single("picture"), (req, res) => {
   });
 
   tripHandler.createOne(newTrip, dbres => {
-      console.log(" ------- -------dbres -------  -------", dbres);
-
       let newtripId=dbres._id
-      console.log("tripsId", newtripId)
-
       userHandler.getOne({_id: userId }, (user) => {
         existingTrips=user.trips
         existingTrips.push(newtripId)
@@ -107,7 +98,7 @@ router.get("/trip_edit/:trip_id", ensureAuthenticated, (req, res) => {
     
     res.render(
       "editTripForm",
-      { trip, start, end, logInText, logInPicture, logInLink }
+      { trip, start, end}
     );
   });
 });

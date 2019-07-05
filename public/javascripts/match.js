@@ -45,7 +45,7 @@ export default class {
             countries2.forEach(country2 =>{
                 country2=country2.replace(/\s/g, '')  
                 if(country2==country && country!=""){
-                    console.log("matched for country -------", country)
+                    //console.log("matched for country -------", country)
                     matchCountries=true;
                     if( end1 < dateNow && dateNow< start2) {
                         matchDates={
@@ -83,7 +83,6 @@ export default class {
                                 end : end1 < end2 ? end1 : end2,
                                 },
                         }
-                        if (country=="Nigeria"){console.log("matchDates------------",matchDates)}
                     }
                 }
             })
@@ -104,7 +103,7 @@ export default class {
                     : matchTrue[[id1, id2]] = false;
             })
         })
-        /console.log("matchTrue ARRAY ---", matchTrue)
+        //console.log("matchTrue ARRAY ---", matchTrue)
         return matchTrue==[] ? null : matchTrue
     }
 }

@@ -14,6 +14,7 @@ router.get("/tripdetails/:trip_id", (req, res, next) => {
       end_date: "01.03.2020"
     }); */
 
+  let currentUser=req.session.currentUser
   if (req.session.currentUser) userId = req.session.currentUser._id;
   else userId = "";
 
@@ -28,9 +29,6 @@ router.get("/tripdetails/:trip_id", (req, res, next) => {
       tripResponse,
       start,
       end,
-      logInText,
-      logInPicture,
-      logInLink,
       userId
     });
   });

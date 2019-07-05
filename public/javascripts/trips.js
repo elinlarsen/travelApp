@@ -19,7 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
 // --------- Creating and delement DOM elements ---------
 function showPublicTrips(){    
     tripsDataAjaxHandler.getAll(trips => {
-        trips.forEach( trip => createTripContainer(trip))        
+        trips.forEach( trip => createTripContainer(trip)) 
+        const trashButtons=document.querySelectorAll(".fa-trash")
+        trashButtons.forEach(link => {
+            link.onclick = deleteTripElement})       
     }) 
 }
 
@@ -27,10 +30,13 @@ function showUserTrips(userId){
     usersDataAjaxHandler.getOne(userId, dbRes => {
         dbRes.trips.forEach ( userTrip => {
             createTripContainer(userTrip)
+            const trashButtons=document.querySelectorAll(".fa-trash")
+            trashButtons.forEach(link => {
+                link.onclick = deleteTripElement})  
         })
+        
     })
-    const trashButtons=document.querySelectorAll(".fa-trash")
-    trashButtons.forEach(link => {link.onclick = deleteTripElement})
+
 }
 
 
@@ -63,7 +69,8 @@ function createTripContainer(tripInfoObject){
 
 function deleteTripElement(evt) {
     evt.preventDefault();
-    ID=evt.target.id
+    let ID=evt.target.id
+    console.log( "id ---", ID)
     let deleteButton= evt.target
     let divButton=deleteButton.parentNode
     let wrapperTrip=divButton.parentNode

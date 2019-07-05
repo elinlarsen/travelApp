@@ -25,7 +25,7 @@ function computeMatch(user1, allUsers){
 
             let match= new Match(user1,user) 
             if( user._id != user1._id && match.user1IsFriendWithUser2() ){  
-                console.log(`${user.username} and ${user1.username} are friends !!!!`)
+                //console.log(`${user.username} and ${user1.username} are friends !!!!`)
                 let friend=user;
                 allFriends.push({"friend" : friend},) 
                 let matchArray= match.matchAllTrips()
@@ -41,13 +41,15 @@ function computeMatch(user1, allUsers){
                         "meetup": matchArray[tripPair].meetup,
                         "reco": matchArray[tripPair].reco,
                     }
-                    if(matchArray[tripPair].meetup==true) {matchedFriends.push(result); console.log("result --------", result ) }
+                    if(matchArray[tripPair].meetup==true) {
+                            matchedFriends.push(result); 
+                            console.log("result --------", result ) }
                     if (matchArray[tripPair].advisor===friend._id)advisors.push(result)
                     if (matchArray[tripPair].advisor===user1._id)advisees.push(result)  
                                    
                 })
             }  
-            else { console.log(`${user.username} and ${user1.username} ARE NOT friends`)}            
+            //else { console.log(`${user.username} and ${user1.username} ARE NOT friends`)}            
         })
     return {allFriends,matchedFriends,advisors,advisees}
 }
@@ -65,45 +67,69 @@ function cleanFriendsWrapper(){
     wrapperEl.innerHTML=''
 }
 
-function createFriendContainer(userObject){
 
-    const allTripsDiv=document.getElementById("friends-details-container");
-    let friendContainer=document.createElement("div");
-    friendContainer.className="friend-wrapper";
-    
-    friendContainer.innerHTML=`
-            <img class="friend-pic round" src=${userObject.friend.picture}>
-            
-            <section class="friend-trip-description" id="section-${userObject.friend._id}"> 
-                <span class="friend-username">${userObject.friend.username}</span>
-            </section>
-            `
+function createFriendDescription(userObject){
+    let content=`<img class="friend-pic round" src=${userObject.friend.picture}>
+    <span class="friend-username">${userObject.friend.username}</span>`
+    return content
+}
+
+function tripContent(userObject){
+    let message="";
+    if (userObject.meetup==true)
+    {message= "Meet up in"}
+    else if (userObject.advisor==userObject.friend._id)
+    {message = "Get some advice about your trip in"}
+    else if (userObject.reco==true && userObject.advisor!=userObject.friend._id)
+    {message = `Give some advice about ${userObject.friend.username} trip in`}
+
     if(userObject.dates!= undefined){
-        friendContainer.id=userObject.friend._id;
         let start=changeDateFormat(userObject.dates.start)
-        let end =changeDateFormat(userObject.dates.end)
-        let message="";
-        //console.log("userObject", userObject )   
-        //console.log("userObject.advisor", userObject.advisor )  
-        //console.log("userObject.advisor", userObject.advisor )  
-        //console.log("userObject.meetup", userObject.meetup)  
-        if (userObject.meetup==true)
-            {message= "Meet up in"}
-        else if (userObject.advisor==userObject.friend._id)
-            {message = "Get some advice about your trip in"}
-        else if (userObject.reco==true && userObject.advisor!=userObject.friend._id)
-            {message = `Give some advice about ${userObject.friend.username} trip in`}
-        friendContainer.innerHTML=`
-        <img class="friend-pic round" src=${userObject.friend.picture}>
-        <section class="friend-trip-description" id="section-${userObject.friend._id}"> 
-            <p class="friend-username" style="text-align: center">${userObject.friend.username}</p> 
+        let end =changeDateFormat(userObject.dates.end)    
+        return `<section class="friend-trip-description" id="section-${userObject.friend._id}">  
             <span class="common-country"> ${message} ${userObject.country}</span>
             <span class="common-start">  ${start} - ${end}</span>  
         </section>`
-        //<span class="friend-trip-link"> Look at his ${trip} ! ${end} </span>
-        }
-    else{friendContainer.id=userObject._id;}
-    allTripsDiv.append(friendContainer);
+    }
+    else{
+        console.log("dates undefined")
+        return ``}
+}
+
+
+
+function createFriendContainer(userObject){
+    const allTripsDiv=document.getElementById("friends-details-container");
+
+    
+    /*if(friendWrapper.innerHTML==""){
+        console.log("friend wrapper empty")
+        friendWrapper.innerHTML=createFriendDescription(userObject)
+        friendWrapper.innerHTML += tripContent(userObject)
+    } 
+    else{ 
+        console.log("friend wrapper already exist")
+        friendWrapper.innerHTML += tripContent(userObject)}
+    */
+   if(document.getElementById(userObject.friend._id)!=undefined){
+       let existingFriend=document.getElementById(userObject.friend._id)
+        console.log("friend wrapper already exist")
+        //allTripsDiv.remove(friendWrapper)
+        //existingFriend.innerHTML += tripContent(userObject)
+        //allTripsDiv.append(existingFriend)
+   }
+   else{
+        console.log("friend wrapper empty")
+        let friendWrapper=document.createElement("div");
+        friendWrapper.className="friend-wrapper";
+        friendWrapper.id=userObject.friend._id; 
+        friendWrapper.innerHTML=createFriendDescription(userObject)
+        friendWrapper.innerHTML += tripContent(userObject)
+        allTripsDiv.append(friendWrapper)
+   }
+  
+    
+
 }
 
 
@@ -126,7 +152,7 @@ function showMeetUpFriends(user2){
         m.length===0 ? 
         createMessageElement(" None of your friends are travelling to the same location and time as you."): 
         m.forEach( result => {
-            //console.log(result)
+            console.log(  "-----------------------------",createFriendContainer(result))
             createFriendContainer(result)
             //addFriendInfo(friend)
         })

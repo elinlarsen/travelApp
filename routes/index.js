@@ -8,18 +8,18 @@ stepHandler = new dbHandler(stepsModel);
 
 // -----------------------  main pages -----------------------
 
-router.get("/", (req, res, next) => {
-  console.log("Log in picture is " + logInPicture);
-  res.render("index", { logInText, logInPicture, logInLink });
+
+router.get(["/", "/home"], (req, res, next) => {
+  res.render("home");
 });
 
 router.get("/main", (req, res, next) => {
-  res.render("main", { logInText, logInPicture, logInLink });
+  res.render("main");
 });
 
 // ----------------------- ABOUT -----------------------
 router.get("/about", (req, res, next) => {
-  res.render("about", { logInText, logInPicture, logInLink });
+  res.render("about");
 });
 
 module.exports = router;

@@ -5,10 +5,7 @@
   {{errorMessage}}
 
   <div class="form-header">
-
     <h1 class="form-title">Start your journey now </h1>
-    <p class="form-subtitle"> Plan trips and travel with your friends </p>
-
   </div>
 
   <form action="/signup" method="POST" id="form_user" enctype="multipart/form-data">
@@ -45,11 +42,12 @@
     </div>
 
     <button class="button-primary white">Create Account</button>
-  </form>
-  <p class="form-sub-infos">Already have an account ? <a href="/login" class="button-link-form">Sign In</a></p>
+    <p class="form-sub-infos">Already have an account ? <a href="/login" class="button-link-form">Sign In</a></p>
 
+  </form>
+  
   </div>
 
 </div>
 
-{{footer}}
+{{>footer}}

@@ -22,8 +22,9 @@
         <span> visiting {{tripResponse.countries}} </span>
       </section>
 
-      <a id="back_to_trip" {{#if userId}} href="/users/{{userId}}/trips" {{else}} href="/login" {{/if}} /> Back to my
-      trips </a>
+      <a id="back_to_trip" {{#if isLoggedIn}} href="/users/{{logInUser._id}}/trips" 
+      {{else}} href="/login" 
+      {{/if}} /> Back to my trips </a>
 
     </div>
 

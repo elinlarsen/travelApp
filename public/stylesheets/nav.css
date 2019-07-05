@@ -8,16 +8,105 @@
   background-color: black;
   color: var(--nav-text);
   padding-top: 3vh;
+  padding-bottom: 1vh;
 }
 
+/* ----- RIGTH SIDE-----*/
 #options_container {
   width: 100%;
   margin: 0px;
-  padding: 0px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
+
+
+#options_container a {
+  display: flex;
+  flex-flow: column nowrap; 
+  justify-content: center;
+  align-items: flex-end;
+  text-decoration: none;
+  color: var(--nav-text);
+}
+
+#options_container a i {
+  color: white;
+  font-size: 1.5rem;
+  width: 12vw; 
+  height: 5vh; 
+  display : flex; 
+  flex-direction: row; 
+  justify-content: center; 
+}
+
+.onhover {
+  visibility: hidden;
+  width: 12vw; 
+}
+.icon:hover ~ .onhover {
+  visibility: visible;
+  color: var(--background);
+  font-size: 0.8rem; 
+  text-align: center; 
+}
+
+
+/* ----- LEFT SIDE-----
+  <div id="log_details">
+div class="login-wrapper">
+   <span id="hellouser"> Hello {{logInUser.username}} </span>
+    <a   id="login_status" href="/trips">  <img class ="icon" id="log_image" src="{{logInUser.picture}} ">  </a>
+</div>
+<a  class ="logout"
+
+*/
+
+
+#log_details {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+  align-items: flex-start; 
+  padding: 0px;
+  width: 40vw;  
+}
+
+.login-wrapper{
+  text-decoration: none;
+  min-width: 12vw; 
+  height: 5vh;
+  display : flex; 
+  flex-flow: row nowrap; 
+  justify-content: space-evenly; 
+  align-items: center; 
+}
+
+#hellouser{
+  color : white; 
+  font-size: 1rem;
+  padding: 0  1vw; 
+}
+
+.login_status {
+  text-decoration: none;
+  font-size: 1.1rem;
+  color : white; 
+  padding-right: 2vw; 
+}
+
+
+
+
+
+
+#log_image {
+  /*width: 25%;*/
+  height: 50px;
+  border-radius: 40px;
+}
+
+
 /*
 #options_container ul {
   display: flex;
@@ -53,92 +142,3 @@
     font-size: 16px;
 }
 */
-
-#log_details {
-  display: flex;
-  flex-flow: row;
-  justify-content: flex-end;
-  align-items: flex-start; 
-  text-decoration: none;
-  padding: 0px;
-  width: 40vw; 
-}
-
-.logout a{
-  display: flex;
-  flex-flow: column nowrap; 
-  justify-content: flex-start;
-  align-items: center;
-  text-decoration: none;
-  font-size: 35px;
-  color : white; 
-  padding: 0 3vw; 
-  padding-top: 0.5vw; 
-}
-
-
-
-#options_container a {
-  display: flex;
-  flex-flow: column; 
-  justify-content: flex-start;
-  align-items: center;
-  text-decoration: none;
-  color: var(--nav-text);
-  padding: 0px 1vw;
-}
-
-#options_container a i {
-  color: white;
-  font-size: 1.5rem;
-  /*padding-left: 3vw;*/
-}
-
-.onhover {
-  visibility: hidden;
-  padding: 1vh 0px;
-  padding-right: 1vw;
-}
-.icon:hover ~ .onhover {
-  visibility: visible;
-}
-
-#options_container  a:hover,
-#log_details p:hover {
-  color: var(--nav-hover);
-}
-
-
-
-#small_picture {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 1vw;
-}
-
-#log_image {
-  /*width: 25%;*/
-  height: 50px;
-  border-radius: 40px;
-}
-
-
-/*#logoutlink {
-  justify-self: end;
-}*/
-
-.login-wrapper{
-
-  min-width: 12vw; 
-  display : flex; 
-  flex-flow: row nowrap; 
-  justify-content: space-evenly; 
-  align-items: center; 
-}
-
-#login_status{
-  width: 100%; 
-  padding: 0 2vw; 
-}

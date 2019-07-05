@@ -47,18 +47,6 @@ router.post("/signup", upload.single("picture"), (req, res, next) => {
           .create(user)
           .then(dbRes => {
             req.session.currentUser = user;
-            req.session.picture = user.picture;
-
-            logInText = "Welcome " + req.session.currentUser.first_name;
-            logInLink = "/trips";
-            logInPicture = user.picture;
-
-            /*res.render("trips", {
-              logInText,
-              logInLink,
-              logInPicture
-            });
-            */
             res.redirect(`/users/${dbRes._id}/trips/`);
             console.log("Account created ---- dbres", dbRes);
           })
@@ -87,12 +75,12 @@ router.post("/login", (req, res, next) => {
     } else {
       if (bcrypt.compareSync(password, user.password)) {
         req.session.currentUser = user;
-        req.session.picture = user.picture;
-
+        
+        /*req.session.picture = user.picture;
         logInText = "Welcome " + req.session.currentUser.first_name;
         logInLink = "/trips";
         logInPicture = user.picture;
-
+        */
         res.redirect(`/users/${user._id}/trips`);
       } else {
         console.log("error pwd");
@@ -103,22 +91,14 @@ router.post("/login", (req, res, next) => {
 });
 
 // -----------------------  FRIENDS -----------------------
-router.get("/friends", ensureAuthenticated, (req, res, next) => {
-
-  // -----------------------  INSERT FAKE DATA -----------------------
-  //try{
-    //userHandler.insertMany(fakeUsers, dbres =>{res.render("friends")})
-  //}
-  //catch{
-    res.redirect(`/users/${dbRes._id}/friends/`)
-  
-  //}
+router.get("/friends", ensureAuthenticated, (req, res, next) =>{
+  //userHandler.insertMany(fakeUsers, dbres =>{res.render("friends")})
+  res.render("friends")
+})
+router.get("/users/:id/friends", ensureAuthenticated, (req, res, next) => {
+  res.render("friends")
 });
 
-router.get("/users/:id/friends/", ensureAuthenticated, (req, res, next)=>{
-  let userId=req.params.id
-  res.render("friends", { userId, logInText, logInPicture, logInLink });
-})
 
 router.get("/usersData", (req, res, next) => {
   userHandler.getAll(resData => {
@@ -136,9 +116,26 @@ router.get("/usersData/:id", (req, res, next) => {
 
 router.get("/logout", (req, res, next) => {
   req.session.destroy(err => {
-    console.log("logout");
-    res.render("auth/login");
+    console.log("logout ");
+    res.redirect("home");
   });
 });
 
+// -----------------------  ADD A FRIEND -----------------------
+router.get("/friend_add", ensureAuthenticated, (req, res, next) => {
+  res.render("newFriend");
+
+});
+
+router.get("/users/:id/add_friends/", ensureAuthenticated, (req, res) => {
+  res.render("newFriend");
+});
+// -----------------------  SHARE-----------------------
+router.get("/share", ensureAuthenticated, (req, res, next) => {
+  res.render("shareTrip");
+});
+
+router.get("/users/:id/share/", ensureAuthenticated, (req, res) => {
+  res.render("shareTrip");
+});
 module.exports = router;
