@@ -9,6 +9,7 @@
 @import "./lightpick.css";
 @import "./friends.css";
 @import "./loginandsignup.css";
+@import "./newFriends.css";
 @import "jquery.flexdatalist.min.css";
 
 :root {
@@ -18,6 +19,7 @@
   --text-color: white;
   --background: #faf9f8;
   --dark-background: #e0dcdc;
+  --btn: rgb(50, 151, 134);
 }
 
 * {

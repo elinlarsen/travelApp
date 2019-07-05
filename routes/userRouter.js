@@ -124,12 +124,13 @@ router.get("/logout", (req, res, next) => {
 // -----------------------  ADD A FRIEND -----------------------
 router.get("/friend_add", ensureAuthenticated, (req, res, next) => {
   res.render("newFriend");
-
 });
 
-router.get("/users/:id/add_friends/", ensureAuthenticated, (req, res) => {
-  res.render("newFriend");
+router.get("/users/:id/friend_add/", ensureAuthenticated, (req, res) => {
+    res.render("newFriend");  
 });
+
+//<input type="text" placeholder="Search..">
 // -----------------------  SHARE-----------------------
 router.get("/share", ensureAuthenticated, (req, res, next) => {
   res.render("shareTrip");

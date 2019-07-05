@@ -33,5 +33,11 @@ function getCurrentDate(){
   return date;
 }
 
+function createUserDescription(user){
+  let content=`<img class="friend-pic round" src=${user.picture}>
+  <span class="friend-username">${user.username}</span>`
+  return content
+}
+
 
 

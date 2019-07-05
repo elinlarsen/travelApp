@@ -1,8 +1,31 @@
+
+<script src="/../javascripts/utils.js"></script>
+<script type="module" src="/../javascripts/newfriends.js"></script>
+
 {{>nav}}
 
 <div class="main-body">
-    <h1>Find a friend</h1>
-    <span> TODO: search bar</span>
+    <div class="wrap">
+        <h1>Find a friend</h1>
+            <div class="search">
+                <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                <button type="submit" class="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+    </div>
+     
+    <span> TODO: 
+    </span>
+    <p>search bar</p>
+    <p> filter OUT the logged in user form the list of displayed users</p>
+    <p>when hovering on the found friend, a add friend icon pops up and send an invit (email), status: pending</p>
+    <p>updates status in db and then in friends page</p>
+
+    <div id="users-wrapper">
+
+
+    </div>
 
 </div>
 

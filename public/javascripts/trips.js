@@ -1,7 +1,9 @@
 
 const currentURL = window.location.pathname;
-const tripsDataAjaxHandler = new ajaxHandler("http://localhost:3000","/tripsData");
-const usersDataAjaxHandler = new ajaxHandler("http://localhost:3000","/usersData");
+
+const siteUrl = document.getElementById("site_url").content;
+const tripsDataAjaxHandler = new ajaxHandler(siteUrl,"/tripsData");
+const usersDataAjaxHandler = new ajaxHandler(siteUrl,"/usersData");
 
 
 const u= "users";
@@ -45,7 +47,7 @@ function createTripContainer(tripInfoObject){
     tripContainerEl.id=tripInfoObject._id;
     countries=tripInfoObject.countries.join(" & ")
     start=changeDateFormat(tripInfoObject.start_date)
-    end=changeDateFormat(tripInfoObject.start_date)
+    end=changeDateFormat(tripInfoObject.end_date)
     //<div class="trip-container" style="background-image: url(${tripInfoObject.picture})"> 
     tripContainerEl.innerHTML=`  
     <img  class="trip-container"src='${tripInfoObject.picture}' >

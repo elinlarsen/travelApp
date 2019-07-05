@@ -1,5 +1,6 @@
 const currentURL = window.location.pathname;
-const userAjaxHandler = new ajaxHandler("http://localhost:3000", "/usersData");
+const siteUrl = document.getElementById("site_url").content;
+const userAjaxHandler = new ajaxHandler(siteUrl, "/usersData");
 import Match from './Match.js'
 
 
@@ -68,11 +69,11 @@ function cleanFriendsWrapper(){
 }
 
 
-function createFriendDescription(userObject){
-    let content=`<img class="friend-pic round" src=${userObject.friend.picture}>
-    <span class="friend-username">${userObject.friend.username}</span>`
+/*function createUserDescription(user){
+    let content=`<img class="friend-pic round" src=${user.picture}>
+    <span class="friend-username">${user.username}</span>`
     return content
-}
+}*/
 
 function tripContent(userObject){
     let message="";
@@ -101,16 +102,6 @@ function tripContent(userObject){
 function createFriendContainer(userObject){
     const allTripsDiv=document.getElementById("friends-details-container");
 
-    
-    /*if(friendWrapper.innerHTML==""){
-        console.log("friend wrapper empty")
-        friendWrapper.innerHTML=createFriendDescription(userObject)
-        friendWrapper.innerHTML += tripContent(userObject)
-    } 
-    else{ 
-        console.log("friend wrapper already exist")
-        friendWrapper.innerHTML += tripContent(userObject)}
-    */
    if(document.getElementById(userObject.friend._id)!=undefined){
        let existingFriend=document.getElementById(userObject.friend._id)
         console.log("friend wrapper already exist")
@@ -123,13 +114,10 @@ function createFriendContainer(userObject){
         let friendWrapper=document.createElement("div");
         friendWrapper.className="friend-wrapper";
         friendWrapper.id=userObject.friend._id; 
-        friendWrapper.innerHTML=createFriendDescription(userObject)
+        friendWrapper.innerHTML=createUserDescription(userObject.friend)  // see utils.js 
         friendWrapper.innerHTML += tripContent(userObject)
         allTripsDiv.append(friendWrapper)
    }
-  
-    
-
 }
 
 

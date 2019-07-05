@@ -87,8 +87,7 @@ router.post("/trip_add", upload.single("picture"), (req, res) => {
 //  -----------------------  EDIT TRIP  -----------------------
 router.get("/trip_edit/:trip_id", ensureAuthenticated, (req, res) => {
   tripId= req.params.trip_id
-  tripHandler.getOneById(tripId, trip => {
-    
+  tripHandler.getOneById(tripId, trip => {    
     let start = moment().format("L");
     start=changeDateFormat(trip.start_date);
     let end = moment().format("L");
@@ -103,7 +102,7 @@ router.get("/trip_edit/:trip_id", ensureAuthenticated, (req, res) => {
 router.post("/tripsData/:id", upload.single("picture"), (req, res) => {
   const tripId = { _id: req.params.id };
   let countriesArr = req.body.countries.split(",");
-  console.log("countries -------", countriesArr);
+
   const editedTrip = new tripModel({
     _id: req.params.id,
     countries: countriesArr,
