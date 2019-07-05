@@ -9,9 +9,13 @@ export default class {
         this.trips2 =user2.trips;
     }
 
-    isFriend(){
-        var res;
+    user1IsFriendWithUser2(){
+        var res; 
         let friends2=this.user2.friends
+        //console.log("the user1 id ------", this.id1)
+        //console.log("username of user 2 ", this.user2.username)
+        //console.log("the friends of user2------", friends2)
+        //console.log("the user2 id ------", this.id2)
         friends2.includes(this.id1) ?  res=true : res=false
         return res
     }
@@ -41,7 +45,7 @@ export default class {
             countries2.forEach(country2 =>{
                 country2=country2.replace(/\s/g, '')  
                 if(country2==country && country!=""){
-                    //console.log("matched for country -------", country)
+                    console.log("matched for country -------", country)
                     matchCountries=true;
                     if( end1 < dateNow && dateNow< start2) {
                         matchDates={
@@ -67,7 +71,8 @@ export default class {
                             }
                             }
                         }
-                    else if(   (start1 > dateNow && start2> dateNow) && (start1==start2 || end1==end2 || start2<end1 || start1<end2) ){
+                    else if(   (start1 >= dateNow && start2>= dateNow) && (start1==start2 || end1==end2 || start2<end1 || start1<end2) ){
+                        
                         matchDates={
                             country: country ,
                             meetup:true,
@@ -78,12 +83,12 @@ export default class {
                                 end : end1 < end2 ? end1 : end2,
                                 },
                         }
+                        if (country=="Nigeria"){console.log("matchDates------------",matchDates)}
                     }
                 }
             })
         });
-        return { "matchCountries": matchCountries , 
-                 "matchDates": matchDates}
+        return {matchCountries ,  matchDates}
     }
 
     matchAllTrips(){
@@ -96,11 +101,10 @@ export default class {
                     matchArr[[id1, id2]] = this.matchTripsPair(trip1, trip2)
                     this.matchTripsPair(trip1, trip2).matchCountries==true 
                     ? matchTrue[[id1, id2]] = this.matchTripsPair(trip1, trip2).matchDates 
-                    //: matchTrue[[id1, id2]] = false;
-                    :console.log("lol")
+                    : matchTrue[[id1, id2]] = false;
             })
         })
-        console.log("matchTrue ARRAY ---", matchTrue)
-        return matchTrue
+        /console.log("matchTrue ARRAY ---", matchTrue)
+        return matchTrue==[] ? null : matchTrue
     }
 }

@@ -5,25 +5,27 @@ import Match from './Match.js'
 
 const u= "users";
 const f="friends"; 
-console.log("currentURL",currentURL )
 const userId = currentURL.substring(currentURL.indexOf(u) + u.length+1,currentURL.length-f.length-1 );
-console.log("userId",userId)
+console.log(userId)
 
 var currentUser=null;
-//const currentUserId="5d1c94888bfeca2479ef27ca" // TO CHANGE WHEN THE USER LOGIN and to define
-userAjaxHandler.getOne(userId, result => currentUser=result)
+userAjaxHandler.getOne(userId, result => {
+    currentUser=result
+    console.log("currentUser._id", currentUser._id)
+})
 console.log('------------------------------------------------------------')
 
 // as a middleware used in app.js
 
 
 // --------- Modular function ---------
-function computeMatch(user2, allUsers){
+function computeMatch(user1, allUsers){
     var allFriends=[]; var matchedFriends=[];var advisors=[]; var advisees=[]
         allUsers.forEach( user => {            
-            let match= new Match(user, user2)    
-            if( user._id != user2._id && match.isFriend() ){  
-                console.log(`${user.username} and ${user2.username} are friends !!!!`)
+
+            let match= new Match(user1,user) 
+            if( user._id != user1._id && match.user1IsFriendWithUser2() ){  
+                console.log(`${user.username} and ${user1.username} are friends !!!!`)
                 let friend=user;
                 allFriends.push({"friend" : friend},) 
                 let matchArray= match.matchAllTrips()
@@ -39,13 +41,13 @@ function computeMatch(user2, allUsers){
                         "meetup": matchArray[tripPair].meetup,
                         "reco": matchArray[tripPair].reco,
                     }
-                    if(matchArray[tripPair].meetup==true)matchedFriends.push(result)
+                    if(matchArray[tripPair].meetup==true) {matchedFriends.push(result); console.log("result --------", result ) }
                     if (matchArray[tripPair].advisor===friend._id)advisors.push(result)
-                    if (matchArray[tripPair].advisor===user2._id)advisees.push(result)  
-                    console.log("result --------", result )                 
+                    if (matchArray[tripPair].advisor===user1._id)advisees.push(result)  
+                                   
                 })
             }  
-            else { console.log(`${user.username} and ${user2.username} ARE NOT friends`)}            
+            else { console.log(`${user.username} and ${user1.username} ARE NOT friends`)}            
         })
     return {allFriends,matchedFriends,advisors,advisees}
 }
@@ -76,17 +78,15 @@ function createFriendContainer(userObject){
                 <span class="friend-username">${userObject.friend.username}</span>
             </section>
             `
-
-
     if(userObject.dates!= undefined){
         friendContainer.id=userObject.friend._id;
         let start=changeDateFormat(userObject.dates.start)
         let end =changeDateFormat(userObject.dates.end)
         let message="";
-        console.log("userObject", userObject )   
-        console.log("userObject.advisor", userObject.advisor )  
-        console.log("userObject.advisor", userObject.advisor )  
-        console.log("userObject.meetup", userObject.meetup)  
+        //console.log("userObject", userObject )   
+        //console.log("userObject.advisor", userObject.advisor )  
+        //console.log("userObject.advisor", userObject.advisor )  
+        //console.log("userObject.meetup", userObject.meetup)  
         if (userObject.meetup==true)
             {message= "Meet up in"}
         else if (userObject.advisor==userObject.friend._id)
