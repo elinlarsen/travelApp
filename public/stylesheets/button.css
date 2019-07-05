@@ -46,6 +46,10 @@ outline: none;
   background :  var(--background)
 }
 
+#add-trip-btn{
+  margin-bottom: 3rem; 
+}
+
 .button-secondary:hover {
   color:black;
   background: var(--dark-background);

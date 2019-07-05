@@ -43,7 +43,7 @@ function createTripContainer(tripInfoObject){
     let tripContainerEl=document.createElement("div");    
     tripContainerEl.className="wrapper-trip-container";
     tripContainerEl.id=tripInfoObject._id;
-    countries=tripInfoObject.countries.join(", ")
+    countries=tripInfoObject.countries.join(" & ")
     start=changeDateFormat(tripInfoObject.start_date)
     end=changeDateFormat(tripInfoObject.start_date)
     //<div class="trip-container" style="background-image: url(${tripInfoObject.picture})"> 
@@ -51,7 +51,7 @@ function createTripContainer(tripInfoObject){
     <img  class="trip-container"src='${tripInfoObject.picture}' >
     
     <span> ${tripInfoObject.name}  </span>
-    <span> in ${countries}  </span>
+    <span>  ${countries}  </span>
     <span> ${start} - ${end}  </span>
 
     <div class="cta-trip visible" >

@@ -48,6 +48,10 @@ span{
 
 .wrapper-trip-container{
     margin : 2%; 
+    padding: 0; 
+    height: 45vh;
+    width: 30vh;
+    /*max-width: 25vw; */
     background-color : var(--text-color);
     display : flex; 
     flex-flow: column; 
@@ -56,9 +60,15 @@ span{
 }
 
 .trip-container{
-    height: 25vh;
-    width: 25vh;
+    padding: 0;
+    margin: 0;
+    height: 32vh;
+    width: 30vh;
+   
     /*
+     height: inherit;
+    width: inherit;
+    
     border: 1px solid var(--trip-container); 
     border-radius: 50px; */
     display : flex; 

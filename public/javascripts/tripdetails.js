@@ -4,14 +4,15 @@ const td= "tripdetails"
 const len= td.length
 const tripId = currentURL.substring(currentURL.indexOf(td) + len+1);
 const parisLatLong = { lat: 48.85, lng: 2.3488 };
-const tripDetailsAjaxHandler = new ajaxHandler(
-  "http://localhost:3000",
-  "/tripdetails"
-);
 
-console.log("tripId ----------",tripId )
-const tripAjaxHandler = new ajaxHandler("http://localhost:3000", "tripsData");
-const stepsAjaxHandler = new ajaxHandler("http://localhost:3000", "/steps");
+
+const siteUrl = document.getElementById("site_url").content;
+
+console.log(siteUrl)
+
+const tripDetailsAjaxHandler = new ajaxHandler(siteUrl,"/tripdetails");
+const tripAjaxHandler = new ajaxHandler(siteUrl, "tripsData");
+const stepsAjaxHandler = new ajaxHandler(siteUrl, "/steps");
 
 document.addEventListener("DOMContentLoaded", () => {
   map = new mapHandler("trip_details_map", 5, parisLatLong);
