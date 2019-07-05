@@ -8,6 +8,7 @@
     "dev-windows": "nodemon ./bin/www -e hbs,js"
   },
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "connect-mongo": "^3.0.0",
     "cookie-parser": "^1.4.3",
