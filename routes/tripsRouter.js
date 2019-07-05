@@ -56,7 +56,8 @@ router.get("/tripsData", (req, res) => {
 
 // ----------------------- ADD TRIP  -----------------------
 router.get("/trip_add/:id", ensureAuthenticated, (req, res) => {
-  res.render("newTripForm");
+  tripId= req.params.id
+  res.render("newTripForm", {tripId});
 });
 
 
