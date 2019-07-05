@@ -93,10 +93,6 @@ router.get("/trip_edit/:trip_id", ensureAuthenticated, (req, res) => {
     start=changeDateFormat(trip.start_date);
     let end = moment().format("L");
     end=changeDateFormat(trip.end_date);
-    
-    console.log("start-------", start, "--------end--------", end);
-    console.log("trip", trip)
-    
     res.render(
       "editTripForm",
       { trip, start, end}
