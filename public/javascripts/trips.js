@@ -33,10 +33,8 @@ function showUserTrips(userId){
             const trashButtons=document.querySelectorAll(".fa-trash")
             trashButtons.forEach(link => {
                 link.onclick = deleteTripElement})  
-        })
-        
+        })   
     })
-
 }
 
 

@@ -23,7 +23,7 @@ const ensureAuthenticated=require("../bin/ensureAuth.js")
 //countryHandler.insertMany(countries, dbres =>console.log("countries inserted in db"))
 
 // -----------------------  GET ALL Countries -----------------------
-router.get("/countries.json", (req, res) => {
+router.get("/trip_add/countries.json", (req, res) => {
   countryHandler.getAll(resData => {
     res.send(resData);
   });
@@ -55,18 +55,15 @@ router.get("/tripsData", (req, res) => {
 });
 
 // ----------------------- ADD TRIP  -----------------------
-router.get("/trip_add/:id", ensureAuthenticated, (req, res) => {
-  tripId= req.params.id
-  res.render("newTripForm", {tripId});
+router.get("/trip_add/", ensureAuthenticated, (req, res) => {
+  res.render("newTripForm");
 });
 
 
-router.post("/trip_add/:id", upload.single("picture"), (req, res) => {
-  console.log(" hello world this is a post")
-  let userId= req.params.id;
+router.post("/trip_add", upload.single("picture"), (req, res) => {
+
+  let userId= req.session.currentUser._id;
   let countriesArr = req.body.countries.split(",");
-  console.log("countries -------", countriesArr);
-  console.log("req.body -----------", req.body);
   const newTrip = new tripModel({
     name: req.body.name,
     start_date: req.body.start_date,
