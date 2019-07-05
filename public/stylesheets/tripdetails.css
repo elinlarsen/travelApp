@@ -35,7 +35,7 @@
   flex-direction: column;
   height: 50vh;
   /* border-style: solid; */
-  background-color: lightslategray;
+  /*background-color: lightslategray;*/
   /* border-radius: 15px; */
   padding: 20px;
 }
@@ -75,13 +75,12 @@
 
 .trip_details_form input,
 .trip_details_form .button_container {
-  width: 19%;
+  width: 20%;
   text-align: center;
   border-radius: 5px;
-  padding: 3px 0px;
   border-style: none;
   font-size: 1em;
-  padding: 5px;
+  padding: 10px;
 }
 
 .button_container {
