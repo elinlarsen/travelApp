@@ -37,7 +37,7 @@ router.get("/trip_edit/countries.json", ensureAuthenticated, (req, res) => {
 
 // -----------------------  GET ALL TRIPS  -----------------------
 router.get("/trips", ensureAuthenticated, (req, res) => {
-  res.render("trips");
+  res.render("home");
 });
 
   //todo : create route /users/:id/trips

@@ -19,6 +19,7 @@ span{
     justify-content: center; 
     align-items: center; 
     padding : 0px;
+    margin-bottom: 5vh; 
 }
 .invisible{
     visibility: hidden;

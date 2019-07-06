@@ -15,23 +15,22 @@ console.log("userId",userId)
 // --------- Event Listener ---------
 document.addEventListener("DOMContentLoaded", () => {
     // have to catch the url and depinding on the url, function showTrips (public) or function showUserTrips()
-    !userId ? showPublicTrips(): showUserTrips(userId)
+    userId=="/"? showPublicTrips(): showUserTrips(userId)
 })
 
 // --------- Creating and delement DOM elements ---------
 function showPublicTrips(){    
     tripsDataAjaxHandler.getAll(trips => {
-        trips.forEach( trip => createTripContainer(trip)) 
-        const trashButtons=document.querySelectorAll(".fa-trash")
-        trashButtons.forEach(link => {
-            link.onclick = deleteTripElement})       
+        trips.forEach( trip => createTripContainer(trip, "")) 
+      
     }) 
 }
 
 function showUserTrips(userId){
     usersDataAjaxHandler.getOne(userId, dbRes => {
         dbRes.trips.forEach ( userTrip => {
-            createTripContainer(userTrip)
+            let visible="visible";
+            createTripContainer(userTrip, visible)
             const trashButtons=document.querySelectorAll(".fa-trash")
             trashButtons.forEach(link => {
                 link.onclick = deleteTripElement})  
@@ -40,28 +39,32 @@ function showUserTrips(userId){
 }
 
 
-function createTripContainer(tripInfoObject){
+function createTripContainer(tripInfoObject, visible){
+    console.log("tripInfoObject", tripInfoObject)
     const allTripsDiv=document.getElementById("all-trips")
     let tripContainerEl=document.createElement("div");    
     tripContainerEl.className="wrapper-trip-container";
     tripContainerEl.id=tripInfoObject._id;
-    countries=tripInfoObject.countries.join(" & ")
-    start=changeDateFormat(tripInfoObject.start_date)
-    end=changeDateFormat(tripInfoObject.end_date)
+    let countries=tripInfoObject.countries.join(" & ")
+    let start=changeDateFormat(tripInfoObject.start_date)
+    let end=changeDateFormat(tripInfoObject.end_date)
     //<div class="trip-container" style="background-image: url(${tripInfoObject.picture})"> 
     tripContainerEl.innerHTML=`  
     <img  class="trip-container"src='${tripInfoObject.picture}' >
     
     <p> ${tripInfoObject.name}  </p>
     <p>  ${countries}  </p>
-    <p> ${start} - ${end}  </p>
-
-    <div class="cta-trip visible" >
+    <p> ${start} - ${end}  </p>  `
+    if (visible=="visible"){
+        tripContainerEl.innerHTML+=`<div class="cta-trip ${visible}" >
         <a href="/tripdetails/${tripInfoObject._id}" class="fa fa-eye table-icon" ></a> 
         <a href="/trip_edit/${tripInfoObject._id}" class="fa fa-edit table-icon"></a>
         <button id="${tripInfoObject._id}" class="fa fa-trash table-icon"></button>
     </div> 
     `
+
+    }
+ 
     allTripsDiv.appendChild(tripContainerEl)
 }
 
