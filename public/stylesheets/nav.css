@@ -5,7 +5,7 @@
   align-items: flex-start;
   position: fixed;
   width: 100%;
-  background-color: black;
+  background-color: var(--primary);
   color: var(--nav-text);
   padding-top: 3vh;
   padding-bottom: 1vh;

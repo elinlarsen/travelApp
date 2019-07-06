@@ -25,8 +25,10 @@ router.get("/tripdetails/:trip_id", (req, res, next) => {
     console.log("----------- end in db", tripResponse.end_date);
     let start = changeDateFormat(tripResponse.start_date);
     let end = changeDateFormat(tripResponse.end_date);
+    let countries=tripResponse.countries.join(" & ")
     res.render("tripdetails", {
       tripResponse,
+      countries,
       start,
       end,
       userId

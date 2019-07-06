@@ -34,9 +34,22 @@ function getCurrentDate(){
 }
 
 function createUserDescription(user){
-  let content=`<img class="friend-pic round" src=${user.picture}>
-  <span class="friend-username">${user.username}</span>`
+  let content=`<img class="pic round" src=${user.picture}>
+  <p class="username">${user.username}</p>`
   return content
+}
+
+function cleanWrapper(wrapperId){
+  const wrapperEl=document.getElementById(wrapperId)
+  wrapperEl.innerHTML=''
+}
+
+function createMessageElement(message, wrapperId){
+  const wrapper=document.getElementById(wrapperId);
+  let messageContainer=document.createElement("div");
+  messageContainer.className="empty-wrapper";
+  messageContainer.innerHTML=`<p class="friend-name">${message}</p>`
+  wrapper.append(messageContainer);
 }
 
 

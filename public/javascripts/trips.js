@@ -52,9 +52,9 @@ function createTripContainer(tripInfoObject){
     tripContainerEl.innerHTML=`  
     <img  class="trip-container"src='${tripInfoObject.picture}' >
     
-    <span> ${tripInfoObject.name}  </span>
-    <span>  ${countries}  </span>
-    <span> ${start} - ${end}  </span>
+    <p> ${tripInfoObject.name}  </p>
+    <p>  ${countries}  </p>
+    <p> ${start} - ${end}  </p>
 
     <div class="cta-trip visible" >
         <a href="/tripdetails/${tripInfoObject._id}" class="fa fa-eye table-icon" ></a> 

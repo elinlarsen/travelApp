@@ -55,23 +55,14 @@ function computeMatch(user1, allUsers){
     return {allFriends,matchedFriends,advisors,advisees}
 }
 
-function createMessageElement(message){
-    const allTripsDiv=document.getElementById("friends-details-container");
-    let friendContainer=document.createElement("div");
-    friendContainer.className="empty-wrapper";
-    friendContainer.innerHTML=`<p class="friend-name">${message}</p>`
-    allTripsDiv.append(friendContainer);
-}
 
-function cleanFriendsWrapper(){
-    const wrapperEl=document.getElementById("friends-details-container")
-    wrapperEl.innerHTML=''
-}
+
+
 
 
 /*function createUserDescription(user){
     let content=`<img class="friend-pic round" src=${user.picture}>
-    <span class="friend-username">${user.username}</span>`
+    <p class="friend-username">${user.username}</p>`
     return content
 }*/
 
@@ -88,8 +79,8 @@ function tripContent(userObject){
         let start=changeDateFormat(userObject.dates.start)
         let end =changeDateFormat(userObject.dates.end)    
         return `<section class="friend-trip-description" id="section-${userObject.friend._id}">  
-            <span class="common-country"> ${message} ${userObject.country}</span>
-            <span class="common-start">  ${start} - ${end}</span>  
+            <p class="common-country"> ${message} ${userObject.country}</p>
+            <p class="common-start">  ${start} - ${end}</p>  
         </section>`
     }
     else{
@@ -124,21 +115,23 @@ function createFriendContainer(userObject){
 // --------- Creating and delement DOM elements ---------
 
 function showAllFriends(user2){
-    cleanFriendsWrapper()  
+    wrapperName= "friends-details-container"
+    cleanWrapper(wrapperName)  
     userAjaxHandler.getAll(allUsers => { 
         let all=computeMatch(user2, allUsers).allFriends
         all.length===0 ? 
-        createMessageElement(" You don't have friends yet!") : 
+        createMessageElement(" You don't have friends yet!", wrapperName) : 
         all.forEach( friend => createFriendContainer(friend))
     })    
 }
 
 function showMeetUpFriends(user2){
-    cleanFriendsWrapper()
+    wrapperName= "friends-details-container"
+    cleanWrapper(wrapperName)
     userAjaxHandler.getAll(allUsers => { 
         let m=computeMatch(user2, allUsers).matchedFriends
         m.length===0 ? 
-        createMessageElement(" None of your friends are travelling to the same location and time as you."): 
+        createMessageElement(" None of your friends are travelling to the same location and time as you.", wrapperName): 
         m.forEach( result => {
             console.log(  "-----------------------------",createFriendContainer(result))
             createFriendContainer(result)
@@ -148,11 +141,12 @@ function showMeetUpFriends(user2){
 }
 
 function showGetAdvisorsFriends(user2){
-    cleanFriendsWrapper()
+    wrapperName= "friends-details-container"
+    cleanWrapper(wrapperName)
     userAjaxHandler.getAll(allUsers => { 
         let ad=computeMatch(user2, allUsers).advisors
         ad.length===0 ? 
-        createMessageElement(" None of your friends can advise you on your next trip.") : 
+        createMessageElement(" None of your friends can advise you on your next trip.", wrapperName) : 
         console.log("res : ", ad)
         ad.forEach( friend => createFriendContainer(friend))
 
@@ -160,11 +154,12 @@ function showGetAdvisorsFriends(user2){
  }
 
 function showGiveAdvicesFriends(user2){
-    cleanFriendsWrapper()
+    wrapperName= "friends-details-container"
+    cleanWrapper(wrapperName)
     userAjaxHandler.getAll(allUsers => { 
         let add=computeMatch(user2, allUsers).advisees
         add.length===0 ? 
-        createMessageElement(" None of your friends are going to one of the countries you have already visited.") : 
+        createMessageElement(" None of your friends are going to one of the countries you have already visited.", wrapperName) : 
         add.forEach( friend => { console.log("advisee friend ----------", friend);createFriendContainer(friend)})
     })
 }

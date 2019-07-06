@@ -60,8 +60,8 @@ router.get("/trip_add/", ensureAuthenticated, (req, res) => {
 });
 
 
-router.post("/trip_add", upload.single("picture"), (req, res) => {
-
+router.post("/trip_add", ensureAuthenticated, upload.single("picture"), (req, res) => {
+  console.log("req.session.currentUser", req.session.currentUser)
   let userId= req.session.currentUser._id;
   let countriesArr = req.body.countries.split(",");
   const newTrip = new tripModel({
@@ -94,7 +94,7 @@ router.get("/trip_edit/:trip_id", ensureAuthenticated, (req, res) => {
     end=changeDateFormat(trip.end_date);
     res.render(
       "editTripForm",
-      { trip, start, end}
+      {tripId, trip, start, end}
     );
   });
 });

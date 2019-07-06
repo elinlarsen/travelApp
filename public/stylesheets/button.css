@@ -16,7 +16,7 @@ outline: none;
 
 .button-primary {
   color: white;
-  background: black;
+  background: var(--primary);
   border:1px solid;
   font-size: 1.2rem;
   transition: all .2s ease-in;
@@ -28,14 +28,14 @@ outline: none;
 }
 
 .button-primary:hover {
-  color:black;
+  color:var(--primary);
   background: white;
   border:1px solid;
 }
 
 .button-secondary {
-  color: black;
-  border:1px solid  black;
+  color:var(--primary);;
+  border:1px solid  var(--primary);;
   font-size: 1.2rem;
   transition: all .2s ease-in;
   transition-property:color, background;
@@ -43,7 +43,7 @@ outline: none;
   margin: 1rem; 
   padding: 1rem;
   width: 20vw; 
-  background :  var(--background)
+  background :  var(--background);
 }
 
 #add-trip-btn{
@@ -51,22 +51,22 @@ outline: none;
 }
 
 .button-secondary:hover {
-  color:black;
-  background: var(--dark-background);
-  border:1px solid;
+  color:var(--text-color2);
+  background: var(--primary);
+  border:1px solid var(--primary);
   cursor: pointer;
 }
 
 
 .button-ternary {
-  color: rgb(151, 151, 151);
+  color: var(--dark-background);
   font-size: 1rem;
   transition: all .2s ease-in;
   transition-property:color;
 }
 
 .button-ternary:hover {
-  color:black
+  color:var(--primary);
 }
 
 
@@ -86,7 +86,7 @@ outline: none;
   align-items: center; 
   text-align: center;
   font-size: 50px;
-  color: rgba(255,255,255,1);
+  color: var(--background);
   border-radius: 50%;
   background-color :  #3f51b5;
 }

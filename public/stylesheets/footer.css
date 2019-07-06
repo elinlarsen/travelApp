@@ -3,7 +3,7 @@
   bottom: 0;
   height: 5vh;
   width: 100%;
-  background: black;
+  background: var(--primary);
   color: var(--text-color);
 }
 

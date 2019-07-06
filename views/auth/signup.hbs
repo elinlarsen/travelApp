@@ -2,11 +2,16 @@
 
 <div class="main-body">
 
-  {{errorMessage}}
+  <div class="signup form-container">
 
   <div class="form-header">
-    <h1 class="form-title">Start your journey now </h1>
+    <h1 class="form-title">Start your journey now ! </h1>
   </div>
+
+     {{#if errorMessage}}
+      <p class="error_message"> {{errorMessage}} </p>
+      {{/if}}
+
 
   <form action="/signup" method="POST" id="form_user" enctype="multipart/form-data">
 
@@ -46,6 +51,8 @@
 
   </form>
   
+  </div>
+
   </div>
 
 </div>

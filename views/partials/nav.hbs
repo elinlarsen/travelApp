@@ -7,27 +7,49 @@
           <span class="onhover">Home</span>
         </a>
 
-        <a href="/users/{{logInUser._id}}/trips" >
-          <i class=" icon fa fa-suitcase"></i>
-          <span class="onhover">Plan a trip</span>
-        </a>
-
-        <a href="/users/{{logInUser._id}}/friends">
-          <i class="icon fa fa-users"></i>
-          <span class="onhover">Your network</span>
-        </a>
-       {{#if isLoggedIn}}
-        <a href="/users/{{logInUser._id}}/friend_add">
-        {{else}}
-         <a href="/friend_add"></a>
+         {{#if isLoggedIn}}
+            <a href="/users/{{logInUser._id}}/trips" > 
+                <i class=" icon fa fa-suitcase"></i>
+                <span class="onhover">Plan a trip</span>
+           </a>
+         {{else}}
+            <a href="/trips">
+                <i class=" icon fa fa-suitcase"></i>
+                <span class="onhover">Plan a trip</span>
+            </a>
           {{/if}}
-          <i class="icon fa fa-user-plus"></i>
-          <span class="onhover">Add a friend</span>
+          
+
+        {{#if isLoggedIn}}
+          <a href="/users/{{logInUser._id}}/friends"> 
+              <i class="icon fa fa-users"></i>
+              <span class="onhover">Your network</span>
+          </a>
+         {{else}}
+         <a href="/friends">
+              <i class="icon fa fa-users"></i>
+              <span class="onhover">Your network</span>
+          </a>
+          {{/if}}
+          
+ 
+       {{#if isLoggedIn}}
+        <a href="/users/{{logInUser._id}}/friend_add"> 
+            <i class="icon fa fa-user-plus"></i>
+            <span class="onhover">Add a friend</span>
         </a>
+        {{else}}
+         <a href="/friend_add">
+            <i class="icon fa fa-user-plus"></i>
+             <span class="onhover">Add a friend</span>
+        </a>
+          {{/if}}
+          
+
         {{#if isLoggedIn}}
         <a href="/users/{{logInUser._id}}/share">
         {{else}}
-        <a href="/share"></a>
+        <a href="/share">
           {{/if}}
           <i class="icon fa fa-share-alt"></i>
           <span class="onhover">Share a trip</span>

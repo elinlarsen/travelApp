@@ -5,20 +5,20 @@
 {{>nav}}
 
 <div class="main-body">
-    <div class="wrap">
-        <h1>Find a friend</h1>
-            <div class="search">
-                <input type="text" class="searchTerm" placeholder="What are you looking for?">
-                <button type="submit" class="searchButton">
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
+    <div class="wrap" id="wrap-bar">
+        <h1>Add a friend to your network</h1>
+        <div class="search">
+            <input type="text" class="searchTerm" placeholder="e.username" id="searchValue">
+            <button type="submit" class="searchButton" id="searchUsernameBtn">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+        <div id="errorMessage">
+        </div>
     </div>
      
     <span> TODO: 
     </span>
-    <p>search bar</p>
-    <p> filter OUT the logged in user form the list of displayed users</p>
     <p>when hovering on the found friend, a add friend icon pops up and send an invit (email), status: pending</p>
     <p>updates status in db and then in friends page</p>
 
