@@ -7,7 +7,7 @@ const changeDateFormat = require("../utils/changeDateFormat");
 const ensureAuthenticated=require("../bin/ensureAuth.js")
 
 // ----------------------- TRIP DETAILS -----------------------
-router.get("/tripdetails/:trip_id", (req, res, next) => {
+router.get("/tripdetails/:trip_id", ensureAuthenticated,(req, res, next) => {
   /* tripHandler.createOne({
       name: "Great Trip" + Math.random(),
       start_date: "01.02.2020",
@@ -36,12 +36,12 @@ router.get("/tripdetails/:trip_id", (req, res, next) => {
   });
 });
 
-router.post("/tripdetails", (req, res, next) => {
+router.post("/tripdetails", ensureAuthenticated , (req, res, next) => {
   console.log(req.body);
   stepHandler.createOne(req.body, dbRes => res.send(dbRes._id));
 });
 
-router.patch("/tripsData/:id", (req, res, next) => {
+router.patch("/tripsData/:id", ensureAuthenticated, (req, res, next) => {
   tripHandler.updateOne({ _id: req.params.id }, req.body, dbRes => {
     res.send(dbRes);
   });

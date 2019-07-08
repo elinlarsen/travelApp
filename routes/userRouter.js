@@ -5,7 +5,8 @@ const userModel = require("../models/User.js");
 const userHandler = new dbHandler(userModel);
 const fakeUsers = require("../bin/userSeed");
 const multer = require("multer");
-const upload = multer({ dest: "./public/uploads/" });
+//const upload = multer({ dest: "./public/uploads/" });
+const uploadCloud = require('../config/cloudinary.js');
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 const salt = bcrypt.genSaltSync(bcryptSalt);
@@ -16,9 +17,10 @@ router.get("/signup", (req, res, next) => {
   res.render("auth/signup");
 });
 
-router.post("/signup", upload.single("picture"), (req, res, next) => {
+router.post("/signup", uploadCloud.single("picture"), (req, res, next) => {
   const { first_name, last_name, username, email, password } = req.body;
-  picture = `/../uploads/${req.file.filename}`;
+  //picture = `/../uploads/${req.file.filename}`;
+  picture=req.file.url;
 
   console.log(req.body);
 
@@ -100,13 +102,13 @@ router.get("/users/:id/friends", ensureAuthenticated, (req, res, next) => {
 });
 
 
-router.get("/usersData", (req, res, next) => {
+router.get("/usersData",  ensureAuthenticated,(req, res, next) => {
   userHandler.getAll(resData => {
     console.log("GET ALL ----", resData);
     res.send(resData);
   });
 });
-router.get("/usersData/:id", (req, res, next) => {
+router.get("/usersData/:id", ensureAuthenticated,(req, res, next) => {
   let ID = { _id: req.params.id };
   userHandler.getOneById(ID, resData => {
     console.log("GET ALL ----", resData);
@@ -114,7 +116,7 @@ router.get("/usersData/:id", (req, res, next) => {
   });
 });
 
-router.get("/logout", (req, res, next) => {
+router.get("/logout", ensureAuthenticated,(req, res, next) => {
   req.session.destroy(err => {
     console.log("logout ");
     res.redirect("/home");

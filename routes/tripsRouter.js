@@ -12,7 +12,8 @@ const countryHandler = new dbHandler(countryModel);
 const countries = require("../bin/countries.js");
 
 const multer = require("multer");
-const upload = multer({ dest: "./public/uploads/" });
+const uploadCloud = require('../config/cloudinary.js');
+//const upload = multer({ dest: "./public/uploads/" });
 const changeDateFormat = require("../utils/changeDateFormat");
 const moment = require("moment");
 
@@ -60,7 +61,7 @@ router.get("/trip_add/", ensureAuthenticated, (req, res) => {
 });
 
 
-router.post("/trip_add", ensureAuthenticated, upload.single("picture"), (req, res) => {
+router.post("/trip_add",  ensureAuthenticated, uploadCloud.single("picture"), (req, res) => {
   console.log("req.session.currentUser", req.session.currentUser)
   let userId= req.session.currentUser._id;
   let countriesArr = req.body.countries.split(",");
@@ -99,7 +100,7 @@ router.get("/trip_edit/:trip_id", ensureAuthenticated, (req, res) => {
   });
 });
 
-router.post("/tripsData/:id", upload.single("picture"), (req, res) => {
+router.post("/tripsData/:id",ensureAuthenticated, uploadCloud.single("picture"), (req, res) => {
   const tripId = { _id: req.params.id };
   let countriesArr = req.body.countries.split(",");
 
@@ -107,7 +108,8 @@ router.post("/tripsData/:id", upload.single("picture"), (req, res) => {
     _id: req.params.id,
     countries: countriesArr,
     name: req.body.name,
-    picture: `/../uploads/${req.file.filename}`,
+    //picture: `/../uploads/${req.file.filename}`,
+    picture:req.file.url,
     start_date: req.body.start_date,
     end_date: req.body.end_date
   });
@@ -122,7 +124,7 @@ router.post("/tripsData/:id", upload.single("picture"), (req, res) => {
 });
 
 // ----------------------- GET ONE TRIP -----------------------
-router.get("/tripsData/:trip_id", (req, res) => {
+router.get("/tripsData/:trip_id", ensureAuthenticated,(req, res) => {
   let ID = req.params.trip_id;
   tripHandler.getOne({ _id: ID }, resData => {
     console.log("ID ------", { _id: ID });
@@ -132,7 +134,7 @@ router.get("/tripsData/:trip_id", (req, res) => {
 });
 
 // ----------------------- DELETE ONE TRIP -----------------------
-router.delete("/tripsData/:trip_id", (req, res) => {
+router.delete("/tripsData/:trip_id", ensureAuthenticated, (req, res) => {
   let ID = req.params.trip_id;
   console.log({ _id: ID });
   tripHandler.deleteOne({ _id: ID }, resData => {
