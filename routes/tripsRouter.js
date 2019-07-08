@@ -70,7 +70,8 @@ router.post("/trip_add",  ensureAuthenticated, uploadCloud.single("picture"), (r
     start_date: req.body.start_date,
     end_date: req.body.end_date,
     countries: countriesArr,
-    picture: `/../uploads/${req.file.filename}`
+    //picture: `/../uploads/${req.file.filename}`
+    picture:req.file.url,
   });
 
   tripHandler.createOne(newTrip, dbres => {
