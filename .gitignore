@@ -2,3 +2,4 @@
 node-modules/
 .DS_store
 /public/uploads/
+node_modules
