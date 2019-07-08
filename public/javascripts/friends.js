@@ -115,7 +115,7 @@ function createFriendContainer(userObject){
 // --------- Creating and delement DOM elements ---------
 
 function showAllFriends(user2){
-    wrapperName= "friends-details-container"
+    const wrapperName= "friends-details-container"
     cleanWrapper(wrapperName)  
     userAjaxHandler.getAll(allUsers => { 
         let all=computeMatch(user2, allUsers).allFriends
@@ -126,7 +126,7 @@ function showAllFriends(user2){
 }
 
 function showMeetUpFriends(user2){
-    wrapperName= "friends-details-container"
+    const wrapperName= "friends-details-container"
     cleanWrapper(wrapperName)
     userAjaxHandler.getAll(allUsers => { 
         let m=computeMatch(user2, allUsers).matchedFriends
@@ -141,7 +141,7 @@ function showMeetUpFriends(user2){
 }
 
 function showGetAdvisorsFriends(user2){
-    wrapperName= "friends-details-container"
+    const wrapperName= "friends-details-container"
     cleanWrapper(wrapperName)
     userAjaxHandler.getAll(allUsers => { 
         let ad=computeMatch(user2, allUsers).advisors
@@ -154,7 +154,7 @@ function showGetAdvisorsFriends(user2){
  }
 
 function showGiveAdvicesFriends(user2){
-    wrapperName= "friends-details-container"
+    const wrapperName= "friends-details-container"
     cleanWrapper(wrapperName)
     userAjaxHandler.getAll(allUsers => { 
         let add=computeMatch(user2, allUsers).advisees

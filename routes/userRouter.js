@@ -117,7 +117,7 @@ router.get("/usersData/:id", (req, res, next) => {
 router.get("/logout", (req, res, next) => {
   req.session.destroy(err => {
     console.log("logout ");
-    res.redirect("home");
+    res.redirect("/home");
   });
 });
 

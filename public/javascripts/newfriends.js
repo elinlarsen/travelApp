@@ -56,13 +56,20 @@ function showUserSearched( userId ){
     }   
 }
 
+function createAddUserIcon(){
+    return `
+    <div class="add-friend-icon"><i class="icon fa fa-user-plus"></i><span class="onhover">Add Friend</span>
+    </div>`
+}
+
 
 function createUserContainer(user, wrapperUserId){
     const userWrapper=document.getElementById(wrapperUserId)
     let friendWrapper=document.createElement("div");
     friendWrapper.className="friend-wrapper"; // see friends.js & friends.css
     friendWrapper.id=user._id; 
-    friendWrapper.innerHTML=createUserDescription(user) // see utils.js 
+    friendWrapper.innerHTML=createAddUserIcon()
+    friendWrapper.innerHTML+=createUserDescription(user) // see utils.js 
     userWrapper.append(friendWrapper)
 }
 

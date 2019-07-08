@@ -19,10 +19,36 @@
      
     <span> TODO: 
     </span>
-    <p>when hovering on the found friend, a add friend icon pops up and send an invit (email), status: pending</p>
+    <p>check if user already friend</p>
+    <p>when hovering on the found user,   a add friend icon pops up and send an invit (email), status: pending</p>
     <p>updates status in db and then in friends page</p>
 
+
     <div id="users-wrapper">
+
+
+    </div>
+
+
+    <div id="invite-friend-form">
+         <h1>Not finding your friend ? Invite him to join Fantabulous!</h1>
+         <form action="/tripsData/{{tripId}}" method="POST" class="add-trip-form" enctype="multipart/form-data">
+            <div class="form-item-wrapper">
+                <label for="email" class="label-name label">Your friend's email</label>
+                <br>
+                <input type="text-area" name="email" class="input-text input" placeholder="email@email.com"  required>
+            </div>
+
+            <div class="form-item-wrapper">
+                <label for="name" class="label-name label">Tell your friend about Fantabulous!</label>
+                <br>
+                <input type="text" name="name" class="input-text input" required>
+            </div>
+
+            <button id="invite-friend-button" class="button-primary">Send invite</button>
+
+        </form>
+
 
 
     </div>
